@@ -20,7 +20,7 @@ if (php_sapi_name() == 'cli-server') {
 
 if (!isset($_SERVER['ALLOW_APP_LOGINDEV'])) die('app_logindev not allowed');
 
-require __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../app/bootstrap.php.cache';
 use Symfony\Component\HttpFoundation\Request;
 $path = Request::createFromGlobals()->getPathInfo();
 
