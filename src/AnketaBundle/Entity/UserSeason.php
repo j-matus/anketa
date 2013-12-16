@@ -214,10 +214,14 @@ class UserSeason {
     }
 
     public function setStartTimestamp($startTimestamp) {
-        $this->startTimestamp = $startTimestamp;
+        // startTimestamp sa nastavi iba pri prvom zavolani tejto funkcie
+        $null_date = new \DateTime('0000-00-00 00:00:00');
+        if ($this->startTimestamp == $null_date || $this->startTimestamp == null) {
+            $this->startTimestamp = $startTimestamp;
+        }
     }
 
-    public function getStartTimestamp($startTimestamp) {
+    public function getStartTimestamp() {
         return $this->startTimestamp;
     }
 
@@ -225,7 +229,7 @@ class UserSeason {
         $this->finishTimestamp = $finishTimestamp;
     }
 
-    public function getFinishTimestamp($finishTimestamp) {
+    public function getFinishTimestamp() {
         return $this->finishTimestamp;
     }
 
