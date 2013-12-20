@@ -23,10 +23,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 
-class TeachingAssociationAdminController extends Controller {
-
+class TeachingAssociationAdminController extends Controller
+{
     // TODO protect /admin at one place
-    public function preExecute() {
+    public function preExecute()
+    {
         if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
@@ -39,7 +40,8 @@ class TeachingAssociationAdminController extends Controller {
     // TODO group by (subjec,t teacher, season), zobrazit pocet rovnakych
     //      cez COUNT() a spojit notes do jedneho, aby to vyzeralo ako 1 ticket
     // TODO CSFR
-    public function indexAction() {
+    public function indexAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         $active_season = $em->getRepository('AnketaBundle:Season')
@@ -47,7 +49,8 @@ class TeachingAssociationAdminController extends Controller {
 
         $tas = $em->getRepository('AnketaBundle:TeachingAssociation')
                 ->findBy(array('season' => $active_season,
-                               'completed' => false));
+                               'completed' => false),
+                         array('createdOn' => 'ASC'));
 
         return $this->render(
                 'AnketaBundle:TeachingAssociationAdmin:index.html.twig',
@@ -59,7 +62,8 @@ class TeachingAssociationAdminController extends Controller {
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse>
      */
-    public function processRequestAction() {
+    public function processRequestAction()
+    {
         // check if the record exists
         $ta_id = $this->getRequest()->get('ta_id', null);
         if ($ta_id == null) {
@@ -101,7 +105,8 @@ class TeachingAssociationAdminController extends Controller {
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function addTeacherToSubject(TeachingAssociation $ta) {
+    private function addTeacherToSubject(TeachingAssociation $ta)
+    {
         $em = $this->getDoctrine()->getManager();
 
         // at least one of the functions should to be set to 1 (true)
@@ -142,6 +147,7 @@ class TeachingAssociationAdminController extends Controller {
                 // TODO check if $e really says the insert is duplicated (SQL 23000)
                 $session->getFlashBag()
                         ->add('error', 'Učiteľ už je priradený k predmetu.');
+
                 return $this->redirect($this->generateUrl(
                         'admin_teaching_associations'));
             }
@@ -160,10 +166,11 @@ class TeachingAssociationAdminController extends Controller {
      * If there are more requests with equal season, teacher and subjects, it
      * marks them as completed as well.
      *
-     * @param TeachingAssociation $ta
+     * @param  TeachingAssociation $ta
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    private function markAsCompleted(TeachingAssociation $ta) {
+    private function markAsCompleted(TeachingAssociation $ta)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $ta->setCompleted(true);
@@ -182,7 +189,7 @@ class TeachingAssociationAdminController extends Controller {
                       'completed' => false
                         ));
 
-        foreach($tas as $ta_item) {
+        foreach ($tas as $ta_item) {
             $ta_item->setCompleted(true);
             $em->persist($ta_item);
             $em->flush();
@@ -204,10 +211,11 @@ class TeachingAssociationAdminController extends Controller {
      *
      * @param TeachingAssociation $ta
      */
-    private function sendEmailAfterApproval(TeachingAssociation $ta) {
+    private function sendEmailAfterApproval(TeachingAssociation $ta)
+    {
         $skratkaFakulty = $this->container->getParameter('skratka_fakulty');
 
-        $subject = 'Požiadavka na zmena učiteľa bola vybavená';
+        $subject = 'Požiadavka na zmenu učiteľa bola vybavená';
         $to = $ta->getRequestedBy()->getLogin().'@uniba.sk';
         $sender = $this->container->getParameter('mail_sender');
         $replyTo = $this->container->getParameter('mail_replyto_new_teaching_association');

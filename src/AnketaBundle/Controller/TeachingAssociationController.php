@@ -21,11 +21,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class TeachingAssociationController extends AbstractVotingController
-{
+class TeachingAssociationController extends AbstractVotingController {
 
-    public function formAction($subject_slug) {
-        $em = $this->get('doctrine.orm.entity_manager');
+    public function formAction($subject_slug)
+    {
+        $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AnketaBundle\Entity\Subject');
         $subject = $repo->findOneBy(array('slug' => $subject_slug));
         if ($subject === null) {
@@ -36,9 +36,10 @@ class TeachingAssociationController extends AbstractVotingController
                 array('subject'=>$subject));
     }
 
-    public function processFormAction($subject_slug) {
+    public function processFormAction($subject_slug)
+    {
         $request = $this->get('request');
-        $em = $this->get('doctrine.orm.entity_manager');
+        $em = $this->getDoctrine()->getManager();
         $subjectRepository = $em->getRepository('AnketaBundle\Entity\Subject');
         $seasonRepository = $em->getRepository('AnketaBundle\Entity\Season');
         $userRepository = $em->getRepository('AnketaBundle\Entity\User');
