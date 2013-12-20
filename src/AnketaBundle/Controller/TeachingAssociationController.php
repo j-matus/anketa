@@ -100,19 +100,19 @@ class TeachingAssociationController extends AbstractVotingController {
             }
         }
 
-        // create "ticket" for the association
-        $assoc = new TeachingAssociation($season, $subject, $teacher, $user,
-                $note, $is_lecturer, $is_trainer);
-        $em->persist($assoc);
-        $em->flush();
-
         if ($teacher === null) {
             // if $teacher_login was not submitted, user was not found in LDAP,
             // add this info to the note
             $note .= PHP_EOL.sprintf(
-                    'Učiteľ "%s" nebol nájdený v LDAP-e (možno je externista).',
-                    $teacher_name);
+                'Učiteľ "%s" nebol nájdený v LDAP-e (možno je externista).',
+                $teacher_name);
         }
+
+        // create a "ticket" for the association
+        $assoc = new TeachingAssociation($season, $subject, $teacher, $user,
+                $note, $is_lecturer, $is_trainer);
+        $em->persist($assoc);
+        $em->flush();
 
         // send email about the request
         $emailTpl = array(
