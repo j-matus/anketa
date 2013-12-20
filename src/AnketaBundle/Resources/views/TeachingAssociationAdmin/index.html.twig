@@ -20,6 +20,7 @@
             <th>Funkcia</th>
             <th>Predmet</th>
             <th>Poznámka</th>
+            <th>Vytvorené</th>
             <th>Akcia</th>
         </tr>
     </thead>
@@ -31,6 +32,7 @@
         <td>{% if not (ta.lecturer or ta.trainer) %}&#8212;{% endif %}{% if ta.lecturer %}učitel{% endif %}{% if ta.lecturer and ta.trainer %}, {% endif %}{% if ta.trainer %}cvičiaci{% endif %}</td>
         <td>{{ ta.subject.name }} [id={{ ta.subject.id }}]</td>
         <td>{{ ta.note }}</td>
+        <td>{% if ta.createdOn %}{{ ta.createdOn|date('d.m.Y H:i') }}{% endif %}</td>
         <td>
             <form action="{{ path('admin_teaching_associations_process') }}" method="post">
                 <input type="hidden" name="ta_id" value="{{ ta.id }}" />

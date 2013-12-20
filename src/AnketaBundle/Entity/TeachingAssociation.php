@@ -72,11 +72,18 @@ class TeachingAssociation {
     protected $completed;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var DateTime
+     */
+    protected $createdOn;
+
+    /**
      * @param String $name
      */
     public function __construct(Season $season, Subject $subject,
-            User $teacher = null, User $requestedBy = null, $note = '',
-            $lecturer = null, $trainer = null, $completed = false) {
+            User $teacher = NULL, User $requestedBy = NULL, $note = '',
+            $lecturer = NULL, $trainer = NULL, $completed = FALSE,
+            $createdOn = NULL) {
         Preconditions::checkIsString($note, 'note must be string');
         $this->requestedBy = $requestedBy;
         $this->teacher = $teacher;
@@ -86,6 +93,7 @@ class TeachingAssociation {
         $this->lecturer = $lecturer;
         $this->trainer = $trainer;
         $this->completed = $completed;
+        $this->createdOn = $createdOn;
     }
 
     public function getId() {
@@ -163,7 +171,18 @@ class TeachingAssociation {
     /**
      * @param bool $completed
      */
+
     public function setCompleted($completed) {
         $this->completed = $completed;
+    }
+
+    public function getCreatedOn() {
+        return $this->createdOn;
+    }
+    /**
+     * @param bool $createdOn
+     */
+    public function setCreatedOn($createdOn) {
+        $this->createdOn = $createdOn;
     }
 }

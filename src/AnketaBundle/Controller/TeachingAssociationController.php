@@ -111,6 +111,7 @@ class TeachingAssociationController extends AbstractVotingController {
         // create a "ticket" for the association
         $assoc = new TeachingAssociation($season, $subject, $teacher, $user,
                 $note, $is_lecturer, $is_trainer);
+        $assoc->setCreatedOn(new \DateTime());
         $em->persist($assoc);
         $em->flush();
 
