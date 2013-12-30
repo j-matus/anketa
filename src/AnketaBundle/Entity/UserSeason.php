@@ -217,7 +217,7 @@ class UserSeason {
         $this->startTimestamp = $startTimestamp;
     }
 
-    public function getStartTimestamp($startTimestamp) {
+    public function getStartTimestamp() {
         return $this->startTimestamp;
     }
 
@@ -225,7 +225,7 @@ class UserSeason {
         $this->finishTimestamp = $finishTimestamp;
     }
 
-    public function getFinishTimestamp($finishTimestamp) {
+    public function getFinishTimestamp() {
         return $this->finishTimestamp;
     }
 
