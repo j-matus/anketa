@@ -106,9 +106,10 @@ class AnswerRepository extends EntityRepository {
         return $priemer[0];
     }
 
-    public function getMostRecentAverageEvaluations($subjectCodes) {
+    public function getMostRecentAverageEvaluations($subjectCodes, $user = NULL, $org_unit = NULL) {
         $codes = array_fill(0, count($subjectCodes), '?');
         $codes = implode($codes,',');
+
         // pre kazdy predmet zistime priemer celkoveho hodnotenia
         // z najnovsej sezony v ktorej sa vyskytol, vysledky su public
         // a ma aspon jedno celkove ohodnotenie
@@ -128,7 +129,7 @@ class AnswerRepository extends EntityRepository {
                     'WHERE s.id = ss.season_id '.
                     'AND ss.subject_id = su.id '.
                     'AND a.subject_id = su.id '.
-                    'AND s.resultsPublic = 1 '.
+                    'AND s.permissionsPublic > 0 '.
                     'AND a.season_id = s.id '.
                     'AND a.question_id = q.id '.
                     'AND q.season_id = s.id '.

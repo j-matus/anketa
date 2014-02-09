@@ -10,41 +10,11 @@
 
 namespace AnketaBundle\Access;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use AnketaBundle\Entity\Response;
 use AnketaBundle\Entity\Season;
 
-class StatisticsAccess
+class StatisticsAccess extends AbstractAccess
 {
-    /** @var SecurityContextInterface */
-    private $security;
-
-    /** @var EntityManager */
-    private $em;
-
-    /** @var mixed */
-    private $user;
-
-    public function __construct(SecurityContextInterface $security, EntityManager $em) {
-        $this->security = $security;
-        $this->em = $em;
-        $this->user = null;
-    }
-
-    /**
-     * Returns the logged in user, or null if nobody is logged in.
-     *
-     * @return mixed
-     */
-    public function getUser() {
-        if ($this->user === null && $this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $token = $this->security->getToken();
-            if ($token) $this->user = $token->getUser();
-        }
-        return $this->user;
-    }
-
     /**
      * Returns whether the current user is teacher in the specified season.
      *
@@ -98,21 +68,31 @@ class StatisticsAccess
      *
      * @return boolean
      */
-    public function canSeeTopLevelResults() {
+    public function canSeeTopLevelResults()
+    {
         $activeSeason = $this->em->getRepository('AnketaBundle:Season')->getActiveSeason();
         if ($activeSeason->getFafRestricted() && $this->hasOwnSubjects($activeSeason)) return true;
 
-        return $this->em->getRepository('AnketaBundle:Season')->getTopLevelResultsVisible();
+        $seasons = $this->em->getRepository('AnketaBundle:Season')->findAll();
+        foreach ($seasons as $season) {
+            if ($this->canSeeResults($season)) {
+                return TRUE;
+            }
+        }
+        return FALSE;
     }
 
     /**
-     * Returns whether the active season has visible results.
+     * Returns whether the active season has visible results based on the
+     * specified minimal permission.
      *
+     * @param int $min_permisson minimal permission the season has to have
      * @return boolean
      */
-    public function activeSeasonHasVisibleResults() {
+    public function canSeeActiveSeasonResults($min_permisson = Season::PERMISSION_NUMERIC)
+    {
         $activeSeason = $this->em->getRepository('AnketaBundle:Season')->getActiveSeason();
-        return $activeSeason->getResultsVisible();
+        return $this->canSeeResults($activeSeason, $min_permisson);
     }
 
     /**
@@ -121,10 +101,21 @@ class StatisticsAccess
      * @param Season $season
      * @return boolean
      */
-    public function canSeeResults(Season $season) {
-        if ($this->security->isGranted('ROLE_ADMIN')) return true;
-        if ($season->getFafRestricted() && $this->hasOwnSubjects($season)) return true;
-        return $season->getResultsVisible() && ($season->getResultsPublic() || ($this->getUser() !== null));
+    public function canSeeResults(Season $season, $min_permisson = Season::PERMISSION_NUMERIC)
+    {
+        if ($this->security->isGranted('ROLE_ADMIN')) return TRUE;
+        if ($season->getFafRestricted() && $this->hasOwnSubjects($season)) return TRUE;
+
+        // public
+        if ($this->getUser() === NULL) {
+            return $season->getPermissionsPublic() >= $min_permisson;
+        }
+        // university
+        if (!$this->isUserFromFaculty()) {
+            return $season->getPermissionsUniversity() >= $min_permisson;
+        } 
+        // faculty
+        return $season->getPermissionsFaculty() >= $min_permisson;
     }
 
     /**
@@ -136,8 +127,9 @@ class StatisticsAccess
      * @param Season $season
      * @return boolean
      */
-    public function commentsBlocked(Season $season) {
-        return !$this->getUser();
+    public function commentsBlocked(Season $season)
+    {
+        return !$this->canSeeResults($season, Season::PERMISSION_NUMERIC_TEXT);
     }
 
     /**
@@ -171,7 +163,7 @@ class StatisticsAccess
      * @return boolean
      */
     public function canSeeResponses(Season $season) {
-        return $this->canSeeResults($season) && ($season->getResponsesVisible() || $this->canCreateResponses($season));
+        return $this->canSeeResults($season, Season::PERMISSION_NUMERIC_TEXT_RESPONSES) || $this->canCreateResponses($season);
     }
 
     /**

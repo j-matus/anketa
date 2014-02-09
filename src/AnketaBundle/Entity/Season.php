@@ -18,6 +18,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Season {
 
+    const PERMISSION_NONE = 0;
+    const PERMISSION_NUMERIC = 1;
+    const PERMISSION_NUMERIC_TEXT = 2;
+    const PERMISSION_NUMERIC_TEXT_RESPONSES = 3;
+
+    protected static $permissions = array(
+        self::PERMISSION_NONE,
+        self::PERMISSION_NUMERIC,
+        self::PERMISSION_NUMERIC_TEXT,
+        self::PERMISSION_NUMERIC_TEXT_RESPONSES
+    );
+
     /**
      * @ORM\Id @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -63,22 +75,7 @@ class Season {
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $resultsVisible;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $resultsPublic;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
     protected $respondingOpen;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $responsesVisible;
 
     /**
      * TODO: This is a huge hack and needs to be removed as soon as it's not
@@ -87,6 +84,21 @@ class Season {
      * @ORM\Column(type="boolean", nullable=false)
      */
     protected $fafRestricted;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $permissionsPublic = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $permissionsUniversity = 0;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $permissionsFaculty = 0;
 
     /**
      * Order seasons by this column in descending order in results.
@@ -162,22 +174,6 @@ class Season {
         $this->votingOpen = $value;
     }
 
-    public function getResultsVisible() {
-        return $this->resultsVisible;
-    }
-
-    public function setResultsVisible($value) {
-        $this->resultsVisible = $value;
-    }
-
-    public function getResultsPublic() {
-        return $this->resultsPublic;
-    }
-
-    public function setResultsPublic($value) {
-        $this->resultsPublic = $value;
-    }
-
     public function getRespondingOpen() {
         return $this->respondingOpen;
     }
@@ -186,12 +182,44 @@ class Season {
         $this->respondingOpen = $value;
     }
 
-    public function getResponsesVisible() {
-        return $this->responsesVisible;
+    private function validatePermission($value) {
+        return in_array($value, $this->permissions);
     }
 
-    public function setResponsesVisible($value) {
-        $this->responsesVisible = $value;
+    public function setPermissionsPublic($value) {
+        if ($this->validatePermission($value)) {
+            $this->permissionsPublic = $value;
+        } else {
+            throw new \UnexpectedValueException();
+        }
+    }
+
+    public function getPermissionsPublic() {
+        return $this->permissionsPublic;
+    }
+
+    public function setPermissionsUniversity($value) {
+        if ($this->validatePermission($value)) {
+            $this->permissionsUniversity = $value;
+        } else {
+            throw new \UnexpectedValueException();
+        }
+    }
+
+    public function getPermissionsUniversity() {
+        return $this->permissionsUniversity;
+    }
+
+    public function setPermissionsFaculty($value) {
+        if ($this->validatePermission($value)) {
+            $this->permissionsFaculty = $value;
+        } else {
+            throw new \UnexpectedValueException();
+        }
+    }
+
+    public function getPermissionsFaculty() {
+        return $this->permissionsFaculty;
     }
 
     public function getFafRestricted() {

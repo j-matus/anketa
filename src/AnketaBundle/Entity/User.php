@@ -124,6 +124,10 @@ class User implements UserInterface, EquatableInterface {
         $this->orgUnits = $orgUnits;
     }
 
+    public function hasOrgUnit($orgUnit) {
+        return in_array($orgUnit, $this->getOrgUnits());
+    }
+
     public function isEqualTo(UserInterface $user) {
         if (!$user instanceof User) {
             return false;

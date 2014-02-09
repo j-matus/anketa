@@ -38,7 +38,7 @@ class StatisticsMenu
         $menu = array();
         $seasons = $em->getRepository('AnketaBundle:Season')->findBy(array(), array('ordering' => 'DESC'));
         foreach ($seasons as $season) {
-            if (!$access->canSeeResults($season) && !$season->getResultsVisible()) continue;
+            if (!$access->canSeeResults($season)) continue;
             // Add this season.
             $menu[$season->getId()] = $seasonItem = new MenuItem(
                 $season->getDescription(),

@@ -113,10 +113,7 @@ class FixtureLoader implements FixtureInterface {
         $season->setActive(true);
         $season->setStudentCount(1800);
         $season->setVotingOpen(true);
-        $season->setResultsVisible(false);
-        $season->setResultsPublic(false);
         $season->setRespondingOpen(false);
-        $season->setResponsesVisible(false);
         $season->setOrdering(0);
         $manager->persist($season);
 

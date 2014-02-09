@@ -26,7 +26,7 @@ class StatisticsController extends Controller {
             $access = $this->get('anketa.access.statistics');
             $season = null;
             foreach ($seasonsFound as $candidateSeason) {
-                if ($access->canSeeResults($candidateSeason) || $candidateSeason->getResultsVisible()) {
+                if ($access->canSeeResults($candidateSeason)) {
                     $season = $candidateSeason;
                     break;
                 }

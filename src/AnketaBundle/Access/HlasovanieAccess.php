@@ -13,42 +13,15 @@ namespace AnketaBundle\Access;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
-class HlasovanieAccess
+class HlasovanieAccess extends AbstractAccess
 {
-    /** @var SecurityContextInterface */
-    private $security;
-
-    /** @var EntityManager */
-    private $em;
-
-    /** @var string */
-    private $allowedOrgUnit;
-
-    /** @var mixed */
-    private $user;
-
     /** @var \AnketaBundle\Entity\UserSeason */
     private $userSeason;
 
     public function __construct(SecurityContextInterface $security, EntityManager $em, $allowedOrgUnit, $checkOrgUnit) {
-        $this->security = $security;
-        $this->em = $em;
-        $this->allowedOrgUnit = ($checkOrgUnit ? $allowedOrgUnit : null);
-        $this->user = null;
+        parent::__construct($security, $em, $allowedOrgUnit);
         $this->userSeason = null;
-    }
-
-    /**
-     * Returns the logged in user, or null if nobody is logged in.
-     *
-     * @return mixed
-     */
-    public function getUser() {
-        if ($this->user === null && $this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $token = $this->security->getToken();
-            if ($token) $this->user = $token->getUser();
-        }
-        return $this->user;
+        $this->allowedOrgUnit = ($checkOrgUnit ? $allowedOrgUnit : null);
     }
 
     /**
@@ -87,15 +60,6 @@ class HlasovanieAccess
     }
 
     /**
-     * Returns whether the current user belongs to the allowed org. unit.
-     *
-     * @return boolean
-     */
-    public function userHasAllowedOrgUnit() {
-        return !$this->allowedOrgUnit || ($this->getUser() && in_array($this->allowedOrgUnit, $this->getUser()->getOrgUnits()));
-    }
-
-    /**
      * Returns whether the current user can participate in voting.
      *
      * @return boolean
@@ -104,5 +68,4 @@ class HlasovanieAccess
         if ($this->security->isGranted('ROLE_ADMIN')) return true;
         return $this->isVotingOpen() && $this->getUserSeason() && $this->getUserSeason()->canVote() && $this->userHasAllowedOrgUnit();
     }
-
 }
