@@ -108,15 +108,15 @@ class ReportsController extends Controller {
         if (!$access->hasReports()) throw new AccessDeniedException();
 
         $items = array();
-	$access_links = array();
+    $access_links = array();
 
         $departments = $access->getDepartmentReports($season);
         if (count($departments)) {
             $links = array();
             foreach ($departments as $department) {
                 $links[$department->getName()] =
-			$this->generateUrl('report_department', array('season_slug' => $season->getSlug(), 'department_slug' => $department->getSlug()));
-		$access_links[$department->getName()] = 
+            $this->generateUrl('report_department', array('season_slug' => $season->getSlug(), 'department_slug' => $department->getSlug()));
+        $access_links[$department->getName()] =
                         $this->generateUrl('report_department_access', array('season_slug' => $season->getSlug(), 'department_slug' => $department->getSlug()));
             }
             $title = $this->get('translator')->trans('reports.controller.katedry');
@@ -128,9 +128,9 @@ class ReportsController extends Controller {
             $links = array();
             foreach ($studyPrograms as $studyProgram) {
                 $links[$studyProgram->getName() . ' (' . $studyProgram->getCode() . ')'] =
-			 $this->generateUrl('report_study_programme', array('season_slug' => $season->getSlug(), 'study_programme_slug' => $studyProgram->getSlug()));
-	        $access_links[$studyProgram->getName() . ' (' . $studyProgram->getCode() . ')'] =
-	                 $this->generateUrl('report_study_programme_access', array('season_slug' => $season->getSlug(), 'study_programme_slug' => $studyProgram->getSlug()));
+             $this->generateUrl('report_study_programme', array('season_slug' => $season->getSlug(), 'study_programme_slug' => $studyProgram->getSlug()));
+            $access_links[$studyProgram->getName() . ' (' . $studyProgram->getCode() . ')'] =
+                     $this->generateUrl('report_study_programme_access', array('season_slug' => $season->getSlug(), 'study_programme_slug' => $studyProgram->getSlug()));
             }
             $title = $this->get('translator')->trans('reports.controller.studijne_programy');
             $items[$title] = $links;
@@ -141,7 +141,7 @@ class ReportsController extends Controller {
         $templateParams['activeMenuItems'] = array($season->getId(), 'my_reports');
         $templateParams['items'] = $items;
         if($access->hasAllReports())
-	$templateParams['access_links'] = $access_links;
+    $templateParams['access_links'] = $access_links;
         return $this->render('AnketaBundle:Statistics:listing.html.twig', $templateParams);
     }
 
@@ -149,7 +149,7 @@ class ReportsController extends Controller {
         $em = $this->get('doctrine.orm.entity_manager');
         $access = $this->get('anketa.access.statistics');
         $season = $em->getRepository('AnketaBundle:Season')->findOneBy(array('slug' => $season_slug));
-        
+
         $department_code = str_replace('-', '.', $department_slug);
         $department = $em->getRepository('AnketaBundle:Department')->findOneBy(array('code' => $department_code));
         if ($season === null || $department == null) {

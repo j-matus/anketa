@@ -244,8 +244,8 @@ class StatisticsAccess
                  $authorized_users[] = $user;
                  continue;
              }
-
-             if($user->hasRole("ROLE_DEPARTMENT_REPORT") && $user->getDepartment() == $department){
+             $userDepartment = $repository->getUserDepartment($user, $season);
+             if($user->hasRole("ROLE_DEPARTMENT_REPORT") && $userDepartment == $department){
                 $authorized_users[] = $user;
              }
          }
@@ -263,7 +263,7 @@ class StatisticsAccess
     public function getStudyProgrammeAthorizedPeople(Season $season, StudyProgram $studyProgram){
          $repository = $this->em->getRepository('AnketaBundle:User');
          $studyProgramRepository = $this->em->getRepository('AnketaBundle:StudyProgram');
-         
+
          $users =  $repository->getUsersForSeason($season);
 
          $authorized_users = array();
