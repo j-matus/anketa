@@ -430,6 +430,15 @@ h2.fragment, .results-comments div.comment {
     text-decoration: underline;
 }
 
+span.autorizedPeopleLink{
+    border-radius: 5px;
+    background-color: #DDD9D9;
+    color: #fff;
+    display: inline-block;
+    padding: 2px;
+    font-family: Verdana;
+}
+
 h2.fragment a:hover:after, .results-comments a.comment-link:hover:after {
     content: "¶";
     position: absolute;

@@ -14,6 +14,8 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use AnketaBundle\Entity\Response;
 use AnketaBundle\Entity\Season;
+use AnketaBundle\Entity\Department;
+use AnketaBundle\Entity\StudyProgram;
 
 class StatisticsAccess
 {
@@ -187,6 +189,18 @@ class StatisticsAccess
     }
 
     /**
+     * Returns whether the current user can view names of people who
+     * has access to the reports.
+     * see a "My reports" item in the menu.
+     *
+     * @return boolean
+     */
+    public function hasAllReports() {
+        return $this->security->isGranted('ROLE_ALL_REPORTS');
+    }
+
+
+    /**
      * Returns the departments that the current user can view reports of.
      *
      * @param Season $season
@@ -212,6 +226,63 @@ class StatisticsAccess
             return array();
         }
     }
+
+     /**
+     * Returns the name of people who has access to the department reports.
+     *
+     * @param Season $season
+     * @param Department $department
+     * @return array(\AnketaBundle\Entity\User)
+     */
+    public function getDepartmentAthorizedPeople(Season $season, Department $department){
+         $repository = $this->em->getRepository('AnketaBundle:User');
+         $users =  $repository->getUsersForSeason($season);
+
+         $authorized_users = array();
+         foreach($users as $user){
+             if($user->hasRole("ROLE_ALL_REPORTS")){
+                 $authorized_users[] = $user;
+                 continue;
+             }
+
+             if($user->hasRole("ROLE_DEPARTMENT_REPORT") && $user->getDepartment() == $department){
+                $authorized_users[] = $user;
+             }
+         }
+
+         return $authorized_users;
+    }
+
+    /**
+     * Returns the name of people who has access to the study programme reports.
+     *
+     * @param Season $season
+     * @param StudyProgram $department
+     * @return array(\AnketaBundle\Entity\User)
+     */
+    public function getStudyProgrammeAthorizedPeople(Season $season, StudyProgram $studyProgram){
+         $repository = $this->em->getRepository('AnketaBundle:User');
+         $studyProgramRepository = $this->em->getRepository('AnketaBundle:StudyProgram');
+         
+         $users =  $repository->getUsersForSeason($season);
+
+         $authorized_users = array();
+         foreach($users as $user){
+             if($user->hasRole("ROLE_ALL_REPORTS")){
+                 $authorized_users[] = $user;
+                 continue;
+             }
+
+             $studyProgrammes = $studyProgramRepository->getStudyProgrammesForUser($user, $season);
+             if($user->hasRole("ROLE_STUDY_PROGRAMME_REPORT") && in_array($studyProgram, $studyProgrammes)){
+                $authorized_users[] = $user;
+             }
+         }
+
+         return $authorized_users;
+
+    }
+
 
     /**
      * Returns the study programmes that the current user can view reports of.

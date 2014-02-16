@@ -173,6 +173,7 @@ reports:
     katedry: Katedry
     studijne_programy: Študijné programy
     moje_reporty: Moje reporty
+    opravnene_osoby: Autorizované osoby
 
 response:
   delete:

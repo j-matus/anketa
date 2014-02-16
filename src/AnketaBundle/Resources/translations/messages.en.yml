@@ -172,6 +172,7 @@ reports:
     katedry: Departments
     studijne_programy: Study programs
     moje_reporty: My reports
+    opravnene_osoby: Authorized persons
 
 response:
   delete:

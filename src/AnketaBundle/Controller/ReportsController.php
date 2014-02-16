@@ -108,13 +108,16 @@ class ReportsController extends Controller {
         if (!$access->hasReports()) throw new AccessDeniedException();
 
         $items = array();
+	$access_links = array();
 
         $departments = $access->getDepartmentReports($season);
         if (count($departments)) {
             $links = array();
             foreach ($departments as $department) {
                 $links[$department->getName()] =
-                    $this->generateUrl('report_department', array('season_slug' => $season->getSlug(), 'department_slug' => $department->getSlug()));
+			$this->generateUrl('report_department', array('season_slug' => $season->getSlug(), 'department_slug' => $department->getSlug()));
+		$access_links[$department->getName()] = 
+                        $this->generateUrl('report_department_access', array('season_slug' => $season->getSlug(), 'department_slug' => $department->getSlug()));
             }
             $title = $this->get('translator')->trans('reports.controller.katedry');
             $items[$title] = $links;
@@ -125,7 +128,9 @@ class ReportsController extends Controller {
             $links = array();
             foreach ($studyPrograms as $studyProgram) {
                 $links[$studyProgram->getName() . ' (' . $studyProgram->getCode() . ')'] =
-                    $this->generateUrl('report_study_programme', array('season_slug' => $season->getSlug(), 'study_programme_slug' => $studyProgram->getSlug()));
+			 $this->generateUrl('report_study_programme', array('season_slug' => $season->getSlug(), 'study_programme_slug' => $studyProgram->getSlug()));
+	        $access_links[$studyProgram->getName() . ' (' . $studyProgram->getCode() . ')'] =
+	                 $this->generateUrl('report_study_programme_access', array('season_slug' => $season->getSlug(), 'study_programme_slug' => $studyProgram->getSlug()));
             }
             $title = $this->get('translator')->trans('reports.controller.studijne_programy');
             $items[$title] = $links;
@@ -135,7 +140,56 @@ class ReportsController extends Controller {
         $templateParams['title'] = $this->get('translator')->trans('reports.controller.moje_reporty');
         $templateParams['activeMenuItems'] = array($season->getId(), 'my_reports');
         $templateParams['items'] = $items;
+	$templateParams['access_links'] = $access_links;
         return $this->render('AnketaBundle:Statistics:listing.html.twig', $templateParams);
     }
 
+    public function departmentAuthorizedAction($season_slug = null, $department_slug = null){
+        $em = $this->get('doctrine.orm.entity_manager');
+        $access = $this->get('anketa.access.statistics');
+        $season = $em->getRepository('AnketaBundle:Season')->findOneBy(array('slug' => $season_slug));
+        
+        $department_code = str_replace('-', '.', $department_slug);
+        $department = $em->getRepository('AnketaBundle:Department')->findOneBy(array('code' => $department_code));
+        if ($season === null || $department == null) {
+            throw new NotFoundHttpException();
+        }
+
+        if (!$access->canSeeResults($season)) throw new AccessDeniedException();
+        if (!$access->hasAllReports()) throw new AccessDeniedException();
+
+        $people = $access->getDepartmentAthorizedPeople($season, $department);
+
+        $templateParams = array();
+        $templateParams['title'] = $department->getName();
+        $templateParams['activeMenuItems'] = array($season->getId(), 'my_reports');
+        $templateParams['items'] = array($this->get('translator')->trans('reports.controller.opravnene_osoby') => $people);
+        $templateParams['people'] = true;
+        return $this->render('AnketaBundle:Statistics:listing.html.twig', $templateParams);
+
+    }
+
+    public function programmeAuthorizedAction($season_slug = null, $study_programme_slug = null){
+        $em = $this->get('doctrine.orm.entity_manager');
+        $access = $this->get('anketa.access.statistics');
+        $season = $em->getRepository('AnketaBundle:Season')->findOneBy(array('slug' => $season_slug));
+
+        $study_programme = $em->getRepository('AnketaBundle:StudyProgram')->findOneBy(array('slug' => $study_programme_slug));
+        if ($season === null || $study_programme == null) {
+            throw new NotFoundHttpException();
+        }
+
+        if (!$access->canSeeResults($season)) throw new AccessDeniedException();
+        if (!$access->hasAllReports()) throw new AccessDeniedException();
+
+        $people = $access->getStudyProgrammeAthorizedPeople($season, $study_programme);
+
+        $templateParams = array();
+        $templateParams['title'] = $study_programme->getName();
+        $templateParams['activeMenuItems'] = array($season->getId(), 'my_reports');
+        $templateParams['items'] = array($this->get('translator')->trans('reports.controller.opravnene_osoby') => $people);
+        $templateParams['people'] = true;
+        return $this->render('AnketaBundle:Statistics:listing.html.twig', $templateParams);
+
+    }
 }

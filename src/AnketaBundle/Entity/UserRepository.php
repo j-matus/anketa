@@ -260,4 +260,14 @@ class UserRepository extends EntityRepository {
         return $teachers;
     }
 
+    public function getUsersForSeason($season) {
+        $dql = 'SELECT DISTINCT u FROM AnketaBundle\Entity\User u, ' .
+                'AnketaBundle\Entity\UserSeason us ' .
+                'WHERE us.season = :season ' .
+                'AND u = us.user ';
+        $users = $this->getEntityManager()
+                        ->createQuery($dql)->execute(array('season' => $season));
+        return $users;
+    }
+
 }
