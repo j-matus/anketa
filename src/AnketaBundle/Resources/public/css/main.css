@@ -430,11 +430,10 @@ h2.fragment, .results-comments div.comment {
     text-decoration: underline;
 }
 
-span.autorizedPeopleLink{
+a.autorizedPeopleLink{
     border-radius: 5px;
     background-color: #DDD9D9;
     color: #fff;
-    display: inline-block;
     padding: 2px;
     font-family: Verdana;
 }

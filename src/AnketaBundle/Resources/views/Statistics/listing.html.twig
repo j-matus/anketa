@@ -15,7 +15,7 @@
         <ul class="category-listing {{ class|default('') }}">
         {% if people is not defined %}
             {% for item_text, item_href in list %}
-                <li><a href="{{ item_href }}">{{ item_text }}</a> {% if access_links is defined %}<span class="autorizedPeopleLink"><a href="{{ access_links[item_text]  }}">(kto iný vidí tento report?){% endif %}</a></span></li>
+                <li><a href="{{ item_href }}">{{ item_text }}</a> {% if access_links is defined %}(<a class="autorizedPeopleLink" href="{{ access_links[item_text]  }}">kto iný vidí tento report?</a>){% endif %}</li>
             {% endfor %}
         {% endif %}
 
