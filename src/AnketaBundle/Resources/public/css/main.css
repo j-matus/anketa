@@ -431,10 +431,8 @@ h2.fragment, .results-comments div.comment {
 }
 
 a.autorizedPeopleLink{
-    border-radius: 5px;
     background-color: #DDD9D9;
     color: #fff;
-    padding: 2px;
     font-family: Verdana;
 }
 
