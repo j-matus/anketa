@@ -140,6 +140,7 @@ class ReportsController extends Controller {
         $templateParams['title'] = $this->get('translator')->trans('reports.controller.moje_reporty');
         $templateParams['activeMenuItems'] = array($season->getId(), 'my_reports');
         $templateParams['items'] = $items;
+        if($access->hasAllReports())
 	$templateParams['access_links'] = $access_links;
         return $this->render('AnketaBundle:Statistics:listing.html.twig', $templateParams);
     }
