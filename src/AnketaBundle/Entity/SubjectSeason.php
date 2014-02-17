@@ -66,6 +66,54 @@ class SubjectSeason {
      */
     protected $studentCountAll;
 
+    /**
+     * Pocet studentov, ktori mali zapisany tento predmet a
+     * mali s neho A.
+     * @ORM\Column(type="integer", nullable=true)
+     * @param int $aCount
+     */
+    protected $aCount;
+
+    /**
+     * Pocet studentov, ktori mali zapisany tento predmet a
+     * mali s neho B.
+     * @ORM\Column(type="integer", nullable=true)
+     * @param int $bCount
+     */
+    protected $bCount;
+
+    /**
+     * Pocet studentov, ktori mali zapisany tento predmet a
+     * mali s neho C.
+     * @ORM\Column(type="integer", nullable=true)
+     * @param int $cCount
+     */
+    protected $cCount;
+
+    /**
+     * Pocet studentov, ktori mali zapisany tento predmet a
+     * mali s neho D.
+     * @ORM\Column(type="integer", nullable=true)
+     * @param int $dCount
+     */
+    protected $dCount;
+
+    /**
+     * Pocet studentov, ktori mali zapisany tento predmet a
+     * mali s neho E.
+     * @ORM\Column(type="integer", nullable=true)
+     * @param int $eCount
+     */
+    protected $eCount;
+
+    /**
+     * Pocet studentov, ktori mali zapisany tento predmet a
+     * mali s neho Fx.
+     * @ORM\Column(type="integer", nullable=true)
+     * @param int $fxCount
+     */
+    protected $fxCount;
+
     public function setSubject($subject) {
         $this->subject = $subject;
     }
@@ -98,4 +146,51 @@ class SubjectSeason {
         $this->studentCountAll = $studentCountAll;
     }
 
+    public function getACount() {
+        return $this->aCount;
+    }
+
+    public function setACount($aCount) {
+        $this->aCount = $aCount;
+    }
+
+    public function getBCount() {
+        return $this->bCount;
+    }
+
+    public function setBCount($bCount) {
+        $this->bCount = $bCount;
+    }
+
+    public function getCCount() {
+        return $this->cCount;
+    }
+
+    public function setCCount($cCount) {
+        $this->aCount = $cCount;
+    }
+
+    public function getDCount() {
+        return $this->dCount;
+    }
+
+    public function setDCount($dCount) {
+        $this->dCount = $dCount;
+    }
+
+    public function getECount() {
+        return $this->eCount;
+    }
+
+    public function setECount($eCount) {
+        $this->eCount = $eCount;
+    }
+
+    public function getFxCount() {
+        return $this->aCount;
+    }
+
+    public function setFxCount($fxCount) {
+        $this->fxCount = $fxCount;
+    }
 }
