@@ -121,7 +121,7 @@ class AnketaUserProvider implements UserProviderInterface
                     ->findOrCreateRole('ROLE_USER'));
         }
 
-        $this->loadUserInfo($user);
+        $this->loadUserInfo($user, true);
 
         if ($user->getDisplayName() === null) {
             throw new UsernameNotFoundException(sprintf('User "%s" not found.', $user->getLogin()));
@@ -135,7 +135,7 @@ class AnketaUserProvider implements UserProviderInterface
      *
      * @param User $user
      */
-    private function loadUserInfo(User $user)
+    private function loadUserInfo(User $user, $loadDisplayName = false)
     {
         $activeSeason = $this->em->getRepository('AnketaBundle:Season')
                 ->getActiveSeason();
@@ -153,7 +153,7 @@ class AnketaUserProvider implements UserProviderInterface
         // "$load[X][Y]" == "service X should load user attribute Y"
         $load = array();
 
-        if ($user->getDisplayName() === null) {
+        if ($loadDisplayName || $user->getDisplayName() === null) {
             $load[$this->userSources['displayName']]['displayName'] = true;
         }
         if (!$user->getOrgUnits()) {
