@@ -150,9 +150,9 @@ statistics:
     teacher: Prístup ku výsledkom je obmedzený. Učitelia môžu vidieť iba výsledky <a href="%url%">svojich predmetov</a>.
     noteacher: Prístup ku výsledkom je obmedzený. Výsledky môžu vidieť iba učitelia, a to iba pre predmety, ktoré učia.
   teacherOptedOut:
-    me: Tento učiteľ vyslovil nesúhlas so zverejnením jeho výsledkov.
-    any: Učiteľ tohto predmetu vyslovil nesúhlas so zverejnením jeho výsledkov.
-    all: Učitelia tohoto predmetu vyslovili nesúhlas so zverejnením jeho výsledkov.
+    me: Tento učiteľ nesúhlasí so zverejnením jeho výsledkov.
+    any: Učiteľ tohoto predmetu nesúhlasí so zverejnením jeho výsledkov.
+    all: Učitelia tohoto predmetu nesúhlasia so zverejnením jeho výsledkov.
   controller:
     vseobecne: Všeobecné otázky
     studijne_programy: Študijné programy

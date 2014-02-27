@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
     <h1>{{ section.title }}</h1>
+    <p>
     {% if section.teacher %}
         {% trans %}statistics.teacherOptedOut.me{% endtrans %}
     {% elseif hide_if_all %}
@@ -12,4 +13,5 @@
     {% else %}
         {% trans %}statistics.teacherOptedOut.any{% endtrans %}
     {% endif %}
+    </p>
 {% endblock %}

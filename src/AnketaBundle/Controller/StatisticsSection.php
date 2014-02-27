@@ -393,7 +393,7 @@ class StatisticsSection extends ContainerAware {
             $foundTrue = false;
             $foundFalse = false;
             $teachersSubjects = $em->getRepository('AnketaBundle:TeachersSubjects')->findBy(
-                array('subject' => $this->getSubject()->getId(), 'season' => $this->getSeason()->getId()));
+                array('subject' => $this->getSubject(), 'season' => $this->getSeason()));
             foreach ($teachersSubjects as $ts) {
                 $teacher = $ts->getTeacher();
                 if ($teacher->getHideAllResults()) $foundTrue = true;
