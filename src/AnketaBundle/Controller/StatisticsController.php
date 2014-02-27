@@ -358,7 +358,7 @@ class StatisticsController extends Controller {
             return $this->accessDeniedForSeason($section->getSeason());
         }
 
-        if ($section->getSeason()->getFafRestricted() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (($section->getSeason()->getFafRestricted() || $section->getTeacherOptedOut()) && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $em = $this->get('doctrine.orm.entity_manager');
             $access = $this->get('anketa.access.statistics');
             $season = $section->getSeason();
@@ -373,9 +373,14 @@ class StatisticsController extends Controller {
                     $good = false;
                 }
             }
-            if (!$good) {
+            if (!$good && $section->getSeason()->getFafRestricted()) {
                 return $this->render('AnketaBundle:Statistics:fafRestriction.html.twig',
                     array('section' => $section, 'isteacher' => $access->isATeacher($season)));
+            }
+            if (!$good && $section->getTeacherOptedOut()) {
+                return $this->render('AnketaBundle:Statistics:teacherOptedOut.html.twig', array(
+                    'section' => $section,
+                    'hide_if_all' => ($season->getSubjectHiding() == Season::HIDE_SUBJECT_IF_ALL)));
             }
         }
 

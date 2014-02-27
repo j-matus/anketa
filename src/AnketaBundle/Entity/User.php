@@ -65,6 +65,13 @@ class User implements UserInterface, EquatableInterface {
     protected $department;
 
     /**
+     * Ci si tento ucitel vyziadal, aby sa neukazovali ziadne jeho vysledky.
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $hideAllResults;
+
+    /**
      * @param String $username
      */
     public function __construct($login) {
@@ -198,6 +205,14 @@ class User implements UserInterface, EquatableInterface {
      */
     public function setDepartment($department) {
         $this->department = $department;
+    }
+
+    public function getHideAllResults() {
+        return $this->hideAllResults;
+    }
+
+    public function setHideAllResults($hideAllResults) {
+        $this->hideAllResults = $hideAllResults;
     }
 
     /**

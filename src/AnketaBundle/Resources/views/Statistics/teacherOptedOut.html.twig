@@ -1,0 +1,17 @@
+{% extends 'AnketaBundle::layout.html.twig' %}
+{% block title %}{{ section.title }}{% endblock %}
+{% block navigation %}
+    {{ menu.statistics.render(section.activeMenuItems)|raw }}
+{% endblock %}
+{% block content %}
+    <h1>{{ section.title }}</h1>
+    <p>
+    {% if section.teacher %}
+        {% trans %}statistics.teacherOptedOut.me{% endtrans %}
+    {% elseif hide_if_all %}
+        {% trans %}statistics.teacherOptedOut.all{% endtrans %}
+    {% else %}
+        {% trans %}statistics.teacherOptedOut.any{% endtrans %}
+    {% endif %}
+    </p>
+{% endblock %}
