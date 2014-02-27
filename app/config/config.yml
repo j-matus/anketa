@@ -102,7 +102,6 @@ services:
             - "@database_connection"
             - "@doctrine.orm.entity_manager"
             - "@anketa.ais_retriever"
-            - %ais_semestre%
             - "@anketa.subject_identification"
             - "@logger"
     anketa.ldap_retriever:

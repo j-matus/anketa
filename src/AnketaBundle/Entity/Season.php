@@ -105,6 +105,13 @@ class Season {
     protected $endTime;
 
     /**
+     * Comma-separated semester list.
+     * Example: 2010/2011Z,2010/2011L
+     * @ORM\Column(type="string")
+     */
+    protected $aisSemesters;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      * @var string $officialStatement;
      */
@@ -226,6 +233,24 @@ class Season {
 
     public function setEndTime($endTime) {
         $this->endTime = $endTime;
+    }
+
+    /**
+     * @return array(array(year,semester))
+     */
+    public function getAisSemesterList() {
+        $result = array();
+        if ($this->aisSemesters) {
+            foreach (explode(',', $this->aisSemesters) as $item) {
+                $schoolYear = substr($item, 0, -1);
+                $semester = substr($item, -1);
+                if ($semester != 'Z' && $semester != 'L') {
+                    throw new \Exception('Wrong aisSemesters value');
+                }
+                $result[] = array($schoolYear, $semester);
+            }
+        }
+        return $result;
     }
 
     public function getOfficialStatement() {

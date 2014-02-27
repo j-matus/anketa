@@ -37,9 +37,6 @@ class AISUserSource implements UserSourceInterface
     /** @var AISRetriever */
     private $aisRetriever;
 
-    /** @var array(array(rok,semester)) */
-    private $semestre;
-
     /** @var LoggerInterface */
     private $logger;
 
@@ -47,13 +44,12 @@ class AISUserSource implements UserSourceInterface
     private $subjectIdentification;
 
     public function __construct(Connection $dbConn, EntityManager $em, AISRetriever $aisRetriever,
-            array $semestre, SubjectIdentificationInterface $subjectIdentification,
+            SubjectIdentificationInterface $subjectIdentification,
             LoggerInterface $logger = null)
     {
         $this->dbConn = $dbConn;
         $this->em = $em;
         $this->aisRetriever = $aisRetriever;
-        $this->semestre = $semestre;
         $this->logger = $logger;
         $this->subjectIdentification = $subjectIdentification;
     }
@@ -84,7 +80,11 @@ class AISUserSource implements UserSourceInterface
      */
     private function loadSubjects(UserSeason $userSeason)
     {
-        $aisPredmety = $this->aisRetriever->getPredmety($this->semestre);
+        $semestre = $userSeason->getSeason()->getAisSemesterList();
+        if (empty($semestre)) {
+            throw new \Exception("Sezona nema nastavene aisSemesters");
+        }
+        $aisPredmety = $this->aisRetriever->getPredmety($semestre);
 
         $slugy = array();
 
