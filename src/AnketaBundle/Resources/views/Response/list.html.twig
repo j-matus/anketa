@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{% trans %}response.list.moje_komentare{% endtrans %}</h1>
+    <h1>{{ trans('response.list.moje_komentare') }}</h1>
     <p>
-        {% trans %}response.list.tu_su_komentare{% endtrans %}
+        {{ trans('response.list.tu_su_komentare') }}
         {% if access.statistics.canCreateResponses(season) %}
-            {% trans %}response.list.pridavanie_z_vysledkov{% endtrans %}
+            {{ trans('response.list.pridavanie_z_vysledkov') }}
         {% endif %}
     </p>
 
@@ -22,13 +22,13 @@
             <p class="comment-comment">{{ item.response.comment|escape|replace({"\n": "<br />"})|raw }}</p>
             {% if access.statistics.canEditResponse(item.response) %}
             <div>
-                <a href="{{ path('response_edit', {'response_id': item.response.id}) }}">{% trans %}response.list.upravit_komentar{% endtrans %}</a> |
-                <a href="{{ path('response_delete', {'response_id': item.response.id}) }}">{% trans %}response.list.zmazat_komentar{% endtrans %}</a>
+                <a href="{{ path('response_edit', {'response_id': item.response.id}) }}">{{ trans('response.list.upravit_komentar') }}</a> |
+                <a href="{{ path('response_delete', {'response_id': item.response.id}) }}">{{ trans('response.list.zmazat_komentar') }}</a>
             </div>
             {% endif %}
         </div>
     {% else %}
-        <p>{% trans %}response.list.ziaden_komentar_pridany{% endtrans %}</p>
+        <p>{{ trans('response.list.ziaden_komentar_pridany') }}</p>
     {% endfor %}
     </div>
 {% endblock %}

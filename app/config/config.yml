@@ -82,6 +82,9 @@ jms_i18n_routing:
 
 # TODO: co najviac z tohto niekam presunut (services.yml v AnketaBundle?)
 services:
+    twig.extension.trans:
+        # disable standard "{% trans %}" tag in favor of our own
+        synthetic: true
     anketa.user_provider:
         class: AnketaBundle\Security\AnketaUserProvider
         arguments:

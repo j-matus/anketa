@@ -5,9 +5,9 @@
 {% block content %}
 <h1>{{ title }}
 </h1>
-{% if studyProgrammeLink is defined %}<a href="{{ studyProgrammeLink }}">{% trans %}reports.report.vysledky_programu{% endtrans %}</a>
+{% if studyProgrammeLink is defined %}<a href="{{ studyProgrammeLink }}">{{ trans('reports.report.vysledky_programu') }}</a>
 {% endif %}
-<h2>{% trans %}reports.report.hodnotenia_ucitelov{% endtrans %}:
+<h2>{{ trans('reports.report.hodnotenia_ucitelov') }}:
 </h2>
 <div class="results-comments">
 {% for teacher in teachers %}
@@ -16,8 +16,8 @@
         <table>
             <tr>
                 <td> {{ teacher.formattedName }}</td>
-                <td>{% trans with {'%stars%': teacher.evaluation[1]} %}reports.report.pocet_hviezdiciek{% endtrans %}</td>
-                <td>({% trans with {'%votes%': teacher.evaluation[2]} %}reports.report.pocet_hodnoteni{% endtrans %})</td></tr>
+                <td>{{ trans('reports.report.pocet_hviezdiciek', {'%stars%': teacher.evaluation[1]}) }}</td>
+                <td>({{ trans('reports.report.pocet_hodnoteni', {'%votes%': teacher.evaluation[2]}) }})</td></tr>
         </table>
         <ul>
 {% for teacherSubject in teacher.subjects %}
@@ -30,7 +30,7 @@
 {% endif %}
 {% endfor %}
 </div>
-<h2>{% trans %}reports.report.hodnotenia_predmetov{% endtrans %}:
+<h2>{{ trans('reports.report.hodnotenia_predmetov') }}:
 </h2>
 <div class="results-comments">
 {% for subject in subjects %}
@@ -41,8 +41,8 @@
                 <td colspan="2"><a href="{{ subject.link }}">{{ subject.code }} {{  subject.name  }}</a></td>
             </tr>
             <tr>
-                <td>{% trans with {'%stars%': subject.evaluation[1]} %}reports.report.pocet_hviezdiciek{% endtrans %}</td>
-                <td>({% trans with {'%votes%': subject.evaluation[2]} %}reports.report.pocet_hodnoteni{% endtrans %})</td>
+                <td>{{ trans('reports.report.pocet_hviezdiciek', {'%stars%': subject.evaluation[1]}) }}</td>
+                <td>({{ trans('reports.report.pocet_hodnoteni', {'%votes%': subject.evaluation[2]}) }})</td>
             </tr>
 {% if subject.teacher | length != 0 %}
 <tr>

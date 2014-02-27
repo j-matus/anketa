@@ -9,10 +9,10 @@
 {% block section_bar %}
     {{ parent() }}
     {% if access.hlasovanie.isVotingOpen %}
-        <a href="{{ path('anketa') }}" class="section">{% trans %}layout.hlasuj{% endtrans %}</a>
+        <a href="{{ path('anketa') }}" class="section">{{ trans('layout.hlasuj') }}</a>
     {% endif %}
     {% if access.statistics.canSeeTopLevelResults %}
-        <a href="{{ path('statistics') }}" class="section">{% trans %}layout.vysledky{% endtrans %}</a>
+        <a href="{{ path('statistics') }}" class="section">{{ trans('layout.vysledky') }}</a>
     {% endif %}
 
 

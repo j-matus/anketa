@@ -6,15 +6,15 @@
  #}
 {% if anon > 5 and voters > 5 %}
 {% if access.hlasovanie.isVotingOpen %}
-<p>{% trans with {'%voters%': voters, '%anon%': anon} %}hlasovanie.globalProgressbar.kto_hlasoval{% endtrans %}
+<p>{{ trans('hlasovanie.globalProgressbar.kto_hlasoval', {'%voters%': voters, '%anon%': anon}) }}
 {% if skratka_fakulty == 'FMFI' %}
-{% trans %}hlasovanie.globalProgressbar.ciel{% endtrans %}
+{{ trans('hlasovanie.globalProgressbar.ciel') }}
 {% else %}
-{% trans %}hlasovanie.globalProgressbar.zapojte_sa{% endtrans %}
+{{ trans('hlasovanie.globalProgressbar.zapojte_sa') }}
 {% endif %}
 </p>
 {% else %}
-<p>{% trans with {'%voters%': voters} %}hlasovanie.globalProgressbar.kto_hlasoval_nakoniec{% endtrans %}</p>
+<p>{{ trans('hlasovanie.globalProgressbar.kto_hlasoval_nakoniec', {'%voters%': voters}) }}</p>
 {% endif %}
 <div class="progressbar-welcome-wrapper"
      data-anon="{{ "%.0f%%" | format(progressAnon.percentDone) }}"

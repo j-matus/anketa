@@ -6,47 +6,47 @@
 
 {% block content %}
 
-<a href="{{ path('answer_subject', {'subject_slug': subject.slug}) }}">&laquo; {% trans %}teachingassociation.form.spat_na_predmet{% endtrans %}</a>
+<a href="{{ path('answer_subject', {'subject_slug': subject.slug}) }}">&laquo; {{ trans('teachingassociation.form.spat_na_predmet') }}</a>
 
-<h2>{{ subject.name }} &ndash; {% trans %}teachingassociation.form.nadpis{% endtrans %}</h2>
+<h2>{{ subject.name }} &ndash; {{ trans('teachingassociation.form.nadpis') }}</h2>
 
 <div id="section-teacher-add" class="page-section">
-<h3>{% trans %}teachingassociation.form.chybajuci_ucitel.nadpis{% endtrans %}</h3>
-<p>{% trans %}teachingassociation.form.chybajuci_ucitel.popis{% endtrans %}</p>
+<h3>{{ trans('teachingassociation.form.chybajuci_ucitel.nadpis') }}</h3>
+<p>{{ trans('teachingassociation.form.chybajuci_ucitel.popis') }}</p>
 
 <form method="post" action="{{ path('assoc_teacher_with_subject_process', {'subject_slug': subject.slug}) }}" id="teaching-association">
 
 <p>
-    <label for="teacher-name">{% trans %}teachingassociation.form.chybajuci_ucitel.meno{% endtrans %}</label>
-    <input type="text" name="teacher-name" id="teacher-name" size="40" value="" placeholder="{% trans %}teachingassociation.form.chybajuci_ucitel.meno_placeholder{% endtrans %}" required="required" />
+    <label for="teacher-name">{{ trans('teachingassociation.form.chybajuci_ucitel.meno') }}</label>
+    <input type="text" name="teacher-name" id="teacher-name" size="40" value="" placeholder="{{ trans('teachingassociation.form.chybajuci_ucitel.meno_placeholder') }}" required="required" />
     <input type="hidden" name="teacher-login" id="teacher-login" value="" />
 </p>
 <p>
      <fieldset>
-        <legend>{% trans %}teachingassociation.form.chybajuci_ucitel.funkcia{% endtrans %}</legend>
-        <input type="checkbox" name="teacher-role-lecturer" id="teacher" value="1" /> <label for="teacher">{% trans %}teachingassociation.form.chybajuci_ucitel.vyucujuci{% endtrans %}</label><br/>
-        <input type="checkbox" name="teacher-role-assistant" id="teacher-assistant" value="1" /> <label for="teacher-assistant">{% trans %}teachingassociation.form.chybajuci_ucitel.cviciaci{% endtrans %}</label>
+        <legend>{{ trans('teachingassociation.form.chybajuci_ucitel.funkcia') }}</legend>
+        <input type="checkbox" name="teacher-role-lecturer" id="teacher" value="1" /> <label for="teacher">{{ trans('teachingassociation.form.chybajuci_ucitel.vyucujuci') }}</label><br/>
+        <input type="checkbox" name="teacher-role-assistant" id="teacher-assistant" value="1" /> <label for="teacher-assistant">{{ trans('teachingassociation.form.chybajuci_ucitel.cviciaci') }}</label>
     </fieldset>
 </p>
 <div>
-<label for="note">{% trans %}teachingassociation.form.chybajuci_ucitel.poznamka{% endtrans %}:</label>
+<label for="note">{{ trans('teachingassociation.form.chybajuci_ucitel.poznamka') }}:</label>
 <textarea id="note" name="note" cols="40" rows="3"></textarea>
 </div>
 <div class="submit">
-    <input type="submit" name="report" value="{% trans %}teachingassociation.form.chybajuci_ucitel.nahlasit{% endtrans %}" class="btn btn-primary" />
+    <input type="submit" name="report" value="{{ trans('teachingassociation.form.chybajuci_ucitel.nahlasit') }}" class="btn btn-primary" />
 </div>
 </form>
 </div>
 
 <div id="section-other-problem" class="page-section">
-<h3>{% trans %}teachingassociation.form.iny_problem.nadpis{% endtrans %}</h3>
-<p>{% trans %}teachingassociation.form.iny_problem.popis{% endtrans %}</p>
+<h3>{{ trans('teachingassociation.form.iny_problem.nadpis') }}</h3>
+<p>{{ trans('teachingassociation.form.iny_problem.popis') }}</p>
 <form method="post" action="{{ path('assoc_teacher_with_subject_process', {'subject_slug': subject.slug}) }}">
-    <label for="note">{% trans %}teachingassociation.form.iny_problem.popis_chyby{% endtrans %}:</label>
+    <label for="note">{{ trans('teachingassociation.form.iny_problem.popis_chyby') }}:</label>
     <textarea id="problem-desc" name="note" cols="40" rows="6" required="required"></textarea>
 
     <div class="submit">
-        <input type="submit" name="report" value="{% trans %}teachingassociation.form.iny_problem.nahlasit{% endtrans %}" class="btn btn-primary" />
+        <input type="submit" name="report" value="{{ trans('teachingassociation.form.iny_problem.nahlasit') }}" class="btn btn-primary" />
     </div>
 </form>
 </div>
@@ -57,9 +57,9 @@ jQuery(document).ready(function($) {
     "use strict";
 
     // creating elements for JS version
-    $('#section-teacher-add').before('<p>{% trans %}teachingassociation.form.vyberte_akciu{% endtrans %}:</p>');
-    $('#section-teacher-add').before('<div class="page-section"><a href="#" id="btn-teacher-add" class="btn btn-large">{% trans %}teachingassociation.form.chybajuci_ucitel.chcem_nahlasit{% endtrans %}</a></div>');
-    $('#section-other-problem').before('<div><a href="#" id="btn-other-problem" class="btn btn-large">{% trans %}teachingassociation.form.iny_problem.chcem_nahlasit{% endtrans %}</a></div>');
+    $('#section-teacher-add').before('<p>{{ trans('teachingassociation.form.vyberte_akciu') }}:</p>');
+    $('#section-teacher-add').before('<div class="page-section"><a href="#" id="btn-teacher-add" class="btn btn-large">{{ trans('teachingassociation.form.chybajuci_ucitel.chcem_nahlasit') }}</a></div>');
+    $('#section-other-problem').before('<div><a href="#" id="btn-other-problem" class="btn btn-large">{{ trans('teachingassociation.form.iny_problem.chcem_nahlasit') }}</a></div>');
 
     $('#section-teacher-add').hide();
     $('#btn-teacher-add').click(function(event) {
@@ -103,7 +103,7 @@ jQuery(document).ready(function($) {
                 data: {'name': $('#teacher-name').val()},
             }).done(function(data) {
                 if (Object.keys(data).length == 0) {
-                    $('#teacher-search-result').html('{% trans %}teachingassociation.form.chybajuci_ucitel.meno_sa_nenaslo{% endtrans %}');
+                    $('#teacher-search-result').html('{{ trans('teachingassociation.form.chybajuci_ucitel.meno_sa_nenaslo') }}');
                     return;
                 }
                 var list = $(document.createElement('ul'));
@@ -113,7 +113,7 @@ jQuery(document).ready(function($) {
                         $('#teacher-name').attr('value', teacher.name).attr('readonly', 'readonly');
 
                         $('#teacher-search-result').remove();
-                        $('#teacher-name').after($(document.createElement('a')).append('{% trans %}teachingassociation.form.chybajuci_ucitel.zrusit{% endtrans %}').attr('href', '#').click(function(event) {
+                        $('#teacher-name').after($(document.createElement('a')).append('{{ trans('teachingassociation.form.chybajuci_ucitel.zrusit') }}').attr('href', '#').click(function(event) {
                             $('#teacher-name').attr('value', '').removeAttr('readonly').focus();
                             $('#teacher-login').attr('value', '');
                             $(this).remove();
