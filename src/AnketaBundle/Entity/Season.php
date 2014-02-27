@@ -110,6 +110,16 @@ class Season {
      */
     protected $officialStatement;
 
+    /**
+     * When to hide a subject, based on which of its teachers are hidden.
+     *
+     * @ORM\Column(type="smallint", nullable=false)
+     */
+    protected $subjectHiding;
+    const HIDE_SUBJECT_NEVER  = 0;
+    const HIDE_SUBJECT_IF_ANY = 1;
+    const HIDE_SUBJECT_IF_ALL = 2;
+
     public function __construct($description, $slug) {
         $this->setDescription($description);
         $this->setSlug($slug);
@@ -224,6 +234,19 @@ class Season {
 
     public function setOfficialStatement($officialStatement) {
         $this->officialStatement = $officialStatement;
+    }
+
+    public function getSubjectHiding() {
+        return $this->subjectHiding;
+    }
+
+    public function setSubjectHiding($subjectHiding) {
+        if ($subjectHiding !== HIDE_SUBJECT_NEVER &&
+            $subjectHiding !== HIDE_SUBJECT_IF_ANY &&
+            $subjectHiding !== HIDE_SUBJECT_IF_ALL) {
+            throw \UnexpectedValueException();
+        }
+        $this->subjectHiding = $subjectHiding;
     }
 
 }

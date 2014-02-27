@@ -384,5 +384,30 @@ class StatisticsSection extends ContainerAware {
         return $this->associationExamples;
     }
 
+    public function getTeacherOptedOut() {
+        if ($this->getTeacher()) {
+            return $this->getTeacher()->getHideAllResults();
+        }
+        if ($this->getSubject()) {
+            $em = $this->container->get('doctrine.orm.entity_manager');
+            $foundTrue = false;
+            $foundFalse = false;
+            $teachersSubjects = $em->getRepository('AnketaBundle:TeachersSubjects')->findBy(
+                array('subject' => $this->getSubject()->getId(), 'season' => $this->getSeason()->getId()));
+            foreach ($teachersSubjects as $ts) {
+                $teacher = $ts->getTeacher();
+                if ($teacher->getHideAllResults()) $foundTrue = true;
+                else $foundFalse = true;
+            }
+            if ($this->getSeason()->getSubjectHiding() == Season::HIDE_SUBJECT_IF_ANY) {
+                return $foundTrue;
+            }
+            if ($this->getSeason()->getSubjectHiding() == Season::HIDE_SUBJECT_IF_ALL) {
+                return $foundTrue && !$foundFalse;
+            }
+        }
+        return false;
+    }
+
 }
 
