@@ -56,8 +56,6 @@ parameters:
         displayName:  anketa.ldap_user_source     # ais / ldap / demo / none
         isStudent:    anketa.ais_user_source      # ais / demo / none
         orgUnits:     anketa.ldap_user_source     # ldap / demo
-    ais_semestre: 
-        - ["2011/2012", "Z"]
 
 
 # ak chces posielat postu, nastav tu spravne prihlasovacie udaje

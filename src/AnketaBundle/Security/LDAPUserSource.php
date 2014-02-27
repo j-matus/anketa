@@ -53,7 +53,7 @@ class LDAPUserSource implements UserSourceInterface
 
         if ($userInfo === null) {
             if ($this->logger !== null) {
-                $this->logger->info(sprintf('User %s not found in LDAP'));
+                $this->logger->info(sprintf('User %s not found in LDAP', $user->getLogin()));
             }
             return;
             // AnketaUserProvider will throw UsernameNotFoundException if there's no displayName
