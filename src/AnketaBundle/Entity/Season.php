@@ -109,7 +109,7 @@ class Season {
      * Example: 2010/2011Z,2010/2011L
      * @ORM\Column(type="string")
      */
-    protected $aisSemesters;
+    protected $aisSemesters = '';
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -122,7 +122,7 @@ class Season {
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    protected $subjectHiding;
+    protected $subjectHiding = 0;
     const HIDE_SUBJECT_NEVER  = 0;
     const HIDE_SUBJECT_IF_ANY = 1;
     const HIDE_SUBJECT_IF_ALL = 2;
