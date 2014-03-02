@@ -9,17 +9,16 @@
         <h1>{{ title }}</h1>
     {% endif %}
     {% if authorized_people is defined %}
-        <label for="authorized_people_checkbox">zobraziť kto vidí dané reporty:</label>
-        <input type="checkbox" name="authorized_people" id="authorized_people_checkbox"/>
-        <h3 id="authorized_people_title">Ľuďia ktorý vidia všetky reporty</h3>
-        <ul class="authorized_people">(
+        <input type="button" name="authorized_people" id="authorized_people_checkbox" value="{{ authorizedPeopleToggleButton }}"/>
+        <h3 id="authorized_people_title">{{ authorizedPeopleTitle }}</h3>
+        <ul class="authorized_people_hidden">
         {% for person in authorized_people['ROLE_ALL_REPORTS'] %}
             {% if not loop.last %}
-                <li>{{ person }}</li>,
+                <li>{{ person }}</li>
             {% else %}
                 <li>{{ person }}</li>
             {% endif %}
-        {% endfor %})</ul>
+        {% endfor %}</ul>
     {% endif %}
     {% for category_title, list in items %}
         {% if category_title is not empty %}
@@ -28,14 +27,14 @@
         <ul class="category-listing {{ class|default('') }}">
             {% for item_text, item_href in list %}
                 <li><a href="{{ item_href }}">{{ item_text }}</a>
-                {% if authorized_people is defined %}<ul class="authorized_people">(
+                {% if authorized_people is defined %}<ul class="authorized_people_hidden">
                     {% for person in authorized_people[item_text] %}
                         {% if not loop.last %}
-                            <li>{{ person }}</li>,
+                            <li>{{ person }}</li>
                         {% else %}
                             <li>{{ person }}</li>
                         {% endif %}
-                    {% endfor %})</ul>
+                    {% endfor %}</ul>
                {% endif %}
             {% endfor %}
         </ul>
