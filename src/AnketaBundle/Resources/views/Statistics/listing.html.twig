@@ -8,14 +8,37 @@
     {% if title is defined %}
         <h1>{{ title }}</h1>
     {% endif %}
+    {% if authorized_people is defined %}
+        <input type="button" name="authorized_people" id="authorized_people_checkbox" value="{{ authorizedPeopleToggleButton }}"/>
+        <h3 id="authorized_people_title">{{ authorizedPeopleTitle }}</h3>
+        <ul class="authorized_people_hidden">
+        {% for person in authorized_people['ROLE_ALL_REPORTS'] %}
+            {% if not loop.last %}
+                <li>{{ person }}</li>
+            {% else %}
+                <li>{{ person }}</li>
+            {% endif %}
+        {% endfor %}</ul>
+    {% endif %}
     {% for category_title, list in items %}
         {% if category_title is not empty %}
             <h3>{{ category_title }}</h3>
         {% endif %}
         <ul class="category-listing {{ class|default('') }}">
-        {% for item_text, item_href in list %}
-            <li><a href="{{ item_href }}">{{ item_text }}</a></li>
-        {% endfor %}
+            {% for item_text, item_href in list %}
+                <li><a href="{{ item_href }}">{{ item_text }}</a>
+                {% if authorized_people is defined %}<ul class="authorized_people_hidden">
+                    {% for person in authorized_people[item_text] %}
+                        {% if not loop.last %}
+                            <li>{{ person }}</li>
+                        {% else %}
+                            <li>{{ person }}</li>
+                        {% endif %}
+                    {% endfor %}</ul>
+               {% endif %}
+            {% endfor %}
         </ul>
     {% endfor %}
+    <script src="{{ asset('bundles/anketa/js/reports.js') }}" type="text/javascript"></script>
 {% endblock %}
+

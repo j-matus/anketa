@@ -33,6 +33,16 @@ class UserRepository extends EntityRepository {
         return array_shift($result);
     }
 
+    public function findUsersWithAnyRole($roles)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb = $qb->leftJoin('u.roles', 'r')
+            ->where($qb->expr()->in('r.name', $roles))
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
     public function anonymizeAnswersByUser(User $user, Season $season) {
         $em = $this->getEntityManager();
         $conn = $em->getConnection();
@@ -258,6 +268,30 @@ class UserRepository extends EntityRepository {
         $teachers = $this->getEntityManager()
                         ->createQuery($dql)->execute(array('department' => $department, 'season' => $season));
         return $teachers;
+    }
+
+    public function getUsersForSeason($season) {
+        $dql = 'SELECT DISTINCT u FROM AnketaBundle\Entity\User u, ' .
+                'AnketaBundle\Entity\UserSeason us ' .
+                'WHERE us.season = :season ' .
+                'AND u = us.user ';
+        $users = $this->getEntityManager()
+                        ->createQuery($dql)->execute(array('season' => $season));
+        return $users;
+    }
+
+    public function getUserDepartment(User $user, Season $season){
+        $dql = 'SELECT d FROM AnketaBundle\Entity\UserSeason us, ' .
+                'AnketaBundle\Entity\Department d ' .
+                'WHERE us.season = :season ' .
+                'AND us.user = :user ' .
+                'AND us.department = d';
+        $department = $this->getEntityManager()
+                   ->createQuery($dql)
+                   ->setParameter('season', $season)
+                   ->setParameter('user', $user)
+                   ->getSingleResult();
+        return $department;
     }
 
 }

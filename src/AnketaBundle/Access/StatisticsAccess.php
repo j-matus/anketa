@@ -14,6 +14,8 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use AnketaBundle\Entity\Response;
 use AnketaBundle\Entity\Season;
+use AnketaBundle\Entity\Department;
+use AnketaBundle\Entity\StudyProgram;
 
 class StatisticsAccess
 {
@@ -185,6 +187,18 @@ class StatisticsAccess
             $this->security->isGranted('ROLE_DEPARTMENT_REPORT') ||
             $this->security->isGranted('ROLE_STUDY_PROGRAMME_REPORT');
     }
+
+    /**
+     * Returns whether the current user can view names of people who
+     * has access to the reports.
+     * see a "My reports" item in the menu.
+     *
+     * @return boolean
+     */
+    public function hasAllReports() {
+        return $this->security->isGranted('ROLE_ALL_REPORTS');
+    }
+
 
     /**
      * Returns the departments that the current user can view reports of.

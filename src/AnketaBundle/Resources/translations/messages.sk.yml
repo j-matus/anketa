@@ -177,6 +177,9 @@ reports:
     katedry: Katedry
     studijne_programy: Študijné programy
     moje_reporty: Moje reporty
+    opravnene_osoby: Autorizované osoby
+    opravnene_osoby_button: Kto vidí reporty?
+    opravnene_osoby_nadpis: Ľudia, ktorí vidia všetky reporty:
 
 response:
   delete:

@@ -40,6 +40,17 @@ class StudyProgramRepository extends EntityRepository {
         else return null;
     }
 
+    public function getStudyProgrammeAuthorizedUsers(StudyProgram $studyProgram, Season $season){
+        $em = $this->getEntityManager();
+        $users = $em->getRepository('AnketaBundle:User')->findUsersWithAnyRole(array("ROLE_STUDY_PROGRAMME_REPORT"));
+        $authorizedUsers = array();
+        foreach($users as $user){
+            $studyProgrammes = $this->findByReportsUser($user);
+            if(in_array($studyProgram, $studyProgrammes)) $authorizedUsers[] = $user;
+        }
+        return $authorizedUsers;
+    }
+
     /**
      * @return StudyProgram
      */

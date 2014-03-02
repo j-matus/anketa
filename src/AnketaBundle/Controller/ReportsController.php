@@ -108,34 +108,59 @@ class ReportsController extends Controller {
         if (!$access->hasReports()) throw new AccessDeniedException();
 
         $items = array();
+        $authorized_people = array();
 
         $departments = $access->getDepartmentReports($season);
+        $departmentRepository = $em->getRepository('AnketaBundle:Department');
+
+        $userRepository = $em->getRepository('AnketaBundle:User');
+
         if (count($departments)) {
             $links = array();
             foreach ($departments as $department) {
                 $links[$department->getName()] =
-                    $this->generateUrl('report_department', array('season_slug' => $season->getSlug(), 'department_slug' => $department->getSlug()));
+                $this->generateUrl('report_department', array('season_slug' => $season->getSlug(), 'department_slug' => $department->getSlug()));
             }
             $title = $this->get('translator')->trans('reports.controller.katedry');
             $items[$title] = $links;
+
+            $users = $userRepository->findUsersWithAnyRole(array('ROLE_DEPARTMENT_REPORT'));
+            foreach($users as $user){
+                $depart = $userRepository->getUserDepartment($user, $season);
+                $authorized_people[$depart->getName()][] = $user;
+            }
         }
 
         $studyPrograms = $access->getStudyProgrammeReports($season);
         if (count($studyPrograms)) {
             $links = array();
+            $studyProgramRepository = $em->getRepository('AnketaBundle:StudyProgram');
             foreach ($studyPrograms as $studyProgram) {
-                $links[$studyProgram->getName() . ' (' . $studyProgram->getCode() . ')'] =
-                    $this->generateUrl('report_study_programme', array('season_slug' => $season->getSlug(), 'study_programme_slug' => $studyProgram->getSlug()));
+                $links[$studyProgram->getName() . ' (' . $studyProgram->getCode() . ')'] = $this->generateUrl('report_study_programme', array('season_slug' => $season->getSlug(), 'study_programme_slug' => $studyProgram->getSlug()));
+                $authorized_people[$studyProgram->getName() . ' (' . $studyProgram->getCode() . ')'] = array();
             }
             $title = $this->get('translator')->trans('reports.controller.studijne_programy');
             $items[$title] = $links;
+
+            $users = $userRepository->findUsersWithAnyRole(array('ROLE_STUDY_PROGRAMME_REPORT'));
+            foreach($users as $user){
+                $programmes = $studyProgramRepository->findByReportsUser($user);
+                foreach($programmes as $program){
+                    $authorized_people[$program->getName() . ' (' . $program->getCode() . ')'][] = $user;
+                }
+            }
         }
 
+        $authorized_people['ROLE_ALL_REPORTS'] = $em->getRepository('AnketaBundle:User')->findUsersWithAnyRole(array("ROLE_ALL_REPORTS"));
+
         $templateParams = array();
+        $templateParams['authorizedPeopleToggleButton'] = $this->get('translator')->trans('reports.controller.opravnene_osoby_button');
+        $templateParams['authorizedPeopleTitle'] = $this->get('translator')->trans('reports.controller.opravnene_osoby_nadpis');
         $templateParams['title'] = $this->get('translator')->trans('reports.controller.moje_reporty');
         $templateParams['activeMenuItems'] = array($season->getId(), 'my_reports');
         $templateParams['items'] = $items;
+        if($access->hasAllReports())
+            $templateParams['authorized_people'] = $authorized_people;
         return $this->render('AnketaBundle:Statistics:listing.html.twig', $templateParams);
     }
-
 }

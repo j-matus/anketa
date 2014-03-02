@@ -176,6 +176,9 @@ reports:
     katedry: Departments
     studijne_programy: Study programs
     moje_reporty: My reports
+    opravnene_osoby: Authorized persons
+    opravnene_osoby_button: Who see reports?
+    opravnene_osoby_nadpis: People who see all reports:
 
 response:
   delete:

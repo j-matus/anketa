@@ -14,4 +14,18 @@ namespace AnketaBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 
 class DepartmentRepository extends EntityRepository {
+    public function getDepartmentAuthorizedUsers(Department $department, Season $season){
+        $em = $this->getEntityManager();
+        $repository = $em->getRepository('AnketaBundle:User');
+
+        $authorizedPeople = array();
+        foreach( $repository->findUsersWithAnyRole(array("ROLE_DEPARTMENT_REPORT")) as $user){
+            $userDepartment = $repository->getUserDepartment($user, $season);
+
+            if($userDepartment == $department)
+                $authorizedPeople[] = $user;
+        }
+
+        return $authorizedPeople;
+    }
 }
