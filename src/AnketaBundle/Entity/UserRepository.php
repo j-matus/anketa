@@ -33,6 +33,16 @@ class UserRepository extends EntityRepository {
         return array_shift($result);
     }
 
+    public function findUsersWithAnyRole($roles)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb = $qb->leftJoin('u.roles', 'r')
+            ->where($qb->expr()->in('r.name', $roles))
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
     public function anonymizeAnswersByUser(User $user, Season $season) {
         $em = $this->getEntityManager();
         $conn = $em->getConnection();
@@ -277,7 +287,10 @@ class UserRepository extends EntityRepository {
                 'AND us.user = :user ' .
                 'AND us.department = d';
         $department = $this->getEntityManager()
-                        ->createQuery($dql)->execute(array('season' => $season, 'user' => $user));
+                   ->createQuery($dql)
+                   ->setParameter('season', $season)
+                   ->setParameter('user', $user)
+                   ->getSingleResult();
         return $department;
     }
 

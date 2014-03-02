@@ -7,9 +7,3 @@ report_department:
 reports_my_reports:
     pattern: /reporty/{season_slug}/moje-reporty
     defaults: { _controller: AnketaBundle:Reports:myReports, season_slug: null}
-report_department_access:
-    pattern: /reporty/{season_slug}/katedra/{department_slug}/autorizovane-osoby
-    defaults: {_controller: AnketaBundle:Reports:departmentAuthorized, season_slug: null, department_slug: null}
-report_study_programme_access:
-    pattern: /reporty/{season_slug}/studijny-program/{study_programme_slug}/autorizovane-osoby
-    defaults: {_controller: AnketaBundle:Reports:programmeAuthorized, season_slug: null, study_programme_slug: null}

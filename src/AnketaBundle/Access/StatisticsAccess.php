@@ -227,63 +227,6 @@ class StatisticsAccess
         }
     }
 
-     /**
-     * Returns the name of people who has access to the department reports.
-     *
-     * @param Season $season
-     * @param Department $department
-     * @return array(\AnketaBundle\Entity\User)
-     */
-    public function getDepartmentAthorizedPeople(Season $season, Department $department){
-         $repository = $this->em->getRepository('AnketaBundle:User');
-         $users =  $repository->getUsersForSeason($season);
-
-         $authorized_users = array();
-         foreach($users as $user){
-             if($user->hasRole("ROLE_ALL_REPORTS")){
-                 $authorized_users[] = $user;
-                 continue;
-             }
-             $userDepartment = $repository->getUserDepartment($user, $season);
-             if($user->hasRole("ROLE_DEPARTMENT_REPORT") && $userDepartment == $department){
-                $authorized_users[] = $user;
-             }
-         }
-
-         return $authorized_users;
-    }
-
-    /**
-     * Returns the name of people who has access to the study programme reports.
-     *
-     * @param Season $season
-     * @param StudyProgram $department
-     * @return array(\AnketaBundle\Entity\User)
-     */
-    public function getStudyProgrammeAthorizedPeople(Season $season, StudyProgram $studyProgram){
-         $repository = $this->em->getRepository('AnketaBundle:User');
-         $studyProgramRepository = $this->em->getRepository('AnketaBundle:StudyProgram');
-
-         $users =  $repository->getUsersForSeason($season);
-
-         $authorized_users = array();
-         foreach($users as $user){
-             if($user->hasRole("ROLE_ALL_REPORTS")){
-                 $authorized_users[] = $user;
-                 continue;
-             }
-
-             $studyProgrammes = $studyProgramRepository->getStudyProgrammesForUser($user, $season);
-             if($user->hasRole("ROLE_STUDY_PROGRAMME_REPORT") && in_array($studyProgram, $studyProgrammes)){
-                $authorized_users[] = $user;
-             }
-         }
-
-         return $authorized_users;
-
-    }
-
-
     /**
      * Returns the study programmes that the current user can view reports of.
      *

@@ -7,6 +7,19 @@ body {
   padding: 0 1em;
 }
 
+ul.authorized_people {
+  display: none;
+  margin: 0;
+}
+
+#authorized_people_title {
+  display: none;
+}
+
+ul.authorized_people  li {
+  display: inline;
+}
+
 p {text-align: justify;}
 
 .for-screen-readers {
