@@ -1,3 +1,21 @@
+statistics_stats:
+    pattern: /{season_slug}/stats/
+    defaults: { _controller: AnketaBundle:Statistics:analyticsStats}
+    requirements:
+      season_slug:   "[a-z0-9-]+"
+
+statistics_stats_started_daily:
+    pattern: /{season_slug}/stats/started_daily.csv
+    defaults: { _controller: AnketaBundle:Statistics:analyticsStatsStartedDaily}
+    requirements:
+      season_slug:   "[a-z0-9-]+"
+
+statistics_stats_started_daily:
+    pattern: /{season_slug}/stats/started_weekday_hour.csv
+    defaults: { _controller: AnketaBundle:Statistics:analyticsStatsStartedWeekdayHour}
+    requirements:
+      season_slug:   "[a-z0-9-]+"
+
 statistics:
     pattern: /vysledky
     defaults: { _controller: AnketaBundle:Statistics:seasonReport}
@@ -51,4 +69,3 @@ statistics_results:
     defaults: { _controller: AnketaBundle:Statistics:results }
     requirements:
       section_slug: ".+"
-
