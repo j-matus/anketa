@@ -458,6 +458,21 @@ class StatisticsController extends Controller {
     /*
      * Does a CSV export of startTimestamp dates aggregated on a given day
      */
+    public function analyticsStatsFinishedDailyAction($season_slug = null) {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $conn = $em->getConnection();
+        $season = $this->getSeason($season_slug);
+        $st = $conn->prepare("select date_format(UserSeason.finishTimestamp, '%Y-%m-%d') as dates, count(*) as counts from UserSeason where UserSeason.finishTimestamp is not NULL and UserSeason.season_id = :season_id group by date_format(dates, '%Y-%m-%d')");
+	$st->bindValue('season_id', $season->getId());
+        $st->execute();
+	$template_params = array();
+        $template_params['results'] = $st->fetchAll();
+        return $this->render('AnketaBundle:Statistics:started_daily.csv.twig', $template_params);
+    }
+
+    /*
+     * Does a CSV export of startTimestamp dates aggregated on a given weekday/hour
+     */
     public function analyticsStatsStartedWeekdayHourAction($season_slug = null) {
         $em = $this->get('doctrine.orm.entity_manager');
         $conn = $em->getConnection();

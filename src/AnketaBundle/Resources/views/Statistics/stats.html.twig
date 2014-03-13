@@ -152,7 +152,7 @@
 		  fill: none;
 		  stroke: #000;
 		}
-		#graph {
+		#graph, #graph-finish {
 		  background-color: white;
 		  width: 960px;
 		  border-radius: 1em;
@@ -190,6 +190,7 @@ d3.csv("{{ path('statistics_stats_started_daily', {'season_slug': season_slug}) 
 		var svg = d3.select("#graph").append("svg")
 		      .attr("width", width + m.left + m.right)
       		      .attr("height", height + m.top + m.bottom)
+		      .on("click", function(){click()})
 		    .append("g")
 		      .attr("transform", "translate(" + m.left + "," + m.top + ")");
 
@@ -209,8 +210,69 @@ d3.csv("{{ path('statistics_stats_started_daily', {'season_slug': season_slug}) 
 		    .attr("clip-path", "url(#clip)")
 		    .attr("d", line(data));
 
+  function click() {
+    console.log('clicking');
+    var n = data.length - 1,
+        i = Math.floor(Math.random() * n / 2),
+        j = i + Math.floor(Math.random() * n / 2) + 1;
+    x.domain([data[i].date, data[j].date]);
+    var t = svg.transition().duration(750);
+    t.select(".x.axis").call(xAxis);
+    t.select(".line").attr("d", line(data));
+  }
+
+});
+d3.csv("{{ path('statistics_stats_finished_daily', {'season_slug': season_slug}) }}", 
+	function(d){
+		return {
+			date: parse(d.dates),
+			count: +d.counts
+		};		
+	},
+	function(err, data) {
+		x.domain([data[0].date, data[data.length - 1].date]);
+		y.domain([0, d3.max(data, function(d) { return d.count; })]).nice();
+
+		var svg = d3.select("#graph-finish").append("svg")
+		      .attr("width", width + m.left + m.right)
+      		      .attr("height", height + m.top + m.bottom)
+		      .on("click", function(){click()})
+		    .append("g")
+		      .attr("transform", "translate(" + m.left + "," + m.top + ")");
+
+		svg.append("g")
+		    .attr("class", "x axis")
+		    .attr("transform", "translate(0," + height + ")")
+		    .call(xAxis);
+
+		// Add the y-axis.
+		svg.append("g")
+		    .attr("class", "y axis")
+		    .attr("transform", "translate(" + width + ",0)")
+		    .call(yAxis);
+		
+		svg.append("path")
+		    .attr("class", "line")
+		    .attr("clip-path", "url(#clip)")
+		    .attr("d", line(data));
+
+  function click() {
+    console.log('clicking');
+    var n = data.length - 1,
+        i = Math.floor(Math.random() * n / 2),
+        j = i + Math.floor(Math.random() * n / 2) + 1;
+    x.domain([data[i].date, data[j].date]);
+    var t = svg.transition().duration(750);
+    t.select(".x.axis").call(xAxis);
+    t.select(".line").attr("d", line(data));
+  }
+
 	});
 	</script>
+	
+    	<h2> Kedy studenti skoncili s vyplnanim ankety? </h2>
+	<div id="graph-finish"></div>
+    	<h2> Ako dlho studentom trvalo vyplnit anketu? </h2>
     <script src="{{ asset('bundles/anketa/js/reports.js') }}" type="text/javascript"></script>
 {% endblock %}
 

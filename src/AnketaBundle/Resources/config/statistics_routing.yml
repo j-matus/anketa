@@ -10,6 +10,12 @@ statistics_stats_started_daily:
     requirements:
       season_slug:   "[a-z0-9-]+"
 
+statistics_stats_finished_daily:
+    pattern: /{season_slug}/stats/finished_daily.csv
+    defaults: { _controller: AnketaBundle:Statistics:analyticsStatsFinishedDaily}
+    requirements:
+      season_slug:   "[a-z0-9-]+"
+
 statistics_stats_started_weekday_hour:
     pattern: /{season_slug}/stats/started_weekday_hour.csv
     defaults: { _controller: AnketaBundle:Statistics:analyticsStatsStartedWeekdayHour}
