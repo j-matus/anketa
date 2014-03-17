@@ -71,7 +71,7 @@ class AISRetriever
 
     public function __destruct() {
         if ($this->adminStudiaScreen !== null) {
-            $this->adminStudiaScreen->closeIfNeeded($this->trace);
+            $this->adminStudiaScreen->closeWindow($this->trace);
         }
         $this->logoutIfNotAlready();
     }
@@ -93,7 +93,7 @@ class AISRetriever
         if (!$this->triedLogin) return;
 
         if ($this->adminStudiaScreen !== null) {
-            $this->adminStudiaScreen->closeIfNeeded($this->trace);
+            $this->adminStudiaScreen->closeWindow($this->trace);
         }
 
         if ($this->login->isLoggedIn($this->connection)) {
@@ -179,7 +179,7 @@ class AISRetriever
                     $vsetky_predmety[] = $hodnotenie;
                 }
 
-                $hodnoteniaPriemeryScreen->closeIfNeeded($this->trace);
+                $hodnoteniaPriemeryScreen->closeWindow($this->trace);
             }
         }
 
