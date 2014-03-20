@@ -1,12 +1,14 @@
 /nbproject
 /report
-/app/cache
-/app/logs
-/app/bootstrap*
+/app/cache/*
+/app/logs/*
+!app/cache/.gitkeep
+!app/logs/.gitkeep
+/app/bootstrap.php.cache
 /app/config/config_local.yml
-/web/bundles
-/vendor
-/db
+/web/bundles/
+/vendor/
+/db/
 /composer.phar
 
 *~
