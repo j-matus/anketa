@@ -105,8 +105,10 @@ class Season {
     protected $endTime;
 
     /**
-     * Comma-separated semester list.
-     * Example: 2010/2011Z,2010/2011L
+     * Comma-separated semester list. Each item is given as the year and the semester (Z/L).
+     * If the semester is not specified, the item will match subjects that don't have a semester in AIS
+     * (i.e. subjects that take the whole year).
+     * Example: 2010/2011Z,2010/2011L,2010/2011
      * @ORM\Column(type="string")
      */
     protected $aisSemesters = '';
@@ -242,10 +244,15 @@ class Season {
         $result = array();
         if ($this->aisSemesters) {
             foreach (explode(',', $this->aisSemesters) as $item) {
+                if (!preg_match('@^[0-9]{4}/[0-9]{4}[ZL]?$@', $item)) {
+                    throw new \Exception('Wrong aisSemesters value');
+                }
                 $schoolYear = substr($item, 0, -1);
                 $semester = substr($item, -1);
                 if ($semester != 'Z' && $semester != 'L') {
-                    throw new \Exception('Wrong aisSemesters value');
+                    // matches year-round subjects that don't have a semester
+                    $schoolYear = $item;
+                    $semester = '';
                 }
                 $result[] = array($schoolYear, $semester);
             }
