@@ -8,10 +8,12 @@
     <script type="text/javascript" src="{{ asset('bundles/anketa/js/reD3/line.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/anketa/js/reD3/util.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/anketa/js/reD3/dayhourheatmap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/anketa/js/reD3/bar.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/anketa/js/reD3/d3.min.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('bundles/anketa/css/reD3/line.css') }}" type="text/css" media="all">
     <link rel="stylesheet" href="{{ asset('bundles/anketa/css/reD3/heatmap.css') }}" type="text/css" media="all">
+    <link rel="stylesheet" href="{{ asset('bundles/anketa/css/reD3/bar.css') }}" type="text/css" media="all">
 
 	<h2>V ktory den/hodinu zacali studenti vyplnat anketu?</h2>
 	<div id="heatmap"></div>
@@ -23,6 +25,7 @@
     	<div id="start-chart"></div>
 
     	<h2> Ako dlho studentom trvalo vyplnit anketu? </h2>
+    	<div id="histogram"></div>
 <script type="text/javascript">
 	
 var el = document.getElementById('start-chart');
@@ -44,7 +47,6 @@ d3.csv("{{ path('statistics_stats_started_daily', {'season_slug': season_slug}) 
 			d.date = parse(d.dates);
 			d.close = +d.counts;
 		});
-		console.log(data);
 		startline.render(data);
 	});
 
@@ -86,23 +88,29 @@ d3.csv("{{ path('statistics_stats_started_weekday_hour', {'season_slug': season_
 });
 
 el = document.getElementById('histogram');
-var finishline = new reD3.Line(el, {
+var histogram = new reD3.Bar(el, {
     width: 550,
     height: 250,
-    xValue: 'date',
-    yValue: 'students',
+    xValue: 'time',
+    yValue: 'frequency',
     margin: {
         top: 20
     }
 });
 
-d3.csv("{{ path('statistics_stats_finished_daily', {'season_slug': season_slug}) }}", 
+d3.csv("{{ path('statistics_stats_time_taken_to_finish', {'season_slug': season_slug}) }}", 
 	function(error, data){
+		var n = d3.sum(data, function(d){return +d.counts});
+		var k = 1500;
+		var over_k = 0;
 		data.forEach(function(d){
-			d.date = parse(d.dates);
-			d.close = +d.counts;
+			d.time= (+d.time + 1) * 5;
+			d.frequency = +d.counts/n;
+			if (d.time >= k) over_k++;
 		});
-		finishline.render(data);
+		data = data.filter(function(d){return d.time < k});
+		data.push({time: k + "+", frequency: over_k/n});
+		histogram.render(data);
 	});
 
     </script>
