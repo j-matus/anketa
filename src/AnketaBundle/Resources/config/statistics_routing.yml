@@ -22,6 +22,12 @@ statistics_stats_started_weekday_hour:
     requirements:
       season_slug:   "[a-z0-9-]+"
 
+statistics_stats_time_taken_to_finish:
+    pattern: /{season_slug}/stats/time_taken_to_finish.csv
+    defaults: { _controller: AnketaBundle:Statistics:analyticsTimeTakenToFinish}
+    requirements:
+      season_slug:   "[a-z0-9-]+"
+
 statistics:
     pattern: /vysledky
     defaults: { _controller: AnketaBundle:Statistics:seasonReport}

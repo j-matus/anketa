@@ -84,6 +84,27 @@ d3.csv("{{ path('statistics_stats_started_weekday_hour', {'season_slug': season_
     });
     heatmap.render(data);
 });
+
+el = document.getElementById('histogram');
+var finishline = new reD3.Line(el, {
+    width: 550,
+    height: 250,
+    xValue: 'date',
+    yValue: 'students',
+    margin: {
+        top: 20
+    }
+});
+
+d3.csv("{{ path('statistics_stats_finished_daily', {'season_slug': season_slug}) }}", 
+	function(error, data){
+		data.forEach(function(d){
+			d.date = parse(d.dates);
+			d.close = +d.counts;
+		});
+		finishline.render(data);
+	});
+
     </script>
 
     <script src="{{ asset('bundles/anketa/js/reports.js') }}" type="text/javascript"></script>
