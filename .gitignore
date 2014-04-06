@@ -2,9 +2,7 @@
 /report
 /app/cache/*
 /app/logs/*
-!app/cache/.gitkeep
-!app/logs/.gitkeep
-/app/bootstrap.php.cache
+/app/bootstrap/*
 /app/config/config_local.yml
 /web/bundles/
 /vendor/
