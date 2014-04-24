@@ -1,0 +1,4 @@
+time,counts
+{% for result in results %}
+{{ result['dt'] }},{{ result['counts'] }}
+{% endfor %}
