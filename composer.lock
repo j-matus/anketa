@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f9bf991613bacc32c9665ebdec70f384",
+    "hash": "37d712d4f2ad83408096b75b18f3eeba",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -718,58 +718,6 @@
             "time": "2014-02-08 16:28:24"
         },
         {
-            "name": "incenteev/composer-parameter-handler",
-            "version": "v2.1.0",
-            "target-dir": "Incenteev/ParameterHandler",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Incenteev/ParameterHandler.git",
-                "reference": "143272a0a09c62616a3c8011fc165a10c6b35241"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/143272a0a09c62616a3c8011fc165a10c6b35241",
-                "reference": "143272a0a09c62616a3c8011fc165a10c6b35241",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "symfony/yaml": "~2.0"
-            },
-            "require-dev": {
-                "composer/composer": "1.0.*@dev",
-                "phpspec/prophecy-phpunit": "~1.0",
-                "symfony/filesystem": "~2.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Incenteev\\ParameterHandler": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Christophe Coevoet",
-                    "email": "stof@notk.org"
-                }
-            ],
-            "description": "Composer script handling your ignored parameter file",
-            "homepage": "https://github.com/Incenteev/ParameterHandler",
-            "keywords": [
-                "parameters management"
-            ],
-            "time": "2013-12-07 10:10:39"
-        },
-        {
             "name": "jdorn/sql-formatter",
             "version": "v1.2.17",
             "source": {
@@ -1346,7 +1294,7 @@
             "source": {
                 "type": "git",
                 "url": "https://code.google.com/p/libfajr/",
-                "reference": "8e78075523f478179b56f7e97e7cad043aa6f04a"
+                "reference": "fcf56cd6942f5bca98463f21c5a5e0dfda962bd1"
             },
             "type": "library",
             "autoload": {
@@ -1358,7 +1306,7 @@
                 "MIT"
             ],
             "description": "Functions for connecting to AIS2",
-            "time": "2014-02-27 18:08:51"
+            "time": "2014-05-13 13:24:27"
         },
         {
             "name": "svt/rozvrhxml",
@@ -1871,6 +1819,58 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "incenteev/composer-parameter-handler",
+            "version": "v2.1.0",
+            "target-dir": "Incenteev/ParameterHandler",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Incenteev/ParameterHandler.git",
+                "reference": "143272a0a09c62616a3c8011fc165a10c6b35241"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/143272a0a09c62616a3c8011fc165a10c6b35241",
+                "reference": "143272a0a09c62616a3c8011fc165a10c6b35241",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/yaml": "~2.0"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpspec/prophecy-phpunit": "~1.0",
+                "symfony/filesystem": "~2.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Incenteev\\ParameterHandler": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                }
+            ],
+            "description": "Composer script handling your ignored parameter file",
+            "homepage": "https://github.com/Incenteev/ParameterHandler",
+            "keywords": [
+                "parameters management"
+            ],
+            "time": "2013-12-07 10:10:39"
+        },
         {
             "name": "svt/linters",
             "version": "dev-master",
