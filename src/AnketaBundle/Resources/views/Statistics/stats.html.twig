@@ -15,19 +15,19 @@
     <link rel="stylesheet" href="{{ asset('bundles/anketa/css/reD3/heatmap.css') }}" type="text/css" media="all">
     <link rel="stylesheet" href="{{ asset('bundles/anketa/css/reD3/bar.css') }}" type="text/css" media="all">
 
-	<h2>V ktory den/hodinu zacali studenti vyplnat anketu?</h2>
-	<div id="heatmap"></div>
+    <h2>V ktory den/hodinu zacali studenti vyplnat anketu?</h2>
+    <div id="heatmap"></div>
 
-    	<h2> Kedy studenti skoncili s vyplnanim ankety? </h2>
-	<div id="finish-chart"></div>
+        <h2> Kedy studenti skoncili s vyplnanim ankety? </h2>
+    <div id="finish-chart"></div>
 
-    	<h2> Kedy zacali studenti vyplnat anketu? </h2>
-    	<div id="start-chart"></div>
+        <h2> Kedy zacali studenti vyplnat anketu? </h2>
+        <div id="start-chart"></div>
 
-    	<h2> Ako dlho studentom trvalo vyplnit anketu? </h2>
-    	<div id="histogram"></div>
+        <h2> Ako dlho studentom trvalo vyplnit anketu? </h2>
+        <div id="histogram"></div>
 <script type="text/javascript">
-	
+
 var el = document.getElementById('start-chart');
 var startline = new reD3.Line(el, {
     width: 550,
@@ -41,14 +41,14 @@ var startline = new reD3.Line(el, {
 
 var parse = d3.time.format("%Y-%m-%d").parse;
 
-d3.csv("{{ path('statistics_stats_started_daily', {'season_slug': season_slug}) }}", 
-	function(error, data){
-		data.forEach(function(d){
-			d.date = parse(d.dates);
-			d.close = +d.counts;
-		});
-		startline.render(data);
-	});
+d3.csv("{{ path('statistics_stats_started_daily', {'season_slug': season_slug}) }}",
+    function(error, data){
+        data.forEach(function(d){
+            d.date = parse(d.dates);
+            d.close = +d.counts;
+        });
+        startline.render(data);
+    });
 
 
 el = document.getElementById('finish-chart');
@@ -62,20 +62,20 @@ var finishline = new reD3.Line(el, {
     }
 });
 
-d3.csv("{{ path('statistics_stats_finished_daily', {'season_slug': season_slug}) }}", 
-	function(error, data){
-		data.forEach(function(d){
-			d.date = parse(d.dates);
-			d.close = +d.counts;
-		});
-		finishline.render(data);
-	});
+d3.csv("{{ path('statistics_stats_finished_daily', {'season_slug': season_slug}) }}",
+    function(error, data){
+        data.forEach(function(d){
+            d.date = parse(d.dates);
+            d.close = +d.counts;
+        });
+        finishline.render(data);
+    });
 
 
 el = document.getElementById('heatmap');
 var heatmap = new reD3.DayHourHeatmap(el, {
-	width: 500,
-	height: 250
+    width: 500,
+    height: 250
 });
 
 d3.csv("{{ path('statistics_stats_started_weekday_hour', {'season_slug': season_slug}) }}", function(error, data) {
@@ -98,20 +98,20 @@ var histogram = new reD3.Bar(el, {
     }
 });
 
-d3.csv("{{ path('statistics_stats_time_taken_to_finish', {'season_slug': season_slug}) }}", 
-	function(error, data){
-		var n = d3.sum(data, function(d){return +d.counts});
-		var k = 1500;
-		var over_k = 0;
-		data.forEach(function(d){
-			d.time= (+d.time + 1) * 5;
-			d.frequency = +d.counts/n;
-			if (d.time >= k) over_k++;
-		});
-		data = data.filter(function(d){return d.time < k});
-		data.push({time: k + "+", frequency: over_k/n});
-		histogram.render(data);
-	});
+d3.csv("{{ path('statistics_stats_time_taken_to_finish', {'season_slug': season_slug}) }}",
+    function(error, data){
+        var n = d3.sum(data, function(d){return +d.counts});
+        var k = 1500;
+        var over_k = 0;
+        data.forEach(function(d){
+            d.time= (+d.time + 1) * 5;
+            d.frequency = +d.counts/n;
+            if (d.time >= k) over_k++;
+        });
+        data = data.filter(function(d){return d.time < k});
+        data.push({time: k + "+", frequency: over_k/n});
+        histogram.render(data);
+    });
 
     </script>
 

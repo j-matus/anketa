@@ -21,7 +21,7 @@
             this.xValue = xValue;
             this.yValue = yValue;
             this.yAxisText = options.yAxisText || '';
-            
+
             var margin = {
                 top: 20,
                 right: 30,

@@ -79,7 +79,7 @@
         }
         return obj;
     }
-    
+
     reD3.wordWrap = wordWrap;
-    
-})(this);   
+
+})(this);
