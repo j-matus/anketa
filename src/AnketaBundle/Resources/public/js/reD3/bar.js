@@ -112,14 +112,13 @@
                     if (options.onMouseOut)
                         options.onMouseOut(d);
                 });
-
-	    svg.selectAll(".x g")
-		.style('opacity', 0);
-	    svg.selectAll(".x g")
-	        .filter(function(d, i){ return (i % 5) == 0})
-		.style('opacity', 1); 
-	    svg.selectAll(".x g:last")
-		.style('opacity', 1);
+                svg.selectAll(".x g")
+                    .style('opacity', 0);
+                svg.selectAll(".x g")
+                    .filter(function(d, i){ return (i % 5) == 0})
+                    .style('opacity', 1);
+                svg.selectAll(".x g:last")
+                    .style('opacity', 1);
 
         },
 
