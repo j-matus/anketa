@@ -314,7 +314,7 @@ otazky:
       position:   3
 
     - text: Chcete sa ešte k niečomu vyjadriť?
-      text_en: 
+      text_en: Do you have any additional comments?
       popis:  Privítame napr. návrhy na zmeny v skladbe ponúkaných študijných programov, názory na rozšírenie ponuky študijných programov o programy v cudzom jazyku, príp. akékoľvek ďalšie návrhy a pripomienky k činnosti fakulty.
       popis_en: 
       kategoria:  fakulta
