@@ -1,7 +1,8 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
     "hash": "37d712d4f2ad83408096b75b18f3eeba",
     "packages": [
@@ -1294,7 +1295,7 @@
             "source": {
                 "type": "git",
                 "url": "https://code.google.com/p/libfajr/",
-                "reference": "fcf56cd6942f5bca98463f21c5a5e0dfda962bd1"
+                "reference": "6f8265cc8293bc678d11e678389f0c28d0e501b1"
             },
             "type": "library",
             "autoload": {
@@ -1306,7 +1307,7 @@
                 "MIT"
             ],
             "description": "Functions for connecting to AIS2",
-            "time": "2014-05-13 13:24:27"
+            "time": "2014-06-03 20:22:58"
         },
         {
             "name": "svt/rozvrhxml",
