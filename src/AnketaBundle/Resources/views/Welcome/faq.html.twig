@@ -68,16 +68,19 @@
         </div>
     {% endif %}
 
-    {% if skratka_fakulty == 'FMFI' %}
     <h2 class="faq">Dokedy môžem hlasovať?</h2>
         <div class="faq-item">
+        {% if skratka_fakulty == 'FMFI' %}
             <p>
             Anketa je otvorená na hlasovanie podla smernice dekana spravidla posledné dva týždne semestra a prvé dva týždne skúškového obdobia.
             </p>
+        {% else %}
+            {# TODO zistit dokedy je otvorene hlasovanie! #}
+        {% endif %}
+            <p>
+            <strong>Upozornenie pre končiacich študentov.</strong> Po ukončení štúdia sa už nebudete môcť prihlásiť do ankety, preto vyplňte anketu čo najskôr, najneskôr však do dňa posledných štátnic.
+            </p>
         </div>
-    {% else %}
-        {# TODO zistit dokedy je otvorene hlasovanie! #}
-    {% endif %}
 
     <h2 class="faq">Kto je za anketou?</h2>
         <div class="faq-item">
