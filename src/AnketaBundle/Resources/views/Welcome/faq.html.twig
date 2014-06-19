@@ -7,6 +7,7 @@
     {# !!! tato otazka musi zostat prva, lebo predstavuje uvod do celeho FAQ. !!! #}
     <h2 class="faq">Načo je dobrá anketa?</h2>
         <div class="faq-item">
+            <p>
             Anketa je v prvom rade možnosť konštruktívne hodnotiť rôzne
             aspekty fakulty. Tieto dáta poslúžia jednak budúcim študentom,
             ktorí si budú môcť na základe komentárov a hodnotení spraviť
@@ -16,6 +17,7 @@
             jednotlivých katedier, ako zlepšiť úroveň výučby, alebo upraviť
             študijné programy. Len tak mimochodom, povinnosť usporiadať
             anketu vyplýva zo zákona o vysokých školách :)
+            </p>
         </div>
     {# !!! tato otazka musi zostat druha, lebo sa ju tak casto pytaju. !!! #}
     <h2 class="faq">Keď je to anonymné, prečo sa musím prihlasovať?</h2>
@@ -39,7 +41,7 @@
                 táto informácia zostane neverejná.
             </p>
             <p>
-                V databáze  si pri konkrétnej odpovedi pamätáme aj študijný odbor hlasujúceho, aby sme vedeli lepšie
+                V databáze si pri konkrétnej odpovedi pamätáme aj študijný odbor hlasujúceho, aby sme vedeli lepšie
                 vyhodnotiť situácie, keď študenti viacerých odborov navštevujú rovnaký predmet.
             </p>
         </div>
@@ -47,25 +49,31 @@
     <h2 class="faq">Dá sa vyplnením ankety vôbec niečo dosiahnuť?</h2>
     {% if skratka_fakulty == 'FMFI' %}
         <div class="faq-item">
+            <p>
             Vplyv ankety na chod fakulty je priamo úmerný účasti študentov.
             Vedenie fakulty berie početné názory študentov vážne &mdash;
             prečítajte si <a href="{{ asset('bundles/anketa/files/anketa-stanovisko-2010.pdf') }}">stanovisko vedenia
             k výsledkom poslednej ankety</a>, ktoré bolo motivované vyše 40% účasťou študentov.
+            </p>
         </div>
     {% else %}
         <div class="faq-item">
+            <p>
             To, či sa vyplnením ankety niečo zmení, závisí v prvom rade od Vás - Vaša účasť na ankete je prvým, ale potrebným krokom.
             Ako motivácia môže poslúžiť výsledok ankety na Fakulte matematiky, fyziky a informatiky, kde anketa prebehla minulý rok.
             Po vyše 40% účasti študentov došlo k viacerým zmenám (napr. zmeny učiteľov, upravenie obsahov predmetov a pod.). Viac si môžte 
             prečítať v <a href="{{ asset('bundles/anketa/files/anketa-stanovisko-2010.pdf') }}">stanovisku vedenia
             k výsledkom ankety z FMFI</a>. Teda niečo sa dosiahnuť určite dá :)
+            </p>
         </div>
     {% endif %}
 
     {% if skratka_fakulty == 'FMFI' %}
     <h2 class="faq">Dokedy môžem hlasovať?</h2>
         <div class="faq-item">
+            <p>
             Anketa je otvorená na hlasovanie podla smernice dekana spravidla posledné dva týždne semestra a prvé dva týždne skúškového obdobia.
+            </p>
         </div>
     {% else %}
         {# TODO zistit dokedy je otvorene hlasovanie! #}
@@ -76,7 +84,6 @@
             <p>
             Anketu vytvoril <a href="http://svt.fmph.uniba.sk/">Študentský Vývojový Tím</a>{% if skratka_fakulty != 'FMFI' %} z FMFI{% endif %}.
             {% if skratka_fakulty == 'FMFI' %}
-
                 Ak sa chcete stať členom a prispieť tak k vývoju ankety a ďalších
                 zaujímavých projektov, napíšte nám.
             {% endif %}
@@ -104,10 +111,8 @@
                     Pozrite si <a href="/vysledky/2010-2011">výsledky ankety 2010/2011</a>.
                 </p>
             {% endif %}
-
-     </div>
-    <h2 class="faq">Našiel som bug/napadlo mi vylepšenie. Čo mám robiť?
-</h2>
+        </div>
+    <h2 class="faq">Našiel som bug/napadlo mi vylepšenie. Čo mám robiť?</h2>
         <div class="faq-item">
         <p>
         Určite nám napíšte mail na adresu <a href="mailto:fmfi-anketa-users@googlegroups.com">fmfi-anketa-users@googlegroups.com</a>.
