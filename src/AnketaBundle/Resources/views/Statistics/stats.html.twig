@@ -23,11 +23,11 @@
 
     <h2> Kedy začali študenti vypĺňať anketu? </h2>
     <div id="start-chart"></div>
-    
-    <h2> Ako dlho trvalo študentom vyplniť anketu? </h2>
+
+    <h2> Koľko minút trvalo študentom vyplniť anketu? </h2>
     <div id="histogram"></div>
     <script type="text/javascript">
-    
+
     var el = document.getElementById('start-chart');
     var startline = new reD3.Line(el, {
         width: 550,
@@ -38,9 +38,9 @@
             top: 20
         }
     });
-    
+
     var parse = d3.time.format("%Y-%m-%d").parse;
-    
+
     d3.csv("{{ path('statistics_stats_started_daily', {'season_slug': season_slug}) }}",
         function(error, data){
             data.forEach(function(d){
@@ -49,8 +49,8 @@
             });
             startline.render(data);
         });
-    
-    
+
+
     el = document.getElementById('finish-chart');
     var finishline = new reD3.Line(el, {
         width: 550,
@@ -61,7 +61,7 @@
             top: 20
         }
     });
-    
+
     d3.csv("{{ path('statistics_stats_finished_daily', {'season_slug': season_slug}) }}",
         function(error, data){
             data.forEach(function(d){
@@ -70,14 +70,14 @@
             });
             finishline.render(data);
         });
-    
-    
+
+
     el = document.getElementById('heatmap');
     var heatmap = new reD3.DayHourHeatmap(el, {
         width: 500,
         height: 250
     });
-    
+
     d3.csv("{{ path('statistics_stats_started_weekday_hour', {'season_slug': season_slug}) }}", function(error, data) {
         data.forEach(function(d) {
             d.day= +d.weekday;
@@ -86,7 +86,7 @@
         });
         heatmap.render(data);
     });
-    
+
     el = document.getElementById('histogram');
     var histogram = new reD3.Bar(el, {
         width: 550,
@@ -97,7 +97,7 @@
             top: 20
         }
     });
-    
+
     d3.csv("{{ path('statistics_stats_time_taken_to_finish', {'season_slug': season_slug}) }}",
         function(error, data){
             var n = d3.sum(data, function(d){return +d.counts});

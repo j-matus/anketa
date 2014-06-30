@@ -143,6 +143,14 @@ class StatisticsMenu
                         $this->generateUrl('statistics_statement',
                             array('season_slug' => $season->getSlug())));
                 }
+
+                // Add "Stats" under this season.
+                if ($access->isSuperAdmin()) {
+                    $seasonItem->children['stats'] = new MenuItem(
+                        $trans->trans('statistics.menu.statistiky'),
+                        $this->generateUrl('statistics_stats',
+                            array('season_slug' => $season->getSlug())));
+                }
             }
         }
 

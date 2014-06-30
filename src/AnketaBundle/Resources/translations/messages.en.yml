@@ -118,6 +118,7 @@ statistics:
     moje_komentare: My comments
     moje_reporty: Reports
     stanovisko_vedenia: Official statement
+    statistiky: Statistics
   seasonReport:
     vysledky: Results for
     pocet_hlasujucich: %voters% out of %total% students participated in the Student Questionnaire <em>%season%</em>.
