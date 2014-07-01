@@ -294,6 +294,13 @@ input[readonly="readonly"] {
   padding-left: 0.5em;
 }
 
+#content .faq > h1 {
+  font-size: 190%;
+  line-height: 1.4;
+  margin-top: 0.2rem;
+  margin-bottom: 1rem;
+}
+
 div.faq {
     margin-left: 10em;
     margin-right: 10em;
