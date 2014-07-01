@@ -287,7 +287,11 @@ input[readonly="readonly"] {
 
 #content h2.faq {
   font-size: 135%;
-  margin-top: 1em;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  border-left: solid medium #AAA;
+  padding-left: 0.5em;
 }
 
 div.faq {
@@ -296,7 +300,7 @@ div.faq {
 }
 
 .faq-item {
-  margin-bottom: 1.5em;
+  margin-bottom: 2em;
 }
 
 .question {
