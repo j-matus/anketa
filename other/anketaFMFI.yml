@@ -22,10 +22,6 @@ kategorie:
       popis:      Fakulta
       popis_en:   Questions about the faculty
       kategoria:  vseobecne
-    - id:         kniznica
-      popis:      Knižnica
-      popis_en:   Library
-      kategoria:  vseobecne
     - id:         erasmus
       popis:      Program ERASMUS
       popis_en:   ERASMUS program
@@ -304,6 +300,15 @@ otazky:
       hviezdicky: Yes
       position:   2
 
+    - text:   Váš celkový dojem z fakultnej knižnice.
+      text_en: Your overall impression of the faculty library.
+      popis:  
+      popis_en:
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: Yes
+      position:   3
+
     - text: Ako sa vám páči anketa v súčasnej podobe?
       text_en: How do you like the student questionnaire in its current form?
       popis:  Páči sa vám? Čo by ste navrhovali zmeniť?
@@ -311,7 +316,7 @@ otazky:
       kategoria:  fakulta
       komentar:   Yes
       hviezdicky: Yes
-      position:   3
+      position:   4
 
     - text: Chcete sa ešte k niečomu vyjadriť?
       text_en: Do you have any additional comments?
@@ -320,15 +325,5 @@ otazky:
       kategoria:  fakulta
       komentar:   Yes
       hviezdicky: No
-      position:   4
-
-# vseobecne otazky - kniznica
-    - text:   Váš celkový dojem z fakultnej knižnice.
-      text_en: Your overall impression of the faculty library.
-      popis:  
-      popis_en:
-      kategoria:  kniznica
-      komentar:   Yes
-      hviezdicky: Yes
-      position:   1
+      position:   5
 ...
