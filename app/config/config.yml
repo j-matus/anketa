@@ -67,14 +67,6 @@ doctrine:
 # moved to config_local.yml
 # (symfony refuses to substitute "toplevel_section: %parameter_name%")
 
-svt_libfajr:
-    server: ais2.uniba.sk
-    login: %libfajr_login%
-    connection:
-        curl:
-            directory: %libfajr_cookie_path%
-    trace: "null"
-
 jms_i18n_routing:
     default_locale: sk
     locales: [en, sk]
@@ -91,11 +83,7 @@ services:
     anketa.ais_retriever:
         class: AnketaBundle\Integration\AISRetriever
         arguments:
-            - "@libfajr.trace"
-            - "@libfajr.server.connection"
-            - "@libfajr.login"
-            - "@libfajr.window.main"
-            - "@libfajr.window.factory.administracia_studia"
+            - %libfajr_login%
     anketa.ais_user_source:
         class: AnketaBundle\Security\AISUserSource
         arguments:

@@ -57,13 +57,23 @@ class AISUserSource implements UserSourceInterface
     public function load(UserSeason $userSeason, array $want)
     {
         if (isset($want['displayName'])) {
-            $userSeason->getUser()->setDisplayName($this->aisRetriever->getFullName());
+            throw new \Exception("AISUserSource currently doesn't support displayName");
         }
 
         if (isset($want['subjects']) || isset($want['isStudent'])) {
-            if ($this->aisRetriever->isAdministraciaStudiaAllowed()) {
+            $semestre = null;
+            if (isset($want['subjects'])) {
+                $semestre = $userSeason->getSeason()->getAisSemesterList();
+                if (empty($semestre)) {
+                    throw new \Exception("Sezona nema nastavene aisSemesters");
+                }
+            }
+
+            $result = $this->aisRetriever->getResult($semestre);
+
+            if ($result['is_student']) {
                 if (isset($want['subjects'])) {
-                    $this->loadSubjects($userSeason);
+                    $this->loadSubjects($userSeason, $result['subjects']);
                 }
 
                 if (isset($want['isStudent'])) {
@@ -71,21 +81,13 @@ class AISUserSource implements UserSourceInterface
                 }
             }
         }
-
-        $this->aisRetriever->logoutIfNotAlready();
     }
 
     /**
      * Load subject entities associated with this user
      */
-    private function loadSubjects(UserSeason $userSeason)
+    private function loadSubjects(UserSeason $userSeason, $aisPredmety)
     {
-        $semestre = $userSeason->getSeason()->getAisSemesterList();
-        if (empty($semestre)) {
-            throw new \Exception("Sezona nema nastavene aisSemesters");
-        }
-        $aisPredmety = $this->aisRetriever->getPredmety($semestre);
-
         $slugy = array();
 
         foreach ($aisPredmety as $aisPredmet) {
