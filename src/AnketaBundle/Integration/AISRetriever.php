@@ -50,7 +50,7 @@ class AISRetriever
             }
             $name = $_SERVER['COSIGN_SERVICE'];
             $php_name = strtr($name, '.', '_');
-            $value = $_COOKIES[$php_name];
+            $value = $_COOKIE[$php_name];
             $value = strtr($value, ' ', '+');
 
             $params = array(
