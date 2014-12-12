@@ -4,7 +4,7 @@ import sys
 import json
 from os.path import join, dirname, abspath
 
-anketa_root = dirname(dirname(dirname(dirname(abspath(__file__)))))
+anketa_root = join(dirname(abspath(__file__)), '../../..')
 votr_root = join(anketa_root, 'vendor/svt/votr')
 
 sys.path.insert(0, votr_root)
