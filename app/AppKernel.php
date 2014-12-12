@@ -17,7 +17,6 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new SVT\CosignBundle\SVTCosignBundle(),
-            new SVT\LibfajrBundle\SVTLibfajrBundle(),
             new AnketaBundle\AnketaBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),

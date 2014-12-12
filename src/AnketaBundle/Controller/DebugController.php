@@ -35,7 +35,8 @@ class DebugController extends Controller {
                 }
             }
         }
-        $predmety = $retriever->getPredmety($semestreArr);
+        $result = $retriever->getResult($semestreArr);
+        $predmety = $result['subjects'];
         return $this->render('AnketaBundle:Debug:ais.html.twig',
                 array('predmety' => $predmety));
     }

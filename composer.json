@@ -21,6 +21,7 @@
         "jms/i18n-routing-bundle": "1.1.*",
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "svt/libfajr": "@dev",
+        "svt/votr": "@dev",
         "svt/rozvrhxml": "@dev",
         "svt/cosign-bundle": "@dev"
     },
@@ -28,6 +29,19 @@
         "svt/linters": "@dev"
     },
     "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "svt/votr",
+                "version": "1.0-dev",
+                "description": "Next generation AIS frontend",
+                "license": "Apache",
+                "dist": {
+                    "url": "https://github.com/fmfi-svt/votr/archive/57976cf641e5f942691de78298352c93c64a36c9.zip",
+                    "type": "zip"
+                }
+            }
+        },
         {
             "type": "git",
             "url": "https://code.google.com/p/libfajr/"
@@ -47,12 +61,14 @@
     ],
     "scripts": {
         "post-install-cmd": [
+            "./scripts/votr_install.sh",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
+            "./scripts/votr_install.sh",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
