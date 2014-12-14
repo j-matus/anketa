@@ -37,7 +37,7 @@
                 "description": "Next generation AIS frontend",
                 "license": "Apache",
                 "dist": {
-                    "url": "https://github.com/fmfi-svt/votr/archive/57976cf641e5f942691de78298352c93c64a36c9.zip",
+                    "url": "https://github.com/fmfi-svt/votr/archive/d5a3796f3ff55d53c7e2a4b19c661b331f41835a.zip",
                     "type": "zip"
                 }
             }
