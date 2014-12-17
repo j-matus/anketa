@@ -29,7 +29,7 @@ def main():
             for zapisny_list in client.get_zapisne_listy(studium.key):
                 moj_rok = zapisny_list.akademicky_rok
                 if not any(ak_rok == moj_rok for ak_rok, sem in semestre): continue
-                for predmet in client.get_predmety(studium.key, zapisny_list.key):
+                for predmet in client.get_hodnotenia(studium.key, zapisny_list.key):
                     moj_sem = predmet.semester
                     if not any((moj_rok, moj_sem) == (ak_rok, sem) for ak_rok, sem in semestre): continue
                     subjects.append(dict(
