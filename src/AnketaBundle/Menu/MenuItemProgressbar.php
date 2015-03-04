@@ -12,7 +12,7 @@
 
 namespace AnketaBundle\Menu;
 
-use libfajr\base\Preconditions;
+use AnketaBundle\Lib\Preconditions;
 
 class MenuItemProgressbar {
 

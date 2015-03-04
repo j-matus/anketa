@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityRepository;
 use AnketaBundle\Entity\Category;
 use AnketaBundle\Entity\CategoryType;
 use AnketaBundle\Entity\User;
-use libfajr\base\Preconditions;
+use AnketaBundle\Lib\Preconditions;
 
 class QuestionRepository extends EntityRepository {
 
