@@ -52,7 +52,7 @@ class ImportUcitelPredmetCommand extends AbstractImportCommand {
         $season = $this->getSeason($input);
         $file = $this->openFile($input);
 
-        $tableReader = new NativeCSVTableReader($file, 9);
+        $tableReader = new NativeCSVTableReader($file);
 
         $conn = $this->getContainer()->get('database_connection');
 
