@@ -62,18 +62,6 @@ class LDAPUserSource implements UserSourceInterface
         if (isset($want['displayName']) && !empty($userInfo['displayName'])) {
             $user->setDisplayName($userInfo['displayName'][0]);
         }
-
-        $orgUnits = array();
-        foreach ($userInfo['group'] as $group) {
-            $matches = array();
-            if (preg_match('/^pouzivatelia_([^_]+)$/', $group, $matches) === 1) {
-                $orgUnits[] = $matches[1];
-            }
-        }
-
-        if (isset($want['orgUnits'])) {
-            $user->setOrgUnits($orgUnits);
-        }
     }
 
 }
