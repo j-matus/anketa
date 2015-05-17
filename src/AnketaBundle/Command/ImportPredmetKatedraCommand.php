@@ -52,7 +52,7 @@ class ImportPredmetKatedraCommand extends AbstractImportCommand {
         $season = $this->getSeason($input);
 
         $subjectIdentification = $this->getContainer()->get('anketa.subject_identification');
-        $tableReader = new NativeCSVTableReader($file, 5);
+        $tableReader = new NativeCSVTableReader($file);
 
         $conn = $this->getContainer()->get('database_connection');
 
