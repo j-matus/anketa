@@ -25,13 +25,9 @@ class DemoUserSource implements UserSourceInterface
     /** @var EntityManager */
     private $em;
 
-    /** @var array */
-    private $orgUnits;
-
-    public function __construct(EntityManager $em, array $orgUnits = null)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->orgUnits = $orgUnits;
     }
 
     public function load(UserSeason $userSeason, array $want)
@@ -47,10 +43,6 @@ class DemoUserSource implements UserSourceInterface
 
         if (isset($want['isStudent'])) {
             $userSeason->setIsStudent(true);
-        }
-
-        if (isset($want['orgUnits']) && $this->orgUnits !== null) {
-            $user->setOrgUnits($this->orgUnits);
         }
 
         if (isset($want['subjects'])) {

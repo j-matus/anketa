@@ -55,7 +55,6 @@ parameters:
         subjects:     anketa.ais_user_source      # ais / demo / none
         displayName:  anketa.ldap_user_source     # ais / ldap / demo / none
         isStudent:    anketa.ais_user_source      # ais / demo / none
-        orgUnits:     anketa.ldap_user_source     # ldap / demo
 
 
 # ak chces posielat postu, nastav tu spravne prihlasovacie udaje

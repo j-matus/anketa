@@ -31,24 +31,6 @@ class AbstractVotingController extends Controller {
             return $rv;
         }
 
-        if (!$access->userHasAllowedOrgUnit()) {
-            $user = $access->getUser();
-            $allowedOrgUnit = $this->container->getParameter('org_unit');
-            $params = array();
-            $params['org_unit'] = $allowedOrgUnit;
-            $otherInstances = $this->container->getParameter('other_instances');
-            $recommendedInstances = array();
-            foreach ($otherInstances as $key => $definition) {
-                if (in_array($key, $user->getOrgUnits())) {
-                    $recommendedInstances[] = $definition;
-                }
-            }
-            $params['recommended_instances'] = $recommendedInstances;
-            $rv = $this->render('AnketaBundle:Hlasovanie:orgunit.html.twig', $params);
-            $rv->setStatusCode(403);
-            return $rv;
-        }
-
         // Nemoze hlasovat z nejakeho ineho dovodu...
         throw new AccessDeniedException();
     }

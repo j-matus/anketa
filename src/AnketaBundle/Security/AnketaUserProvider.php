@@ -75,7 +75,6 @@ class AnketaUserProvider implements UserProviderInterface
             throw new UsernameNotFoundException(sprintf("User %s not found in database! Cannot refresh.", $oldUser->getLogin()));
         }
 
-        $user->setOrgUnits($oldUser->getOrgUnits());
         $this->loadUserInfo($user);
 
         return $user;
@@ -155,9 +154,6 @@ class AnketaUserProvider implements UserProviderInterface
 
         if ($loadDisplayName || $user->getDisplayName() === null) {
             $load[$this->userSources['displayName']]['displayName'] = true;
-        }
-        if (!$user->getOrgUnits()) {
-            $load[$this->userSources['orgUnits']]['orgUnits'] = true;
         }
 
         foreach ($load as $service => $attributes) {

@@ -44,13 +44,6 @@ class User implements UserInterface, EquatableInterface {
     protected $roles;
 
     /**
-     * List of user's organizational units
-     * This is not persisted in the database, as it is always reloaded
-     * @var array(string)
-     */
-    protected $orgUnits = array(); // inicializator musi byt tu! (doctrine nevola konstruktor)
-
-    /**
      * @ORM\Column(type="string", nullable=true, unique=true)
      */
     protected $login;
@@ -121,14 +114,6 @@ class User implements UserInterface, EquatableInterface {
             $role = $role->getRole();
         }
         return array_search($role, $this->getRoles()) !== false;
-    }
-
-    public function getOrgUnits() {
-        return $this->orgUnits;
-    }
-
-    public function setOrgUnits($orgUnits) {
-        $this->orgUnits = $orgUnits;
     }
 
     public function isEqualTo(UserInterface $user) {

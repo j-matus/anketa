@@ -26,8 +26,9 @@ class AISRetriever
         $this->loginInfo = $loginInfo;
     }
 
-    public function getResult(array $semestre = null) {
+    public function getResult($fakulta = null, array $semestre = null) {
         $input = $this->getConnectionData();
+        $input['fakulta'] = $fakulta;
         $input['semestre'] = $semestre;
 
         return $this->runVotr($input);
