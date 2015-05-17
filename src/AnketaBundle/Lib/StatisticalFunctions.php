@@ -12,8 +12,6 @@
  */
 namespace AnketaBundle\Lib;
 
-use libfajr\base\Preconditions;
-
 /**
  * Compute statistics over data
  */
