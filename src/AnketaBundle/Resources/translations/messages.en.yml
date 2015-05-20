@@ -74,7 +74,7 @@ teachingassociation:
       chcem_nahlasit: I want to report <strong>a missing teacher</strong>
       nadpis: Report a missing teacher
       popis: If there is a lecturer or teaching assistant missing for this subject, please let us know. We will try to fix that as soon as possible.
-      meno: Name
+      meno: Name (no diacritics)
       meno_placeholder: Start typing for autocomplete
       funkcia: Role
       vyucujuci: Lecturer
