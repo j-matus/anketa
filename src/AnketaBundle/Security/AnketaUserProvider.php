@@ -129,7 +129,8 @@ class AnketaUserProvider implements UserProviderInterface
      *
      * @param User $user
      * @param $thingList List of things we want to load. One or more of
-     *                   'subjects', 'displayName', 'isStudent'.
+     *                   'subjects', 'displayName', 'isStudentThisSeason',
+     *                   'isStudentAtAnyTime'.
      */
     private function loadUserInfo(User $user, $thingList)
     {

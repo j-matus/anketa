@@ -64,7 +64,7 @@ class AISUserSource implements UserSourceInterface
             throw new \Exception("AISUserSource currently doesn't support displayName");
         }
 
-        if (isset($want['subjects']) || isset($want['isStudent'])) {
+        if (isset($want['subjects']) || isset($want['isStudentThisSeason']) || isset($want['isStudentAtAnyTime'])) {
             $semestre = null;
             if (isset($want['subjects'])) {
                 $semestre = $userSeason->getSeason()->getAisSemesterList();
@@ -80,8 +80,13 @@ class AISUserSource implements UserSourceInterface
                     $this->loadSubjects($userSeason, $result['subjects']);
                 }
 
-                if (isset($want['isStudent'])) {
+                if (isset($want['isStudentThisSeason'])) {
                     $userSeason->setIsStudent(true);
+                }
+
+                if (isset($want['isStudentAtAnyTime'])) {
+                    $userSeason->getUser()->addRole($this->em->getRepository('AnketaBundle:Role')
+                            ->findOrCreateRole('ROLE_STUDENT_AT_ANY_TIME'));
                 }
             }
         }

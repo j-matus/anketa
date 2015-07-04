@@ -15,20 +15,29 @@ namespace AnketaBundle\Security;
 
 use AnketaBundle\Integration\LDAPRetriever;
 use AnketaBundle\Entity\UserSeason;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class LDAPUserSource implements UserSourceInterface
 {
 
+    /** @var EntityManager */
+    private $em;
+
     /** @var LDAPRetriever */
     private $ldapRetriever;
+
+    /** @var string */
+    private $orgUnit;
 
     /** @var LoggerInterface */
     private $logger;
 
-    public function __construct(LDAPRetriever $ldapRetriever, LoggerInterface $logger = null)
+    public function __construct(EntityManager $em, LDAPRetriever $ldapRetriever, $orgUnit, LoggerInterface $logger = null)
     {
+        $this->em = $em;
         $this->ldapRetriever = $ldapRetriever;
+        $this->orgUnit = $orgUnit;
         $this->logger = $logger;
     }
 
@@ -61,6 +70,13 @@ class LDAPUserSource implements UserSourceInterface
         
         if (isset($want['displayName']) && !empty($userInfo['displayName'])) {
             $user->setDisplayName($userInfo['displayName'][0]);
+        }
+
+        foreach ($userInfo['group'] as $group) {
+            if ($group == 'studenti_' . $this->orgUnit) {
+                $user->addRole($this->em->getRepository('AnketaBundle:Role')
+                        ->findOrCreateRole('ROLE_STUDENT_AT_ANY_TIME'));
+            }
         }
     }
 
