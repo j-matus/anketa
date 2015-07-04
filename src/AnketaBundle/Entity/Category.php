@@ -4,7 +4,7 @@ namespace AnketaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use libfajr\base\Preconditions;
+use AnketaBundle\Lib\Preconditions;
 
 /**
  * @ORM\Entity(repositoryClass="AnketaBundle\Entity\CategoryRepository")
