@@ -57,7 +57,7 @@
             </div>
         {% endif %}
         {% if data.commentsAllowed %}
-            {% if not access.statistics.commentsBlocked(season) %}
+            {% if access.statistics.canSeeComments(season) %}
                 {% if data.comments is not empty %}
                     {% trans %}statistics.displayQuestionMacro.komentare{% endtrans %}:
                     <div class="results-comments">
@@ -80,6 +80,8 @@
                     {%- transchoice data.numberOfInappropriateComments with {'%count%': data.numberOfInappropriateComments} %}statistics.displayQuestionMacro.skryte_komentare{% endtranschoice -%}
                     </p>
                 {% endif %}
+            {% elseif access.statistics.getUser %}
+                {% trans %}statistics.displayQuestionMacro.komentare_nepristupne{% endtrans %}
             {% else %}
                 {% trans with {'%url%': path('login', {'to': app.request.uri}) }%}statistics.displayQuestionMacro.komentare_po_prihlaseni{% endtrans %}
             {% endif %}

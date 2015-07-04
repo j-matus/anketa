@@ -1,31 +1,27 @@
 {% macro displayResponses(responses, section) %}
-    {% if access.statistics.canCreateResponses(section.season) or (access.statistics.canSeeResponses(section.season) and responses is not empty) %}
+    {% if access.statistics.canSeeResponses(section.season) and (access.statistics.canCreateResponses(section.season) or responses is not empty) %}
         <div class="results-comments results-comments-official">
         <h2>Vyjadrenia učiteľov k výsledkom:</h2>
-        {% if not access.statistics.commentsBlocked(section.season) %}
-            {% for response in responses %}
-                <div class='comment' id="odpoved{{ response.id }}">
-                <div class="comment-top">
-                <b>{{ response.author.formattedName }}
-                {%- if response.association %} ({{ response.association }}){% endif -%}
-                </b>:
-                </div>
-                <p class="comment-comment">{{ response.comment|escape|replace({"\n": "<br />"})|raw }}</p>
-                {% if access.statistics.canEditResponse(response) %}
-                <div>
-                    <a href="{{ path('response_edit', {'response_id': response.id}) }}">Upraviť komentár</a> |
-                    <a href="{{ path('response_delete', {'response_id': response.id}) }}">Zmazať komentár</a>
-                </div>
-                {% endif %}
-                </div>
-            {% endfor %}
-            {% if access.statistics.canCreateResponses(section.season) %}
-                <div>
-                    <a href="{{ path('response_new', {'section_slug': section.slug}) }}">Nový komentár</a>
-                </div>
+        {% for response in responses %}
+            <div class='comment' id="odpoved{{ response.id }}">
+            <div class="comment-top">
+            <b>{{ response.author.formattedName }}
+            {%- if response.association %} ({{ response.association }}){% endif -%}
+            </b>:
+            </div>
+            <p class="comment-comment">{{ response.comment|escape|replace({"\n": "<br />"})|raw }}</p>
+            {% if access.statistics.canEditResponse(response) %}
+            <div>
+                <a href="{{ path('response_edit', {'response_id': response.id}) }}">Upraviť komentár</a> |
+                <a href="{{ path('response_delete', {'response_id': response.id}) }}">Zmazať komentár</a>
+            </div>
             {% endif %}
-        {% else %}
-            Komentáre učiteľov si môžete pozrieť po <a href="{{ path('login', {'to': app.request.uri}) }}">prihlásení</a>.
+            </div>
+        {% endfor %}
+        {% if access.statistics.canCreateResponses(section.season) %}
+            <div>
+                <a href="{{ path('response_new', {'section_slug': section.slug}) }}">Nový komentár</a>
+            </div>
         {% endif %}
         </div>
     {% endif %}

@@ -26,7 +26,7 @@ class StatisticsController extends Controller {
             $access = $this->get('anketa.access.statistics');
             $season = null;
             foreach ($seasonsFound as $candidateSeason) {
-                if ($access->canSeeResults($candidateSeason) || $candidateSeason->getResultsVisible()) {
+                if ($access->canSeeResults($candidateSeason) || $access->someoneCanSeeResults($candidateSeason)) {
                     $season = $candidateSeason;
                     break;
                 }
@@ -258,13 +258,11 @@ class StatisticsController extends Controller {
     }
 
     private function accessDeniedForSeason(Season $season) {
-        if ($season->getResultsVisible()) {
-            $templateParams = array();
-            $templateParams['activeMenuItems'] = array($season->getId());
-            $templateParams['season'] = $season;
-            return $this->render('AnketaBundle:Statistics:resultsRequireLogin.html.twig', $templateParams);
-        }
-        throw new AccessDeniedException();
+        $templateParams = array();
+        $templateParams['activeMenuItems'] = array($season->getId());
+        $templateParams['season'] = $season;
+        $templateParams['logged_in'] = ($this->get('anketa.access.statistics')->getUser() !== null);
+        return $this->render('AnketaBundle:Statistics:resultsDenied.html.twig', $templateParams);
     }
 
     public function listSubjectsAction($season_slug) {

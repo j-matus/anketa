@@ -145,7 +145,8 @@ statistics:
       {1} Bol skrytý 1 nevhodný komentár. Jeho obsah bude napriek tomu preskúmaný.|
       [2,4] Boli skryté %count% nevhodné komentáre. Ich obsah bude napriek tomu preskúmaný.|
       ]4,Inf] Bolo skrytých %count% nevhodných komentárov. Ich obsah bude napriek tomu preskúmaný.
-    komentare_po_prihlaseni: Komentáre si môžete pozrieť po <a href="%url%">prihlásení</a>.
+    komentare_po_prihlaseni: Neprihlásené osoby nemajú prístup ku komentárom. <a href="%url%">Prihlásiť</a>
+    komentare_nepristupne: Momentálne nemáte prístup ku komentárom.
   fafRestriction:
     teacher: Prístup ku výsledkom je obmedzený. Učitelia môžu vidieť iba výsledky <a href="%url%">svojich predmetov</a>.
     noteacher: Prístup ku výsledkom je obmedzený. Výsledky môžu vidieť iba učitelia, a to iba pre predmety, ktoré učia.
