@@ -16,7 +16,7 @@ class AbstractVotingController extends Controller {
 
         if (!$userSeason->getLoadedFromAis()) {
             $userSeason->setLoadedFromAis(TRUE);
-            $this->get('anketa.user_provider')->loadUserInfo($user, array('isStudent', 'subjects'));
+            $this->get('anketa.user_provider')->loadUserInfo($user, array('isStudentThisSeason', 'subjects'));
         }
 
         if ($access->userCanVote()) return;

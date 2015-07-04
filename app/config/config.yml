@@ -95,7 +95,9 @@ services:
     anketa.ldap_user_source:
         class: AnketaBundle\Security\LDAPUserSource
         arguments:
+            - "@doctrine.orm.entity_manager"
             - "@anketa.ldap_retriever"
+            - %org_unit%
             - "@logger"
     anketa.demo_user_source:
         class: AnketaBundle\Security\DemoUserSource

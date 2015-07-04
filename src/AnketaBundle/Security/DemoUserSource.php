@@ -41,8 +41,13 @@ class DemoUserSource implements UserSourceInterface
             $user->setDisplayName($name);
         }
 
-        if (isset($want['isStudent'])) {
+        if (isset($want['isStudentThisSeason'])) {
             $userSeason->setIsStudent(true);
+        }
+
+        if (isset($want['isStudentAtAnyTime'])) {
+            $user->addRole($this->em->getRepository('AnketaBundle:Role')
+                    ->findOrCreateRole('ROLE_STUDENT_AT_ANY_TIME'));
         }
 
         if (isset($want['subjects'])) {
