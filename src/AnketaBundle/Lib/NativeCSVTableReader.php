@@ -39,13 +39,18 @@ class NativeCSVTableReader implements TableReaderInterface
      * @param type $enclosure
      * @param type $escape
      */
-    public function __construct($fp, $skipLines=0, $delimiter=';',$enclosure='"',$escape='\\') {
+    public function __construct($fp, $delimiter=';',$enclosure='"',$escape='\\') {
         $this->fp = $fp;
         $this->delimiter = $delimiter;
         $this->enclosure = $enclosure;
         $this->escape = $escape;
-        while ($skipLines--) $this->readRow();
         $this->header = $this->readRow();
+
+        // Ak CSV vzniklo konverziou z AISoveho XLS, na zaciatku su hlavickove
+        // riadky, ktore maju text iba v prvom stlpci. Tak ich preskocime.
+        while (empty($this->header[count($this->header) - 1])) {
+            $this->header = $this->readRow();
+        }
     }
 
     public function readRow() {
