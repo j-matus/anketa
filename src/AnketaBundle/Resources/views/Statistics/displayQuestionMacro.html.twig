@@ -9,7 +9,7 @@
     {% endif %}
     </div>
     {% if not data.hasAnswer and data.numberOfInappropriateComments == 0 %}
-        {% trans %}statistics.displayQuestionMacro.nik_neodpovedal{% endtrans %}
+        {{ trans('statistics.displayQuestionMacro.nik_neodpovedal') }}
     {% else %}
         {% if data.chart is not null %}
             <img src="{{ data.chart.url }}" width="{{ data.chart.width }}" height="{{ data.chart.height }}" alt="">
@@ -19,12 +19,12 @@
                 <table>
                     <thead>
                         <tr>
-                            <th> {% trans %}statistics.displayQuestionMacro.moznost{% endtrans %} </th>
-                            <th> {% trans %}statistics.displayQuestionMacro.hlasov{% endtrans %} </th>
-                            <th> {% trans %}statistics.displayQuestionMacro.podiel{% endtrans %} </th>
+                            <th> {{ trans('statistics.displayQuestionMacro.moznost') }} </th>
+                            <th> {{ trans('statistics.displayQuestionMacro.hlasov') }} </th>
+                            <th> {{ trans('statistics.displayQuestionMacro.podiel') }} </th>
                             {% if data.hasDifferentOptions %}
-                            <th> <span title="{% trans %}statistics.displayQuestionMacro.vaha_pre_statistiku{% endtrans %}" class="help-tooltip">
-                                {%- trans %}statistics.displayQuestionMacro.v{% endtrans -%}
+                            <th> <span title="{{ trans('statistics.displayQuestionMacro.vaha_pre_statistiku') }}" class="help-tooltip">
+                                {{- trans('statistics.displayQuestionMacro.v') -}}
                             </span> </th>
                             {% endif %}
                         </tr>
@@ -41,17 +41,17 @@
                     {% endfor %}
                 </table>
                 <ul>
-                    <li data-cnt="{{ data.stats.cnt }}">{% trans %}statistics.displayQuestionMacro.pocet_hlasov{% endtrans %}: {{ data.stats.cnt }} </li>
+                    <li data-cnt="{{ data.stats.cnt }}">{{ trans('statistics.displayQuestionMacro.pocet_hlasov') }}: {{ data.stats.cnt }} </li>
                     {% if data.stats.avg is defined %} 
                         <li data-avg="{{ "%.2f" | format(data.stats.avg) }}">
-                            {% trans %}statistics.displayQuestionMacro.priemer{% endtrans %}: {{ "%.2f" | format(data.stats.avg) }}
+                            {{ trans('statistics.displayQuestionMacro.priemer') }}: {{ "%.2f" | format(data.stats.avg) }}
                         </li>
                     {% endif %}
                     {% if data.stats.median is defined %}
-                        <li>{% trans %}statistics.displayQuestionMacro.median{% endtrans %}: {{ "%.2f" | format(data.stats.median) }} </li>
+                        <li>{{ trans('statistics.displayQuestionMacro.median') }}: {{ "%.2f" | format(data.stats.median) }} </li>
                     {% endif %}
                     {% if data.stats.sigma is defined %} 
-                        <li>{% trans %}statistics.displayQuestionMacro.odchylka{% endtrans %}: {{ "%.2f" | format(data.stats.sigma) }} </li>
+                        <li>{{ trans('statistics.displayQuestionMacro.odchylka') }}: {{ "%.2f" | format(data.stats.sigma) }} </li>
                     {% endif %}
                 </ul>
             </div>
@@ -59,13 +59,13 @@
         {% if data.commentsAllowed %}
             {% if not access.statistics.commentsBlocked(season) %}
                 {% if data.comments is not empty %}
-                    {% trans %}statistics.displayQuestionMacro.komentare{% endtrans %}:
+                    {{ trans('statistics.displayQuestionMacro.komentare') }}:
                     <div class="results-comments">
                     {% for comment in data.comments %}
                         <div class='comment' id="komentar{{ comment.answer_id }}">
                         <div class="comment-top"><a class="comment-link" href="#komentar{{ comment.answer_id }}">#{{ comment.answer_id }}</a>:
                             <a href="{{ path('statistics_flag', {'answer_id': comment.answer_id}) }}" class="flag-link">
-                                {%- trans %}statistics.displayQuestionMacro.nahlasit_komentar{% endtrans -%}
+                                {{- trans('statistics.displayQuestionMacro.nahlasit_komentar') -}}
                             </a>
                         </div>
                         <p class="comment-comment">{{ comment.comment|escape|replace({"\n":"<br>"})|raw }}</p>
@@ -73,15 +73,15 @@
                     {% endfor %}
                     </div>
                 {% elseif data.numberOfInappropriateComments == 0 %}
-                    {% trans %}statistics.displayQuestionMacro.ziaden_komentar{% endtrans %}
+                    {{ trans('statistics.displayQuestionMacro.ziaden_komentar') }}
                 {% endif %}
                 {% if data.numberOfInappropriateComments > 0 %}
                     <p class="inappropriate-comments-info">
-                    {%- transchoice data.numberOfInappropriateComments with {'%count%': data.numberOfInappropriateComments} %}statistics.displayQuestionMacro.skryte_komentare{% endtranschoice -%}
+                    {{- trans('statistics.displayQuestionMacro.skryte_komentare', {'%count%': data.numberOfInappropriateComments}, data.numberOfInappropriateComments) -}}
                     </p>
                 {% endif %}
             {% else %}
-                {% trans with {'%url%': path('login', {'to': app.request.uri}) }%}statistics.displayQuestionMacro.komentare_po_prihlaseni{% endtrans %}
+                {{ trans('statistics.displayQuestionMacro.komentare_po_prihlaseni', {'%url%': path('login', {'to': app.request.uri}) }) }}
             {% endif %}
         {% endif %}
     {% endif %}

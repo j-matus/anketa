@@ -21,22 +21,22 @@
     <h2>{{ title }}</h2>
     <form action="#" method="post">
     {% if categoryType == 'teacher_subject' %}
-        <p>{% trans %}question.index.ak_neucil{% endtrans %} <em>{% trans %}question.index.uloz_a_chod{% endtrans %}</em>.</p>
+        <p>{{ trans('question.index.ak_neucil') }} <em>{{ trans('question.index.uloz_a_chod') }}</em>.</p>
     {% elseif categoryType == 'subject' %}
         <p style="color: #888;">
-            {% trans %}question.index.preskocte_predmet{% endtrans %}
+            {{ trans('question.index.preskocte_predmet') }}
         </p>
     {% endif %}
     {% if categoryType == 'teacher_subject' or categoryType == 'subject' %}
-        <p>{% trans %}question.index.chyba_v_uciteloch{% endtrans %}
+        <p>{{ trans('question.index.chyba_v_uciteloch') }}
         <a href="{{ path('assoc_teacher_with_subject', {'subject_slug': subject.slug}) }}"
-           >{% trans %}question.index.dajte_nam_vediet{% endtrans %}</a>.
+           >{{ trans('question.index.dajte_nam_vediet') }}</a>.
         </p>
     {% endif %}
     {% block submit %}
     <div class="submit">
-        <input class="save" type="submit" name="save" value="{% trans %}question.index.uloz{% endtrans %}" />
-        <input class="next" type="submit" name="next" value="{% trans %}question.index.uloz_a_chod{% endtrans %} &raquo;" />
+        <input class="save" type="submit" name="save" value="{{ trans('question.index.uloz') }}" />
+        <input class="next" type="submit" name="next" value="{{ trans('question.index.uloz_a_chod') }} &raquo;" />
     </div>
     {% endblock %}
     {% for question in questions %}
@@ -62,7 +62,7 @@
                       {% else %}
                          checked="checked"
                       {% endif %} />
-              {% trans %}question.index.ziadna_odpoved{% endtrans %}
+              {{ trans('question.index.ziadna_odpoved') }}
               </label>
               </div>
 
@@ -84,7 +84,7 @@
 
             {% if question.hasComment %}
             <div class="comment">
-                <div><label for="comment_{{ question.id }}">{% trans %}question.index.komentar{% endtrans %}:</label></div>
+                <div><label for="comment_{{ question.id }}">{{ trans('question.index.komentar') }}:</label></div>
                 <textarea id="comment_{{ question.id }}" class="expanding"
                           name="question[{{ question.id }}][comment]"
                     >{{ answers[question.id] is not none ? answers[question.id].comment : "" }}</textarea>

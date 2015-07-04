@@ -4,11 +4,11 @@
     {{ menu.statistics.render(activeMenuItems)|raw }}
 {% endblock %}
 {% block content %}
-    <h1>{% trans %}statistics.seasonReport.vysledky{% endtrans %} {{ season.description }}</h1>
+    <h1>{{ trans('statistics.seasonReport.vysledky') }} {{ season.description }}</h1>
     <p>
-       {% trans with {'%season%': season.description, '%voters%': voters, '%total%': season.studentCount } %}statistics.seasonReport.pocet_hlasujucich{% endtrans %}
-       {% trans %}statistics.seasonReport.celkova_ucast{% endtrans %}
+       {{ trans('statistics.seasonReport.pocet_hlasujucich', { '%season%': season.description, '%voters%': voters, '%total%': season.studentCount }) }}
+       {{ trans('statistics.seasonReport.celkova_ucast') }}
        <strong>{{ "%.0f%%" | format(voteProgress.percentDone) }}</strong>.
     </p>
-    <p>{% trans %}statistics.seasonReport.k_vysledkom_cez_menu{% endtrans %}</p>
+    <p>{{ trans('statistics.seasonReport.k_vysledkom_cez_menu') }}</p>
 {% endblock %}

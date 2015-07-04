@@ -6,8 +6,8 @@
 {% block content %}
     <h1>{{ section.title }}</h1>
     {% if isteacher %}
-        {% trans with {'%url%': path('statistics_list_my_subjects', {'season_slug': section.season.slug}) } %}statistics.fafRestriction.teacher{% endtrans %}
+        {{ trans('statistics.fafRestriction.teacher', {'%url%': path('statistics_list_my_subjects', {'season_slug': section.season.slug}) }) }}
     {% else %}
-        {% trans %}statistics.fafRestriction.noteacher{% endtrans %}
+        {{ trans('statistics.fafRestriction.noteacher') }}
     {% endif %}
 {% endblock %}

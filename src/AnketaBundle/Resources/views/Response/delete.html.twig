@@ -5,17 +5,17 @@
 {% endblock %}
 
 {% block content %}
-<h1>{% trans %}response.delete.zmazat_komentar{% endtrans %}</h1>
-<p>{% trans %}response.delete.urcite_zmazat{% endtrans %}</p>
-<p>{% trans %}response.delete.komentar_ku{% endtrans %}:
+<h1>{{ trans('response.delete.zmazat_komentar') }}</h1>
+<p>{{ trans('response.delete.urcite_zmazat') }}</p>
+<p>{{ trans('response.delete.komentar_ku') }}:
 <a href="{{ section.statisticsPath }}">{{ section.title }}</a></p>
 {% if association is not null %}
-    <p>{% trans %}response.delete.vasa_funkcia{% endtrans %}: {{ association }}</p>
+    <p>{{ trans('response.delete.vasa_funkcia') }}: {{ association }}</p>
 {% endif %}
-<p>{% trans %}response.delete.text_komentaru{% endtrans %}:</p>
+<p>{{ trans('response.delete.text_komentaru') }}:</p>
 <p>{{ responseText|escape|replace({"\n": "<br />"})|raw }}</p>
 <form action="{{ submitLink }}" method="POST">
-<button type="submit">{% trans %}response.delete.zmazat{% endtrans %}</button>
-<a href="{{ section.statisticsPath }}">{% trans %}response.delete.nezmazat{% endtrans %}</a>
+<button type="submit">{{ trans('response.delete.zmazat') }}</button>
+<a href="{{ section.statisticsPath }}">{{ trans('response.delete.nezmazat') }}</a>
 </form>
 {% endblock %}

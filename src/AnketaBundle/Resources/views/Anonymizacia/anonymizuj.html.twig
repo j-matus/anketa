@@ -1,18 +1,18 @@
 {% extends 'AnketaBundle::layout.html.twig' %}
 
-{% block title %}{% trans %}anonymizacia.anonymizuj.anonymizacia{% endtrans %}{% endblock %}
+{% block title %}{{ trans('anonymizacia.anonymizuj.anonymizacia') }}{% endblock %}
 
 {% block navigation %}
     {{ menu.hlasovanie.render(['anonymizuj'])|raw }}
 {% endblock %}
 
 {% block content %}
-<h2>{% trans %}anonymizacia.anonymizuj.ukoncenie{% endtrans %}</h2>
-<p>{% trans %}anonymizacia.anonymizuj.vdaka{% endtrans %}</p>
-<p>{% trans %}anonymizacia.anonymizuj.co_sa_stane{% endtrans %}</p>
-<p>{% trans %}anonymizacia.anonymizuj.skontrolujte{% endtrans %} <strong class="warning">{% trans %}anonymizacia.anonymizuj.nevratny_proces{% endtrans %}</strong></p>
+<h2>{{ trans('anonymizacia.anonymizuj.ukoncenie') }}</h2>
+<p>{{ trans('anonymizacia.anonymizuj.vdaka') }}</p>
+<p>{{ trans('anonymizacia.anonymizuj.co_sa_stane') }}</p>
+<p>{{ trans('anonymizacia.anonymizuj.skontrolujte') }} <strong class="warning">{{ trans('anonymizacia.anonymizuj.nevratny_proces') }}</strong></p>
 <form action="#" method="post">
-<input type="submit" name="anonymizuj" value="{% trans %}anonymizacia.anonymizuj.ukoncit{% endtrans %}" />
-&nbsp;&nbsp; <a href="{{ path('answer') }}">{% trans %}anonymizacia.anonymizuj.este_hlasovat{% endtrans %}</a>
+<input type="submit" name="anonymizuj" value="{{ trans('anonymizacia.anonymizuj.ukoncit') }}" />
+&nbsp;&nbsp; <a href="{{ path('answer') }}">{{ trans('anonymizacia.anonymizuj.este_hlasovat') }}</a>
 </form>
 {% endblock %}
