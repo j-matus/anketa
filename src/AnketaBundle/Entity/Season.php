@@ -63,22 +63,40 @@ class Season {
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $resultsVisible;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $resultsPublic;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
     protected $respondingOpen;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * The level of results information available to logged out users.
+     *
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    protected $responsesVisible;
+    protected $levelPublic;
+
+    /**
+     * The level of results information available to logged in users.
+     *
+     * @ORM\Column(type="smallint", nullable=false)
+     */
+    protected $levelUniversity;
+
+    /**
+     * The level of results information available to students of this faculty.
+     *
+     * @ORM\Column(type="smallint", nullable=false)
+     */
+    protected $levelFacultyStudent;
+
+    /**
+     * The level of results information available to teachers of this faculty.
+     *
+     * @ORM\Column(type="smallint", nullable=false)
+     */
+    protected $levelFacultyTeacher;
+
+    const LEVEL_NOTHING   = 0; // no results visible
+    const LEVEL_NUMBERS   = 1; // numbers and graphs visible
+    const LEVEL_COMMENTS  = 2; // text comments visible
+    const LEVEL_RESPONSES = 3; // teacher responses visible
 
     /**
      * TODO: This is a huge hack and needs to be removed as soon as it's not
@@ -181,22 +199,6 @@ class Season {
         $this->votingOpen = $value;
     }
 
-    public function getResultsVisible() {
-        return $this->resultsVisible;
-    }
-
-    public function setResultsVisible($value) {
-        $this->resultsVisible = $value;
-    }
-
-    public function getResultsPublic() {
-        return $this->resultsPublic;
-    }
-
-    public function setResultsPublic($value) {
-        $this->resultsPublic = $value;
-    }
-
     public function getRespondingOpen() {
         return $this->respondingOpen;
     }
@@ -205,12 +207,36 @@ class Season {
         $this->respondingOpen = $value;
     }
 
-    public function getResponsesVisible() {
-        return $this->responsesVisible;
+    public function getLevelPublic() {
+        return $this->levelPublic;
     }
 
-    public function setResponsesVisible($value) {
-        $this->responsesVisible = $value;
+    public function setLevelPublic($value) {
+        $this->levelPublic = $value;
+    }
+
+    public function getLevelUniversity() {
+        return $this->levelUniversity;
+    }
+
+    public function setLevelUniversity($value) {
+        $this->levelUniversity = $value;
+    }
+
+    public function getLevelFacultyStudent() {
+        return $this->levelFacultyStudent;
+    }
+
+    public function setLevelFacultyStudent($value) {
+        $this->levelFacultyStudent = $value;
+    }
+
+    public function getLevelFacultyTeacher() {
+        return $this->levelFacultyTeacher;
+    }
+
+    public function setLevelFacultyTeacher($value) {
+        $this->levelFacultyTeacher = $value;
     }
 
     public function getFafRestricted() {

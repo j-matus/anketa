@@ -41,7 +41,10 @@ class SeasonRepository extends EntityRepository {
 
     public function getTopLevelResultsVisible() {
         $dql = 'SELECT s FROM AnketaBundle\Entity\Season s ' .
-               'WHERE s.resultsVisible = TRUE';
+               'WHERE s.levelPublic > 0 ' .
+               'OR s.levelUniversity > 0 ' .
+               'OR s.levelFacultyTeacher > 0 ' .
+               'OR s.levelFacultyStudent > 0';
         $query = $this->getEntityManager()->createQuery($dql);
         $result = $query->execute();
         return count($result) > 0;
