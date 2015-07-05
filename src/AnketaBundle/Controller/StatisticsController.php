@@ -505,6 +505,7 @@ class StatisticsController extends Controller {
             $this->get('mailer'); // DO NOT DELETE THIS LINE
             // it autoloads required things before Swift_Message can be used
 
+            $answer->setReviewed(false);
             $message = \Swift_Message::newInstance()
                             ->setSubject('FMFI ANKETA -- nevhodný komentár')
                             ->setFrom($sender)

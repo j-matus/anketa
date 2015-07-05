@@ -26,27 +26,33 @@ class CommentReviewAdminController extends Controller {
         }
     }
 
-    public function indexAction() {
+    public function indexAction($page, $filter1, $filter2) {
         $em = $this->getDoctrine()->getManager();
 
         $active_season = $em->getRepository('AnketaBundle:Season')
                 ->getActiveSeason();
 
-        $first_result = 0;
-        $page_id = $this->getRequest()->get('page', null);
-        if ($page_id != null) {
-               $first_result = (int)$page_id * 100;
-        }
-        $next_page_id = (int)$page_id + 1;
-        $prev_page_id = (int)$page_id - 1;
 
-        $criteria = new \Doctrine\Common\Collections\Criteria();
+        $first_result = (int)$page * 100;
+        $next_page_id = (int)$page + 1;
+        $prev_page_id = (int)$page - 1;
+
         $repo = $em->getRepository('AnketaBundle:Answer');
         $query = $repo->createQueryBuilder('q')
                 ->where("q.comment <> ''")
-                ->andWhere("q.season = :season")
-                ->addOrderBy("q.inappropriate", 'DESC')
-                ->setMaxResults(100)
+                ->andWhere("q.season = :season");
+
+        if ($filter1 != 'null') {
+            $val = $filter1 === 'true' ? 1 : 0;
+            $query = $query->andWhere("q.inappropriate = :inapp")
+                        ->setParameter('inapp', $val);
+        }
+        if ($filter2 != 'null') {
+            $val = $filter2 === 'true' ? 1 : 0;
+            $query = $query->andWhere("q.reviewed = :review")
+                        ->setParameter('review', $val);
+        }
+        $query = $query->setMaxResults(100)
                 ->setFirstResult($first_result)
                 ->setParameter('season', $active_season)
                 ->getQuery();
@@ -58,7 +64,9 @@ class CommentReviewAdminController extends Controller {
                       'active_season' => $active_season,
                       'next_page_id' => $next_page_id,
                       'prev_page_id' => $prev_page_id,
-                      'page_id' => $page_id));
+                      'page_id' => $page,
+                      'filter1' => $filter1,
+                      'filter2' => $filter2));
     }
 
     /**
@@ -69,6 +77,8 @@ class CommentReviewAdminController extends Controller {
     public function processRequestAction() {
         $comments = $this->getRequest()->get('comment', null);
         $page = $this->getRequest()->get('page', null);
+        $filter1 = $this->getRequest()->get('filter1', 'null');
+        $filter2 = $this->getRequest()->get('filter2', 'null');
         if ($comments == null) {
             return new Response('Required parameter "comment" is missing.', 400);
         }
@@ -105,6 +115,8 @@ class CommentReviewAdminController extends Controller {
         }
         return $this->redirect(
                 $this->generateUrl('admin_comments_review',
-                                   array('page' => $page)));
+                                   array('page' => $page,
+                                         'filter1' => $filter1,
+                                         'filter2' => $filter2)));
     }
 }
