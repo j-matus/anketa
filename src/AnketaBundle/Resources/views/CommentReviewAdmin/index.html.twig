@@ -1,0 +1,45 @@
+{% extends 'AnketaBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/anketa/css/admin.css') }}" />
+{% endblock %}
+
+{% block content %}
+<h1>Review pridaných komentárov</h1>
+
+{% if comments|length > 0 %}
+<p>Sezóna: <strong>{{ active_season.description }}</strong></p>
+
+<form action="{{ path('admin_comments_review_process') }}" method="post">
+<input type="hidden" name="page" value="{{ page_id }}" />
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Inappropriate</th>
+            <th>Reviewed</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for comment in comments %}
+    <tr>
+        <input type="hidden" name="comment[{{ comment.id }}][prev_inappropriate]" value="{{ comment.inappropriate }}" />
+        <input type="hidden" name="comment[{{ comment.id }}][prev_reviewed]" value="{{ comment.reviewed }}" />
+        <td>{{ comment.id }}</td>
+        <td><input type="checkbox" name="comment[{{ comment.id }}][inappropriate]" value="1"  {% if comment.inappropriate %} checked {% endif %} /> </td>
+        <td><input type="checkbox" name="comment[{{ comment.id }}][reviewed]" value="1" {% if comment.reviewed %} checked {% endif %} /> </td>
+        <td>{{ comment.comment }}</td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+<input type="submit" name="approve" value="Save" class="btn btn-primary"/> {% if prev_page_id >= 0 %}  <a href="{{ path('admin_comments_review', {'page': prev_page_id }) }}"><</a> {% endif %} {{ page_id }} <a href="{{ path('admin_comments_review', {'page': next_page_id }) }}">></a>
+</form>
+
+{% else %}
+<p>No comments found.</p>
+{% endif %}
+
+{% endblock %}
