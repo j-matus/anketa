@@ -21,19 +21,15 @@ class HlasovanieAccess
     /** @var EntityManager */
     private $em;
 
-    /** @var string */
-    private $allowedOrgUnit;
-
     /** @var mixed */
     private $user;
 
     /** @var \AnketaBundle\Entity\UserSeason */
     private $userSeason;
 
-    public function __construct(SecurityContextInterface $security, EntityManager $em, $allowedOrgUnit, $checkOrgUnit) {
+    public function __construct(SecurityContextInterface $security, EntityManager $em) {
         $this->security = $security;
         $this->em = $em;
-        $this->allowedOrgUnit = ($checkOrgUnit ? $allowedOrgUnit : null);
         $this->user = null;
         $this->userSeason = null;
     }
@@ -87,22 +83,12 @@ class HlasovanieAccess
     }
 
     /**
-     * Returns whether the current user belongs to the allowed org. unit.
-     *
-     * @return boolean
-     */
-    public function userHasAllowedOrgUnit() {
-        return !$this->allowedOrgUnit || ($this->getUser() && in_array($this->allowedOrgUnit, $this->getUser()->getOrgUnits()));
-    }
-
-    /**
      * Returns whether the current user can participate in voting.
      *
      * @return boolean
      */
     public function userCanVote() {
-        if ($this->security->isGranted('ROLE_ADMIN')) return true;
-        return $this->isVotingOpen() && $this->getUserSeason() && $this->getUserSeason()->canVote() && $this->userHasAllowedOrgUnit();
+        return $this->isVotingOpen() && $this->getUserSeason() && $this->getUserSeason()->canVote();
     }
 
 }

@@ -3,16 +3,6 @@ imports:
     - { resource: @AnketaBundle/Resources/config/services.yml }
 
 parameters:
-    other_instances:
-        FMFI:
-            url: https://anketa.fmph.uniba.sk/
-            name: "Fakulta matematiky, fyziky a informatiky"
-        PriF:
-            url: https://anketa.uniba.sk/fns/
-            name: "Prírodovedecká fakulta"
-        FaF:
-            url: https://anketa.uniba.sk/fpharm/
-            name: "Farmaceutická fakulta"
     twig.exception_listener.class: AnketaBundle\EventListener\ExceptionListener
 
 framework:
@@ -94,6 +84,8 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@anketa.ais_retriever"
             - "@anketa.subject_identification"
+            - %org_unit%
+            - %check_voters_org_unit%
             - "@logger"
     anketa.ldap_retriever:
         class: AnketaBundle\Integration\LDAPRetriever
@@ -109,7 +101,6 @@ services:
         class: AnketaBundle\Security\DemoUserSource
         arguments:
             - "@doctrine.orm.entity_manager"
-            - [%org_unit%]
     anketa.none_user_source:
         class: AnketaBundle\Security\NoneUserSource
     anketa.subject_identification:

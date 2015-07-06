@@ -43,8 +43,11 @@ class AISUserSource implements UserSourceInterface
     /** @var SubjectIdentificationInterface */
     private $subjectIdentification;
 
+    /** @var string */
+    private $allowedOrgUnit;
+
     public function __construct(Connection $dbConn, EntityManager $em, AISRetriever $aisRetriever,
-            SubjectIdentificationInterface $subjectIdentification,
+            SubjectIdentificationInterface $subjectIdentification, $allowedOrgUnit, $checkOrgUnit,
             LoggerInterface $logger = null)
     {
         $this->dbConn = $dbConn;
@@ -52,6 +55,7 @@ class AISUserSource implements UserSourceInterface
         $this->aisRetriever = $aisRetriever;
         $this->logger = $logger;
         $this->subjectIdentification = $subjectIdentification;
+        $this->allowedOrgUnit = ($checkOrgUnit ? $allowedOrgUnit : null);
     }
 
     public function load(UserSeason $userSeason, array $want)
@@ -69,7 +73,7 @@ class AISUserSource implements UserSourceInterface
                 }
             }
 
-            $result = $this->aisRetriever->getResult($semestre);
+            $result = $this->aisRetriever->getResult($this->allowedOrgUnit, $semestre);
 
             if ($result['is_student']) {
                 if (isset($want['subjects'])) {
