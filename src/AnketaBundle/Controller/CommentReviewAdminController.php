@@ -17,6 +17,7 @@ use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 class CommentReviewAdminController extends Controller {
 
@@ -58,23 +59,21 @@ class CommentReviewAdminController extends Controller {
                 ->setParameter('season', $active_season)
                 ->getQuery();
 
-        $query->setFetchMode('AnketaBundle\Entity\Answer',
-                             'subject',
-                             \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
-        $query->setFetchMode('AnketaBundle\Entity\Answer',
-                             'teacher',
-                             \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
-        $query->setFetchMode('AnketaBundle\Entity\Answer',
-                             'question',
-                             \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
-        $query->setFetchMode('AnketaBundle\Entity\Answer',
-                             'studyProgram',
-                             \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
+        $query = $query->setFetchMode('AnketaBundle\Entity\Answer',
+                             'studyProgram', ClassMetadata::FETCH_EAGER);
+        $query = $query->setFetchMode('AnketaBundle\Entity\Answer',
+                             'subject', ClassMetadata::FETCH_EAGER);
+        $query = $query->setFetchMode('AnketaBundle\Entity\Answer',
+                             'teacher', ClassMetadata::FETCH_EAGER);
+        $query = $query->setFetchMode('AnketaBundle\Entity\Answer',
+                             'question', ClassMetadata::FETCH_EAGER);
+        $query = $query->setFetchMode('AnketaBundle\Entity\Question',
+                             'category', ClassMetadata::FETCH_EAGER);
         $results = $query->execute();
         $comments = array();
         foreach($results as $comment) {
             $section = StatisticsSection::getSectionOfAnswer($this->container, $comment);
-            array_push($comments, array($section->getStatisticsPath(true), $comment));
+            $comments[] = array($section, $comment);
         }
         return $this->render(
                 'AnketaBundle:CommentReviewAdmin:index.html.twig',

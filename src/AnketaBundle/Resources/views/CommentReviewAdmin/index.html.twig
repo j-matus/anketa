@@ -37,10 +37,10 @@
     </thead>
     <tbody>
 {% for result in comments %}
+    {% set section = result[0] %}
     {% set comment = result[1] %}
-    {% set comment_link = result[0] %}
     <tr>
-        <td><a href="{{ comment_link }}#komentar{{ comment.id }}">{{ comment.id }}</a></td>
+        <td><a title="{{ section.title }}" href="{{ section.statisticsPath }}#komentar{{ comment.id }}">{{ comment.id }}</a></td>
         <td>
                 <input type="hidden" name="comment[{{ comment.id }}][prev_inappropriate]" value="{{ comment.inappropriate }}" />
                 <input type="checkbox" name="comment[{{ comment.id }}][inappropriate]" value="1"  {% if comment.inappropriate %} checked {% endif %} />
