@@ -36,15 +36,17 @@
         </tr>
     </thead>
     <tbody>
-{% for comment in comments %}
+{% for result in comments %}
+    {% set comment = result[1] %}
+    {% set comment_link = result[0] %}
     <tr>
-        <td>{{ comment.id }}</td>
+        <td><a href="{{ comment_link }}#komentar{{ comment.id }}">{{ comment.id }}</a></td>
         <td>
                 <input type="hidden" name="comment[{{ comment.id }}][prev_inappropriate]" value="{{ comment.inappropriate }}" />
-                <input type="checkbox" name="comment[{{ comment.id }}][inappropriate]" value="1"  {% if comment.inappropriate %} checked {% endif %} /> 
+                <input type="checkbox" name="comment[{{ comment.id }}][inappropriate]" value="1"  {% if comment.inappropriate %} checked {% endif %} />
         </td>
         <td>
-                <input type="checkbox" name="comment[{{ comment.id }}][reviewed]" value="1" {% if comment.reviewed %} checked {% endif %} /> 
+                <input type="checkbox" name="comment[{{ comment.id }}][reviewed]" value="1" {% if comment.reviewed %} checked {% endif %} />
                 <input type="hidden" name="comment[{{ comment.id }}][prev_reviewed]" value="{{ comment.reviewed }}" />
         </td>
         <td>{{ comment.comment }}</td>
@@ -52,11 +54,11 @@
 {% endfor %}
     </tbody>
 </table>
-<input type="submit" name="approve" value="Uložiť" class="btn btn-primary"/> {% if prev_page_id >= 0 %}  <a href="{{ path('admin_comments_review', {'page': prev_page_id, 'filter1': filter1, 'filter2': filter2 }) }}"><</a> {% endif %} {{ page_id }} <a href="{{ path('admin_comments_review', {'page': next_page_id, 'filter1': filter1, 'filter2': filter2}) }}">></a>
+<input type="submit" name="approve" value="Uložiť" class="btn btn-primary"/>
 </form>
 
 {% else %}
-<p>No comments found.</p> {% if prev_page_id >= 0 %}  <a href="{{ path('admin_comments_review', {'page': prev_page_id, 'filter1': filter1, 'filter2': filter2 }) }}"><</a> {% endif %} {{ page_id }}
+<p>No comments found.</p>
 {% endif %}
-
+{% if prev_page_id >= 0 %}  <a href="{{ path('admin_comments_review', {'page': prev_page_id, 'filter1': filter1, 'filter2': filter2 }) }}"><</a> {% endif %} {{ page_id }} {% if comments %} <a href="{{ path('admin_comments_review', {'page': next_page_id, 'filter1': filter1, 'filter2': filter2}) }}">></a> {% endif %}
 {% endblock %}

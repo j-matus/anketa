@@ -40,24 +40,42 @@ class CommentReviewAdminController extends Controller {
         $repo = $em->getRepository('AnketaBundle:Answer');
         $query = $repo->createQueryBuilder('q')
                 ->where("q.comment <> ''")
-                ->andWhere("q.season = :season");
+                ->andWhere('q.season = :season');
 
         if ($filter1 != 'null') {
             $val = $filter1 === 'true' ? 1 : 0;
-            $query = $query->andWhere("q.inappropriate = :inapp")
+            $query = $query->andWhere('q.inappropriate = :inapp')
                         ->setParameter('inapp', $val);
         }
         if ($filter2 != 'null') {
             $val = $filter2 === 'true' ? 1 : 0;
-            $query = $query->andWhere("q.reviewed = :review")
+            $query = $query->andWhere('q.reviewed = :review')
                         ->setParameter('review', $val);
         }
         $query = $query->setMaxResults(100)
+                ->addOrderBy('q.id', 'ASC')
                 ->setFirstResult($first_result)
                 ->setParameter('season', $active_season)
                 ->getQuery();
 
-        $comments = $query->execute();
+        $query->setFetchMode('AnketaBundle\Entity\Answer',
+                             'subject',
+                             \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode('AnketaBundle\Entity\Answer',
+                             'teacher',
+                             \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode('AnketaBundle\Entity\Answer',
+                             'question',
+                             \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
+        $query->setFetchMode('AnketaBundle\Entity\Answer',
+                             'studyProgram',
+                             \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
+        $results = $query->execute();
+        $comments = array();
+        foreach($results as $comment) {
+            $section = StatisticsSection::getSectionOfAnswer($this->container, $comment);
+            array_push($comments, array($section->getStatisticsPath(true), $comment));
+        }
         return $this->render(
                 'AnketaBundle:CommentReviewAdmin:index.html.twig',
                 array('comments' => $comments,
