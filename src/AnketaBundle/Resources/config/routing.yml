@@ -56,3 +56,16 @@ admin_teaching_associations_process:
     defaults: { _controller: AnketaBundle:TeachingAssociationAdmin:processRequest }
     requirements:
       _method: POST
+
+admin_comments_review:
+    pattern: /admin/comments-review/{page}/{filter1}/{filter2}
+    defaults: { _controller: AnketaBundle:CommentReviewAdmin:index, page: 0, filter1: 'null', filter2: 'null' }
+    requirements:
+      _method: GET
+      page:  \d+
+
+admin_comments_review_process:
+    pattern: /admin/comments-review
+    defaults: { _controller: AnketaBundle:CommentReviewAdmin:processRequest }
+    requirements:
+      _method: POST

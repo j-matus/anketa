@@ -1,0 +1,64 @@
+{% extends 'AnketaBundle::layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/anketa/css/admin.css') }}" />
+{% endblock %}
+
+{% block content %}
+<h1>Review pridaných komentárov</h1>
+
+{% if comments|length > 0 %}
+<p>Sezóna: <strong>{{ active_season.description }}</strong></p>
+
+<p>Filtre: <strong> Inappropriate: </strong>
+{% for state,text in {'true': 'Yes', 'false': 'No', 'null': 'None'} %}
+        {% if filter1 == state %} {{ text }} {% else %}  <a href="{{ path('admin_comments_review', {'page': page_id, 'filter1': state, 'filter2': filter2 }) }}">{{ text }}</a>  {% endif %} {% if loop.last != true %} / {% endif %}
+{% endfor %}
+
+<strong> Reviewed: </strong>
+{% for state,text in {'true': 'Yes', 'false': 'No', 'null': 'None'} %}
+        {% if filter2 == state %} {{ text }} {% else %}  <a href="{{ path('admin_comments_review', {'page': page_id, 'filter1': filter1, 'filter2': state }) }}">{{ text }}</a>  {% endif %} {% if loop.last != true %} / {% endif %}
+{% endfor %}
+</p>
+
+<form action="{{ path('admin_comments_review_process') }}" method="post">
+<input type="hidden" name="page" value="{{ page_id }}" />
+<input type="hidden" name="filter1" value="{{ filter1 }}" />
+<input type="hidden" name="filter2" value="{{ filter2 }}" />
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Inappropriate</th>
+            <th>Reviewed</th>
+            <th>Comment</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for result in comments %}
+    {% set section = result[0] %}
+    {% set comment = result[1] %}
+    <tr>
+        <td><a title="{{ section.title }}" href="{{ section.statisticsPath }}#komentar{{ comment.id }}">{{ comment.id }}</a></td>
+        <td>
+                <input type="hidden" name="comment[{{ comment.id }}][prev_inappropriate]" value="{{ comment.inappropriate }}" />
+                <input type="checkbox" name="comment[{{ comment.id }}][inappropriate]" value="1"  {% if comment.inappropriate %} checked {% endif %} />
+        </td>
+        <td>
+                <input type="checkbox" name="comment[{{ comment.id }}][reviewed]" value="1" {% if comment.reviewed %} checked {% endif %} />
+                <input type="hidden" name="comment[{{ comment.id }}][prev_reviewed]" value="{{ comment.reviewed }}" />
+        </td>
+        <td>{{ comment.comment }}</td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+<input type="submit" name="approve" value="Uložiť" class="btn btn-primary"/>
+</form>
+
+{% else %}
+<p>No comments found.</p>
+{% endif %}
+{% if prev_page_id >= 0 %}  <a href="{{ path('admin_comments_review', {'page': prev_page_id, 'filter1': filter1, 'filter2': filter2 }) }}"><</a> {% endif %} {{ page_id }} {% if comments %} <a href="{{ path('admin_comments_review', {'page': next_page_id, 'filter1': filter1, 'filter2': filter2}) }}">></a> {% endif %}
+{% endblock %}

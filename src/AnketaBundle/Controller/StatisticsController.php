@@ -490,6 +490,8 @@ class StatisticsController extends Controller {
         if ('POST' == $request->getMethod()) {
             $user = $this->get('anketa.access.statistics')->getUser();
             if (!$user) throw new AccessDeniedException();
+            $answer->setReviewed(false);
+            $em->flush();
             $note = $request->get('note', '');
 
             $emailTpl = array(

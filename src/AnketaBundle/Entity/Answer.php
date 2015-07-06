@@ -87,6 +87,11 @@ class Answer {
      */
     protected $inappropriate = false;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $reviewed = false;
+
     public function getId() {
         return $this->id;
     }
@@ -228,5 +233,13 @@ class Answer {
 
     public function setSeason($season) {
         $this->season = $season;
+    }
+
+    public function setReviewed($reviewed) {
+        $this->reviewed = $reviewed;
+    }
+
+    public function getReviewed() {
+        return $this->reviewed;
     }
 }
