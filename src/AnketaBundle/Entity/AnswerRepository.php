@@ -128,7 +128,8 @@ class AnswerRepository extends EntityRepository {
                     'WHERE s.id = ss.season_id '.
                     'AND ss.subject_id = su.id '.
                     'AND a.subject_id = su.id '.
-                    'AND s.resultsPublic = 1 '.
+                    // toto je pre candle API takze chceme to co vidi verejnost
+                    'AND s.levelPublic >= '.Season::LEVEL_NUMBERS.' '.
                     'AND a.season_id = s.id '.
                     'AND a.question_id = q.id '.
                     'AND q.season_id = s.id '.

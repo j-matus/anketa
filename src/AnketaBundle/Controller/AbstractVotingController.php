@@ -10,10 +10,14 @@ class AbstractVotingController extends Controller {
 
     public function preExecute() {
         $access = $this->get('anketa.access.hlasovanie');
-        if ($access->getUser() === null) throw new AccessDeniedException();
-        if ($access->getUserSeason() === null) throw new AccessDeniedException();
+        $user = $access->getUser();
+        $userSeason = $access->getUserSeason();
+        if ($user === null || $userSeason === null) throw new AccessDeniedException();
 
-        $this->loadUserInfo();
+        if (!$userSeason->getLoadedFromAis()) {
+            $userSeason->setLoadedFromAis(TRUE);
+            $this->get('anketa.user_provider')->loadUserInfo($user, array('isStudentThisSeason', 'subjects'));
+        }
 
         if ($access->userCanVote()) return;
 
@@ -33,35 +37,5 @@ class AbstractVotingController extends Controller {
 
         // Nemoze hlasovat z nejakeho ineho dovodu...
         throw new AccessDeniedException();
-    }
-
-    /**
-     * Load user info and subjects if necessary.
-     */
-    private function loadUserInfo()
-    {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $user = $this->get('security.context')->getToken()->getUser();
-        $activeSeason = $em->getRepository('AnketaBundle:Season')
-                ->getActiveSeason();
-        $userSeason = $em->getRepository('AnketaBundle:UserSeason')
-                ->findOneBy(array('user' => $user,
-                                  'season' => $activeSeason));
-        $userSources = $this->get('anketa.user_provider')->getUserSources();
-
-        // "$load[X][Y]" == "service X should load user attribute Y"
-        $load = array();
-
-        if (!$userSeason->getLoadedFromAis()) {
-            $load[$userSources['isStudent']]['isStudent'] = TRUE;
-            $load[$userSources['subjects']]['subjects'] = TRUE;
-            $userSeason->setLoadedFromAis(TRUE);
-        }
-
-        foreach ($load as $service => $attributes) {
-            $this->get($service)->load($userSeason, $attributes);
-        }
-
-        $em->flush();
     }
 }

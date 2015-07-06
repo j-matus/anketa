@@ -52,9 +52,10 @@ parameters:
     cosign_logout_prefix: "https://login.uniba.sk/logout.cgi?"
 
     user_info_zdroje:
-        subjects:     anketa.ais_user_source      # ais / demo / none
-        displayName:  anketa.ldap_user_source     # ais / ldap / demo / none
-        isStudent:    anketa.ais_user_source      # ais / demo / none
+        subjects:            anketa.ais_user_source      # ais / demo / none
+        displayName:         anketa.ldap_user_source     # ais / ldap / demo / none
+        isStudentThisSeason: anketa.ais_user_source      # ais / demo / none
+        isStudentAtAnyTime:  anketa.ldap_user_source     # ais / ldap / demo / none
 
 
 # ak chces posielat postu, nastav tu spravne prihlasovacie udaje

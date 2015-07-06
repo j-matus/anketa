@@ -144,7 +144,8 @@ statistics:
     skryte_komentare: >
       {1} One abusive comment is hidden. Nevertheless, its content will be examined.|
       [2,Inf] There are %count% hidden abusive comments. Nevertheless, theirs content will be examined.|
-    komentare_po_prihlaseni: <a href="%url%">Log in</a> in order to view comments.
+    komentare_po_prihlaseni: Logged out users cannot view comments. <a href="%url%">Log in</a>
+    komentare_nepristupne: You currently cannot view comments.
   fafRestriction:
     teacher: Access to results is restricted. Teachers can only see results of <a href="%url%">their own subjects</a>.
     noteacher: Access to results is restricted. Results can only be viewed by teachers, and only for their own subjects.
