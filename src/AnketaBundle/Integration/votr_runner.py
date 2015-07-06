@@ -28,6 +28,7 @@ def main():
     if client.get_som_student():
         studia = client.get_studia()
         for studium in studia:
+            if studium.sp_skratka == 'ZEkP' and not studium.organizacna_jednotka: studium = studium._replace(organizacna_jednotka='PriF')
             if fakulta and studium.organizacna_jednotka != fakulta: continue   # TODO: pouzivat zapisny_list.organizacna_jednotka, ked bude v REST API
             for zapisny_list in client.get_zapisne_listy(studium.studium_key):
                 if zapisny_list.akademicky_rok not in relevantne_roky: continue
