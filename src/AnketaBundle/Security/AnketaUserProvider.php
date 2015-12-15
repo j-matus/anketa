@@ -132,7 +132,7 @@ class AnketaUserProvider implements UserProviderInterface
      *                   'subjects', 'displayName', 'isStudentThisSeason',
      *                   'isStudentAtAnyTime'.
      */
-    private function loadUserInfo(User $user, $thingList)
+    public function loadUserInfo(User $user, $thingList)
     {
         $activeSeason = $this->em->getRepository('AnketaBundle:Season')
                 ->getActiveSeason();
