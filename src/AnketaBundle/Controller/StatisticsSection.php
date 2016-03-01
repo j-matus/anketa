@@ -405,6 +405,9 @@ class StatisticsSection extends ContainerAware {
             if ($this->getSeason()->getSubjectHiding() == Season::HIDE_SUBJECT_IF_ALL) {
                 return $foundTrue && !$foundFalse;
             }
+            if ($this->getSeason()->getSubjectHiding() == Season::HIDE_SUBJECT_NEVER) {
+                return false;
+            }
         }
         return false;
     }
