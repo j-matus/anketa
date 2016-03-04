@@ -388,24 +388,15 @@ class StatisticsController extends Controller {
             }
         }
         
-        // Ak si ucitel nepraje zverejnit svoje vysledky v ankete, neuvidi nic okrem vysledkov o nom a o predmete,
-        // ktory ucil.
+        // Ak si ucitel nepraje zverejnit svoje vysledky v ankete, neuvidi vysledky ostatnych ucitelov
+        // TODO: Dorobit to tak, aby rozumne bralo do uvahy SubjectHiding (nieco v style "ja neuvidim ekvivalent toho, co ini nevidia kvoli mne"
         if ($this->getUser()->getHideAllResults() && $this->get('anketa.access.statistics')->isFacultyTeacherAtAnyTime() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            $good = false;
-            if ($section->getSubject() !== null) {
+            $good = true;
+            if ($section->getTeacher() !== null) {
                 $em = $this->container->get('doctrine.orm.entity_manager');
                 $teacher = $this->getUser();
 
-                // Hladame, ci prihlaseny uzivatel neucil tento predmet.
-                if ($em->getRepository('AnketaBundle:TeachersSubjects')->
-                    findOneBy(array('subject' => $section->getSubject(), 'season' => $section->getSeason(), 'teacher' => $teacher)) !== null) {
-                    $good = true;
-                }
-
-                // Ak si pozera osobne vysledky niekoho ineho z daneho predmetu
-                if ($section->getTeacher() !== null && $section->getTeacher() !== $teacher) {
-                    $good = false;
-                }
+                if ($section->getTeacher() !== $teacher) $good = false;
             }
             if (!$good) {
                 return $this->render('AnketaBundle:Statistics:teacherOptedOut.html.twig', array(
