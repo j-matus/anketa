@@ -53,7 +53,7 @@ class StatisticsAccess
         return $this->user;
     }
 
-    private function isFacultyTeacherAtAnyTime() {
+    public function isFacultyTeacherAtAnyTime() {
         if ($this->teacherAtAnyTime === null) {
             $user = $this->getUser();
             $userSeasonRepo = $this->em->getRepository('AnketaBundle:UserSeason');
@@ -63,7 +63,7 @@ class StatisticsAccess
         return $this->teacherAtAnyTime;
     }
 
-    private function isFacultyStudentAtAnyTime() {
+    public function isFacultyStudentAtAnyTime() {
         if ($this->studentAtAnyTime === null) {
             $user = $this->getUser();
             $userSeasonRepo = $this->em->getRepository('AnketaBundle:UserSeason');

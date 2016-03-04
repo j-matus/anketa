@@ -150,9 +150,10 @@ statistics:
     teacher: Access to results is restricted. Teachers can only see results of <a href="%url%">their own subjects</a>.
     noteacher: Access to results is restricted. Results can only be viewed by teachers, and only for their own subjects.
   teacherOptedOut:
-    me: This teacher disagrees with publishing their results.
+    teacher: This teacher disagrees with publishing their results.
     any: A teacher of this subject disagrees with publishing its results.
     all: The teachers of this subject disagrees with publishing its results.
+    me: We haven't received your consent to publish your results. Consequently, you don't have permission to view the questionnaire's results (except your own results) and others don't have permission to view your results. If you wish to give consent to publish your results, you can submit a written consent at your faculty's dean's office.
   controller:
     vseobecne: General questions
     studijne_programy: Study programmes
