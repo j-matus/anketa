@@ -62,7 +62,7 @@ class User implements UserInterface, EquatableInterface {
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $hideAllResults = false;
+    protected $hideAllResults = true;
 
     /**
      * @param String $username
