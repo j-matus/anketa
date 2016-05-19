@@ -107,7 +107,7 @@ def export_ucitel_predmet(args):
         ('Akademický rok', akademicky_rok),
         ('Fakulta', fakulta),
     ]
-    response = spusti_report(client, app, 'nR0/ST/11', 'UNIBA03', parametre, 'html')
+    response = spusti_report(client, app, 'nR0/XST/11', 'XUNIBA03', parametre, 'html')
 
     response.encoding = 'cp1250'
     html_to_csv(client, response.text, output_filename)
@@ -127,7 +127,7 @@ def export_pocet_studentov(args):
         ('Predmety z fakulty', fakulta),
         ('Študenti z fakulty', fakulta if typ == 'faculty' else '%'),
     ]
-    response = spusti_report(client, app, 'nR0/RH/5', 'ZAPSTU', parametre, 'tbl')
+    response = spusti_report(client, app, 'nR0/XRH/5', 'XZAPSTU', parametre, 'tbl')
 
     response.encoding = 'cp1250'
     with open(output_filename, 'w', encoding='utf8') as f:

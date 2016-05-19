@@ -6,8 +6,10 @@
 {% block content %}
     <h1>{{ section.title }}</h1>
     <p>
-    {% if section.teacher %}
+    {% if isTeacher is defined and isTeacher %}
         {{ trans('statistics.teacherOptedOut.me') }}
+    {% elseif section.teacher %}
+        {{ trans('statistics.teacherOptedOut.teacher') }}
     {% elseif hide_if_all %}
         {{ trans('statistics.teacherOptedOut.all') }}
     {% else %}

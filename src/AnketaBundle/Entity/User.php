@@ -95,6 +95,7 @@ class User implements UserInterface, EquatableInterface {
      * @param Role $value
      */
     public function addRole($value) {
+        if ($this->hasRole($value)) return;
         $this->roles[] = $value;
     }
 

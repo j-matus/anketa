@@ -32,11 +32,11 @@
             "type": "package",
             "package": {
                 "name": "svt/votr",
-                "version": "20150516.0-dev",
+                "version": "20151120.1-dev",
                 "description": "Next generation AIS frontend",
                 "license": "Apache",
                 "dist": {
-                    "url": "https://github.com/fmfi-svt/votr/archive/5543a530ee4f31fe713bd7a5b76d8a04a524e579.zip",
+                    "url": "https://github.com/fmfi-svt/votr/archive/74bdeda535c2ea5b4a1b243efd586234cd83ebf4.zip",
                     "type": "zip"
                 }
             }
@@ -75,5 +75,8 @@
         "symfony-assets-install": "relative",
         "symfony-app-dir": "app",
         "symfony-web-dir": "web"
+    },
+    "config": {
+        "process-timeout": 0
     }
 }

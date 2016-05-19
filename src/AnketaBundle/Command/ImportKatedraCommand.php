@@ -58,11 +58,11 @@ class ImportKatedraCommand extends AbstractImportCommand {
         }
         $tableReader = new NativeCSVTableReader($file);
         $tableResolver = new TableColumnResolver($tableReader);
-        $tableResolver->mapColumnByTitle('OJ ', 'code');
-        $tableResolver->mapColumnByTitle('Nadriadená org. j. ', 'parent');
-        $tableResolver->mapColumnByTitle('Typ OJ ', 'type');
-        $tableResolver->mapColumnByTitle('Org. jednotka ', 'name');
-        $tableResolver->mapColumnByTitle('Homepage ', 'homepage');
+        $tableResolver->mapColumnByTitle('OJ', 'code');
+        $tableResolver->mapColumnByTitle('Nadriadená org. j.', 'parent');
+        $tableResolver->mapColumnByTitle('Typ OJ', 'type');
+        $tableResolver->mapColumnByTitle('Org. jednotka', 'name');
+        $tableResolver->mapColumnByTitle('Homepage', 'homepage');
 
         $conn = $this->getContainer()->get('database_connection');
 
@@ -80,7 +80,7 @@ class ImportKatedraCommand extends AbstractImportCommand {
                 $name = $row['name'];
                 $homepage = $row['homepage'];
 
-                if ($type !== 'Kated') continue;
+                if ($type !== 'Kated' && $type !== 'Ústav') continue;
                 if ($parentFilter !== null && $parentOrgUnit !== $parentFilter) {
                     continue;
                 }

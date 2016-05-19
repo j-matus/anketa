@@ -81,7 +81,7 @@
                     </p>
                 {% endif %}
             {% elseif access.statistics.getUser %}
-                {% trans %}statistics.displayQuestionMacro.komentare_nepristupne{% endtrans %}
+                {{ trans('statistics.displayQuestionMacro.komentare_nepristupne') }}
             {% else %}
                 {{ trans('statistics.displayQuestionMacro.komentare_po_prihlaseni', {'%url%': path('login', {'to': app.request.uri}) }) }}
             {% endif %}

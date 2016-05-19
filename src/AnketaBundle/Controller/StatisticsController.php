@@ -355,7 +355,9 @@ class StatisticsController extends Controller {
         if (!$this->get('anketa.access.statistics')->canSeeResults($section->getSeason())) {
             return $this->accessDeniedForSeason($section->getSeason());
         }
-
+        
+        // Skontroluje, ci dana stranka predmetu/ucitela nema byt skryta, lebo ucitel nesuhlasi
+        // so zverejnenim svojich vysledkov, pripadne kvoli FaF obmedzeniu.
         if (($section->getSeason()->getFafRestricted() || $section->getTeacherOptedOut()) && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $em = $this->get('doctrine.orm.entity_manager');
             $access = $this->get('anketa.access.statistics');
@@ -364,9 +366,13 @@ class StatisticsController extends Controller {
             $subjects = $em->getRepository('AnketaBundle:Subject')->getSubjectsForTeacherWithAnyAnswers($teacher, $season);
             $good = false;
             if ($section->getSubject() !== null) {
+                
+                // Pozrieme, ci prihlaseny uzivatel neucil v tomto semestri tento predmet
                 foreach ($subjects as $subject) {
                     if ($section->getSubject() == $subject) $good = true;
                 }
+
+                // Ak ide priamo o stranku ucitela, bude ju vidiet iba on.
                 if ($section->getTeacher() !== null && $section->getTeacher() !== $teacher) {
                     $good = false;
                 }
@@ -379,6 +385,23 @@ class StatisticsController extends Controller {
                 return $this->render('AnketaBundle:Statistics:teacherOptedOut.html.twig', array(
                     'section' => $section,
                     'hide_if_all' => ($season->getSubjectHiding() == Season::HIDE_SUBJECT_IF_ALL)));
+            }
+        }
+        
+        // Ak si ucitel nepraje zverejnit svoje vysledky v ankete, neuvidi vysledky ostatnych ucitelov
+        // TODO: Dorobit to tak, aby rozumne bralo do uvahy SubjectHiding (nieco v style "ja neuvidim ekvivalent toho, co ini nevidia kvoli mne"
+        if ($this->getUser()->getHideAllResults() && $this->get('anketa.access.statistics')->isFacultyTeacherAtAnyTime() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $good = true;
+            if ($section->getTeacher() !== null) {
+                $em = $this->container->get('doctrine.orm.entity_manager');
+                $teacher = $this->getUser();
+
+                if ($section->getTeacher() !== $teacher) $good = false;
+            }
+            if (!$good) {
+                return $this->render('AnketaBundle:Statistics:teacherOptedOut.html.twig', array(
+                'section' => $section,
+                'isTeacher' => true));
             }
         }
 
