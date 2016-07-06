@@ -55,6 +55,7 @@
     </tbody>
 </table>
 <input type="submit" name="approve" value="Uložiť" class="btn btn-primary"/>
+<input type="button" name="reviewed" value="Označ všetky ako 'Reviewed'" onclick="$('[name$=\'\[reviewed\]\'').attr({checked: true})" class="btn"/>
 </form>
 
 {% else %}
