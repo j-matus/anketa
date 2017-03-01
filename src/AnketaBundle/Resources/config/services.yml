@@ -15,7 +15,7 @@ services:
         arguments: ["@service_container"]    # TODO :-(
     anketa.access.hlasovanie:
         class: AnketaBundle\Access\HlasovanieAccess
-        arguments: ["@security.context", "@doctrine.orm.entity_manager", "%org_unit%", "%check_voters_org_unit%"]
+        arguments: ["@security.context", "@doctrine.orm.entity_manager"]
     anketa.access.statistics:
         class: AnketaBundle\Access\StatisticsAccess
         arguments: ["@security.context", "@doctrine.orm.entity_manager"]

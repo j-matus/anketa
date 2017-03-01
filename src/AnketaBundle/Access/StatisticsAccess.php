@@ -28,6 +28,12 @@ class StatisticsAccess
     /** @var mixed */
     private $user;
 
+    /** @var boolean */
+    private $teacherAtAnyTime;
+
+    /** @var boolean */
+    private $studentAtAnyTime;
+
     public function __construct(SecurityContextInterface $security, EntityManager $em) {
         $this->security = $security;
         $this->em = $em;
@@ -45,6 +51,64 @@ class StatisticsAccess
             if ($token) $this->user = $token->getUser();
         }
         return $this->user;
+    }
+
+    public function isFacultyTeacherAtAnyTime() {
+        if ($this->teacherAtAnyTime === null) {
+            $user = $this->getUser();
+            $userSeasonRepo = $this->em->getRepository('AnketaBundle:UserSeason');
+            $this->teacherAtAnyTime = ($user !== null &&
+                $userSeasonRepo->findOneBy(array('user' => $user, 'isTeacher' => true)) !== null);
+        }
+        return $this->teacherAtAnyTime;
+    }
+
+    public function isFacultyStudentAtAnyTime() {
+        if ($this->studentAtAnyTime === null) {
+            $user = $this->getUser();
+            $userSeasonRepo = $this->em->getRepository('AnketaBundle:UserSeason');
+            $this->studentAtAnyTime = ($user !== null &&
+                $userSeasonRepo->findOneBy(array('user' => $user, 'isStudent' => true)) !== null) ||
+                $this->security->isGranted('ROLE_STUDENT_AT_ANY_TIME');
+        }
+        return $this->studentAtAnyTime;
+    }
+
+    /**
+     * Returns a number that specifies how much information the current user
+     * sees in the current season results. See the LEVEL_* constants in Season.
+     */
+    public function getResultsLevel(Season $season) {
+        $level = $season->getLevelPublic();
+
+        if ($this->getUser() !== null) {
+            $level = max($level, $season->getLevelUniversity());
+        }
+        if ($this->isFacultyTeacherAtAnyTime()) {
+            $level = max($level, $season->getLevelFacultyTeacher());
+        }
+        if ($this->isFacultyStudentAtAnyTime()) {
+            $level = max($level, $season->getLevelFacultyStudent());
+        }
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            $level = Season::LEVEL_RESPONSES;
+        }
+
+        return $level;
+    }
+
+    /**
+     * Returns whether any group of users can see results for this season. This
+     * is for determining whether the season is shown in the menu.
+     *
+     * @param Season $season
+     * @return boolean
+     */
+    public function someoneCanSeeResults(Season $season) {
+        return $season->getLevelPublic() > 0 ||
+            $season->getLevelUniversity() > 0 ||
+            $season->getLevelFacultyTeacher() > 0 ||
+            $season->getLevelFacultyStudent() > 0;
     }
 
     /**
@@ -105,20 +169,7 @@ class StatisticsAccess
      * @return boolean
      */
     public function canSeeTopLevelResults() {
-        $activeSeason = $this->em->getRepository('AnketaBundle:Season')->getActiveSeason();
-        if ($activeSeason->getFafRestricted() && $this->hasOwnSubjects($activeSeason)) return true;
-
         return $this->em->getRepository('AnketaBundle:Season')->getTopLevelResultsVisible();
-    }
-
-    /**
-     * Returns whether the active season has visible results.
-     *
-     * @return boolean
-     */
-    public function activeSeasonHasVisibleResults() {
-        $activeSeason = $this->em->getRepository('AnketaBundle:Season')->getActiveSeason();
-        return $activeSeason->getResultsVisible();
     }
 
     /**
@@ -128,22 +179,17 @@ class StatisticsAccess
      * @return boolean
      */
     public function canSeeResults(Season $season) {
-        if ($this->security->isGranted('ROLE_ADMIN')) return true;
-        if ($season->getFafRestricted() && $this->hasOwnSubjects($season)) return true;
-        return $season->getResultsVisible() && ($season->getResultsPublic() || ($this->getUser() !== null));
+        return $this->getResultsLevel($season) >= Season::LEVEL_NUMBERS;
     }
 
     /**
-     * Returns whether the current user is blocked from seeing comments of
-     * the given season, and should be shown a prompt to log in instead.
-     * (This only comes into effect if the user can see the results at all.
-     * That is not checked by this function.)
+     * Returns whether the current user can see text comments on result pages.
      *
      * @param Season $season
      * @return boolean
      */
-    public function commentsBlocked(Season $season) {
-        return !$this->getUser();
+    public function canSeeComments(Season $season) {
+        return $this->getResultsLevel($season) >= Season::LEVEL_COMMENTS;
     }
 
     /**
@@ -177,7 +223,7 @@ class StatisticsAccess
      * @return boolean
      */
     public function canSeeResponses(Season $season) {
-        return $this->canSeeResults($season) && ($season->getResponsesVisible() || $this->canCreateResponses($season));
+        return $this->getResultsLevel($season) >= Season::LEVEL_RESPONSES || $this->canCreateResponses($season);
     }
 
     /**

@@ -1,0 +1,20 @@
+{% extends 'AnketaBundle::layout.html.twig' %}
+{% block title %}Výsledky nie sú prístupné{% endblock %}
+{% block navigation %}
+    {{ menu.statistics.render(activeMenuItems)|raw }}
+{% endblock %}
+{% block content %}
+    <h1>Výsledky nie sú prístupné</h1>
+    {% if logged_in %}
+        <p>
+        Momentálne nemáte prístup k výsledkom {{ season.description }}.
+        </p>
+    {% else %}
+        <p>
+        Neprihlásené osoby nemajú prístup k výsledkom {{ season.description }}.
+        </p>
+        <p>
+        <a href="{{ path('login', {'to': app.request.uri }) }}" class="login">Prihlásiť</a>
+        </p>
+    {% endif %}
+{% endblock %}

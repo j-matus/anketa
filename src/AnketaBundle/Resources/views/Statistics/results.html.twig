@@ -24,10 +24,10 @@
     {% set prevSection = section.previousSection %}
     {% if prevSection is not empty %}
         <hr />
-        <h2>{% trans %}statistics.results.predchadzajuce_hodnotenie{% endtrans %}</h2>
+        <h2>{{ trans('statistics.results.predchadzajuce_hodnotenie') }}</h2>
         <p>
-            {% trans %}statistics.results.pozrite_si{% endtrans %}
-            <a href="{{ prevSection.statisticsPath }}">{% trans with {'%season%': prevSection.season.description } %}statistics.results.hodnotenie_pre_obdobie{% endtrans %}</a>.
+            {{ trans('statistics.results.pozrite_si') }}
+            <a href="{{ prevSection.statisticsPath }}">{{ trans('statistics.results.hodnotenie_pre_obdobie', {'%season%': prevSection.season.description }) }}</a>.
         </p>
     {% endif %}
 {% endblock %}

@@ -134,6 +134,10 @@ class ImportRozvrhXMLCommand extends AbstractImportCommand {
                 $conn->exec($sql);
             }
 
+            // 3) V docasnej tabulke, bohuzial, mozu byt duplikaty, pokial sa kratke kody predmetov zhoduju.
+            // Momentalne to riesime tak, ze "duplikaty" updatuju len, ci je dany ucitel cviciaci/prednasajuci,
+            // pokial druhy predmet s rovnakou skratkou ma ine meno, toto meno sa odignoruje.
+
             $sql = 'INSERT INTO TeachersSubjects (teacher_id, subject_id, season_id, lecturer, trainer)';
             $sql .= ' SELECT t.id, s.id, :season, ts.lecturer, ts.trainer';
             $sql .= ' FROM User t, Subject s, tmp_teachers_subjects ts, ';
@@ -144,7 +148,9 @@ class ImportRozvrhXMLCommand extends AbstractImportCommand {
             $sql .=     ' SELECT target.teacher_id, target.subject_id';
             $sql .=     ' FROM TeachersSubjects target';
             $sql .=     ' WHERE target.teacher_id = t.id AND target.subject_id = s.id AND target.season_id = :season';
-            $sql .= ' )';
+            $sql .= ' ) ';
+            $sql .= ' ON DUPLICATE KEY UPDATE lecturer=GREATEST(ts.lecturer, TeachersSubjects.lecturer),';
+            $sql .= ' trainer=GREATEST(ts.trainer, TeachersSubjects.trainer)';
             $prep = $conn->prepare($sql);
             $prep->execute(array('season' => $season->getId()));
 

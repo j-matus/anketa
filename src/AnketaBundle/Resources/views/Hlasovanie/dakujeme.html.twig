@@ -6,17 +6,17 @@
         {{ app.session.flash('anonymizacia') }}
     </div></div>
 {% endif %}
-<h2>{% trans %}hlasovanie.dakujeme.dakujeme{% endtrans %}</h2>
+<h2>{{ trans('hlasovanie.dakujeme.dakujeme') }}</h2>
 <p>
-{% trans %}hlasovanie.dakujeme.dakujeme_za_cas{% endtrans %}
+{{ trans('hlasovanie.dakujeme.dakujeme_za_cas') }}
 
-{% trans %}hlasovanie.dakujeme.potrebujeme_ucast{% endtrans %}
+{{ trans('hlasovanie.dakujeme.potrebujeme_ucast') }}
 
-{% trans %}hlasovanie.dakujeme.povedzte_ostatnym{% endtrans %}
+{{ trans('hlasovanie.dakujeme.povedzte_ostatnym') }}
 </p>
 {% include 'AnketaBundle:Welcome:likebox.html.twig' %}
 {% if skratka_fakulty == 'FMFI' %}
-    <p>{% trans %}welcome.index.zverejnenie_vysledkov{% endtrans %}</p>
+    <p>{{ trans('welcome.index.zverejnenie_vysledkov') }}</p>
 {% else %}
     {# TODO: kedy sa zverejnuju vysledky na inych fakultach? #}
 {% endif %}

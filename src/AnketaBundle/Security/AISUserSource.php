@@ -43,8 +43,11 @@ class AISUserSource implements UserSourceInterface
     /** @var SubjectIdentificationInterface */
     private $subjectIdentification;
 
+    /** @var string */
+    private $allowedOrgUnit;
+
     public function __construct(Connection $dbConn, EntityManager $em, AISRetriever $aisRetriever,
-            SubjectIdentificationInterface $subjectIdentification,
+            SubjectIdentificationInterface $subjectIdentification, $allowedOrgUnit, $checkOrgUnit,
             LoggerInterface $logger = null)
     {
         $this->dbConn = $dbConn;
@@ -52,45 +55,51 @@ class AISUserSource implements UserSourceInterface
         $this->aisRetriever = $aisRetriever;
         $this->logger = $logger;
         $this->subjectIdentification = $subjectIdentification;
+        $this->allowedOrgUnit = ($checkOrgUnit ? $allowedOrgUnit : null);
     }
 
     public function load(UserSeason $userSeason, array $want)
     {
         if (isset($want['displayName'])) {
-            $userSeason->getUser()->setDisplayName($this->aisRetriever->getFullName());
+            throw new \Exception("AISUserSource currently doesn't support displayName");
         }
 
-        if (isset($want['subjects']) || isset($want['isStudent'])) {
-            if ($this->aisRetriever->isAdministraciaStudiaAllowed()) {
+        if (isset($want['subjects']) || isset($want['isStudentThisSeason']) || isset($want['isStudentAtAnyTime'])) {
+            $semestre = null;
+            if (isset($want['subjects'])) {
+                $semestre = $userSeason->getSeason()->getAisSemesterList();
+                if (empty($semestre)) {
+                    throw new \Exception("Sezona nema nastavene aisSemesters");
+                }
+            }
+
+            $result = $this->aisRetriever->getResult($this->allowedOrgUnit, $semestre);
+
+            if ($result['is_student']) {
                 if (isset($want['subjects'])) {
-                    $this->loadSubjects($userSeason);
+                    $this->loadSubjects($userSeason, $result['subjects']);
                 }
 
-                if (isset($want['isStudent'])) {
+                if (isset($want['isStudentThisSeason'])) {
                     $userSeason->setIsStudent(true);
+                }
+
+                if (isset($want['isStudentAtAnyTime'])) {
+                    $userSeason->getUser()->addRole($this->em->getRepository('AnketaBundle:Role')
+                            ->findOrCreateRole('ROLE_STUDENT_AT_ANY_TIME'));
                 }
             }
         }
-
-        $this->aisRetriever->logoutIfNotAlready();
     }
 
     /**
      * Load subject entities associated with this user
      */
-    private function loadSubjects(UserSeason $userSeason)
+    private function loadSubjects(UserSeason $userSeason, $aisPredmety)
     {
-        $semestre = $userSeason->getSeason()->getAisSemesterList();
-        if (empty($semestre)) {
-            throw new \Exception("Sezona nema nastavene aisSemesters");
-        }
-        $aisPredmety = $this->aisRetriever->getPredmety($semestre);
-
         $slugy = array();
 
         foreach ($aisPredmety as $aisPredmet) {
-            $this->dbConn->beginTransaction();
-
             $props = $this->subjectIdentification->identify($aisPredmet['skratka'], $aisPredmet['nazov']);
 
             // Ignorujme duplicitne predmety
@@ -98,6 +107,8 @@ class AISUserSource implements UserSourceInterface
                 continue;
             }
             $slugy[] = $props['slug'];
+
+            $this->dbConn->beginTransaction();
 
             // vytvorime subject v DB ak neexistuje
             // pouzijeme INSERT ON DUPLICATE KEY UPDATE

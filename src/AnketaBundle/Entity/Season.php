@@ -63,22 +63,40 @@ class Season {
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $resultsVisible;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    protected $resultsPublic;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
     protected $respondingOpen;
 
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * The level of results information available to logged out users.
+     *
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    protected $responsesVisible;
+    protected $levelPublic;
+
+    /**
+     * The level of results information available to logged in users.
+     *
+     * @ORM\Column(type="smallint", nullable=false)
+     */
+    protected $levelUniversity;
+
+    /**
+     * The level of results information available to students of this faculty.
+     *
+     * @ORM\Column(type="smallint", nullable=false)
+     */
+    protected $levelFacultyStudent;
+
+    /**
+     * The level of results information available to teachers of this faculty.
+     *
+     * @ORM\Column(type="smallint", nullable=false)
+     */
+    protected $levelFacultyTeacher;
+
+    const LEVEL_NOTHING   = 0; // no results visible
+    const LEVEL_NUMBERS   = 1; // numbers and graphs visible
+    const LEVEL_COMMENTS  = 2; // text comments visible
+    const LEVEL_RESPONSES = 3; // teacher responses visible
 
     /**
      * TODO: This is a huge hack and needs to be removed as soon as it's not
@@ -105,8 +123,10 @@ class Season {
     protected $endTime;
 
     /**
-     * Comma-separated semester list.
-     * Example: 2010/2011Z,2010/2011L
+     * Comma-separated semester list. Each item is given as the year and the semester (Z/L).
+     * If the semester is not specified, the item will match subjects that don't have a semester in AIS
+     * (i.e. subjects that take the whole year).
+     * Example: 2010/2011Z,2010/2011L,2010/2011
      * @ORM\Column(type="string")
      */
     protected $aisSemesters = '';
@@ -179,22 +199,6 @@ class Season {
         $this->votingOpen = $value;
     }
 
-    public function getResultsVisible() {
-        return $this->resultsVisible;
-    }
-
-    public function setResultsVisible($value) {
-        $this->resultsVisible = $value;
-    }
-
-    public function getResultsPublic() {
-        return $this->resultsPublic;
-    }
-
-    public function setResultsPublic($value) {
-        $this->resultsPublic = $value;
-    }
-
     public function getRespondingOpen() {
         return $this->respondingOpen;
     }
@@ -203,12 +207,36 @@ class Season {
         $this->respondingOpen = $value;
     }
 
-    public function getResponsesVisible() {
-        return $this->responsesVisible;
+    public function getLevelPublic() {
+        return $this->levelPublic;
     }
 
-    public function setResponsesVisible($value) {
-        $this->responsesVisible = $value;
+    public function setLevelPublic($value) {
+        $this->levelPublic = $value;
+    }
+
+    public function getLevelUniversity() {
+        return $this->levelUniversity;
+    }
+
+    public function setLevelUniversity($value) {
+        $this->levelUniversity = $value;
+    }
+
+    public function getLevelFacultyStudent() {
+        return $this->levelFacultyStudent;
+    }
+
+    public function setLevelFacultyStudent($value) {
+        $this->levelFacultyStudent = $value;
+    }
+
+    public function getLevelFacultyTeacher() {
+        return $this->levelFacultyTeacher;
+    }
+
+    public function setLevelFacultyTeacher($value) {
+        $this->levelFacultyTeacher = $value;
     }
 
     public function getFafRestricted() {
@@ -242,10 +270,15 @@ class Season {
         $result = array();
         if ($this->aisSemesters) {
             foreach (explode(',', $this->aisSemesters) as $item) {
+                if (!preg_match('@^[0-9]{4}/[0-9]{4}[ZL]?$@', $item)) {
+                    throw new \Exception('Wrong aisSemesters value');
+                }
                 $schoolYear = substr($item, 0, -1);
                 $semester = substr($item, -1);
                 if ($semester != 'Z' && $semester != 'L') {
-                    throw new \Exception('Wrong aisSemesters value');
+                    // matches year-round subjects that don't have a semester
+                    $schoolYear = $item;
+                    $semester = '';
                 }
                 $result[] = array($schoolYear, $semester);
             }

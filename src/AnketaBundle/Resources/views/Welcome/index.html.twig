@@ -1,34 +1,34 @@
 {% extends 'AnketaBundle::layout.html.twig' %}
 {% block content %}
 
-<h2>{% trans %}welcome.index.studentska_anketa{% endtrans %} {{ skratka_fakulty }} &mdash; {{ active_season.description }}</h2>
+<h2>{{ trans('welcome.index.studentska_anketa') }} {{ skratka_fakulty }} &mdash; {{ active_season.description }}</h2>
 
 <p>
-    {% trans %}welcome.index.vitaj{% endtrans %} {{ skratka_fakulty }}!
-    {% trans %}welcome.index.zapoj_sa{% endtrans %}
+    {{ trans('welcome.index.vitaj') }} {{ skratka_fakulty }}!
+    {{ trans('welcome.index.zapoj_sa') }}
 </p>
 
 {% if access.hlasovanie.isVotingOpen %}
     <p><a class="bigbtn" href="{{ path('anketa') }}">
-    <span class="bigbtn_middle"><span class="bigbtn_left"><span class="bigbtn_right bigbtn_in">{% trans %}welcome.index.hlasuj{% endtrans %}</span></span></span></a></p>
+    <span class="bigbtn_middle"><span class="bigbtn_left"><span class="bigbtn_right bigbtn_in">{{ trans('welcome.index.hlasuj') }}</span></span></span></a></p>
     {% if active_season.endTime != null %}
-        <p style="text-align: center">{% trans %}welcome.index.otvorene_do{% endtrans %}: <strong>{{ active_season.endTime|date("d.m.Y") }}</strong>
+        <p style="text-align: center">{{ trans('welcome.index.otvorene_do') }}: <strong>{{ active_season.endTime|date("d.m.Y") }}</strong>
             {% if countdown != null %}
                 {% set dni = countdown|date("%a") %}
-                {% transchoice dni with {'%dni%': dni} %}welcome.index.ostava_dni{% endtranschoice %}
+                {{ trans('welcome.index.ostava_dni', {'%dni%': dni}, dni) }}
             {% endif %}
         </p>
     {% endif %}
 {% else %}
-    <p>{% trans %}welcome.index.hlasovanie_ukoncene{% endtrans %}</p>
+    <p>{{ trans('welcome.index.hlasovanie_ukoncene') }}</p>
     {% if active_season.officialStatement %}
-    <p>{% trans with { '%url%': path('statistics_statement', {'season_slug': active_season.slug}), '%descr%': active_season.description } %}welcome.index.stanovisko{% endtrans %}</p>
+    <p>{{ trans('welcome.index.stanovisko', { '%url%': path('statistics_statement', {'season_slug': active_season.slug}), '%descr%': active_season.description }) }}</p>
     {% endif %}
-    {% if access.statistics.activeSeasonHasVisibleResults %}
+    {% if access.statistics.someoneCanSeeResults(active_season) %}
         <p><a class="bigbtn" href="{{ path('statistics') }}">
-        <span class="bigbtn_middle"><span class="bigbtn_left"><span class="bigbtn_right bigbtn_in">{% trans %}welcome.index.vysledky{% endtrans %}</span></span></span></a></p>
+        <span class="bigbtn_middle"><span class="bigbtn_left"><span class="bigbtn_right bigbtn_in">{{ trans('welcome.index.vysledky') }}</span></span></span></a></p>
     {% elseif skratka_fakulty == 'FMFI' %}
-        <p><strong>{% trans %}welcome.index.zverejnenie_vysledkov{% endtrans %}</strong></p>
+        <p><strong>{{ trans('welcome.index.zverejnenie_vysledkov') }}</strong></p>
     {% else %}
         {# TODO: kedy sa zverejnuju vysledky na inych fakultach? #}
     {% endif %}
@@ -36,16 +36,16 @@
 
 {% render(controller("AnketaBundle:Hlasovanie:globalProgressbar")) %}
 
-<p>{% trans %}welcome.index.aka_je_anketa{% endtrans %}</p>
+<p>{{ trans('welcome.index.aka_je_anketa') }}</p>
 <ul>
-<li><b>{% trans %}welcome.index.k_veci{% endtrans %}</b> &mdash; {% trans %}welcome.index.k_veci_preco{% endtrans %}</li>
-<li><b>{% trans %}welcome.index.flexibilna{% endtrans %}</b> &mdash; {% trans %}welcome.index.flexibilna_preco{% endtrans %}</li>
-<li><b>{% trans %}welcome.index.anonymna{% endtrans %}</b> &mdash; {% trans %}welcome.index.anonymna_preco{% endtrans %}</li>
-<li><b>{% trans %}welcome.index.mobilna{% endtrans %}</b> &mdash; {% trans %}welcome.index.mobilna_preco{% endtrans %}</li>
-<li><b>{% trans %}welcome.index.pekne_hviezdicky{% endtrans %}</b> &mdash; {% trans %}welcome.index.pekne_hviezdicky_preco{% endtrans %}</li>
+<li><b>{{ trans('welcome.index.k_veci') }}</b> &mdash; {{ trans('welcome.index.k_veci_preco') }}</li>
+<li><b>{{ trans('welcome.index.flexibilna') }}</b> &mdash; {{ trans('welcome.index.flexibilna_preco') }}</li>
+<li><b>{{ trans('welcome.index.anonymna') }}</b> &mdash; {{ trans('welcome.index.anonymna_preco') }}</li>
+<li><b>{{ trans('welcome.index.mobilna') }}</b> &mdash; {{ trans('welcome.index.mobilna_preco') }}</li>
+<li><b>{{ trans('welcome.index.pekne_hviezdicky') }}</b> &mdash; {{ trans('welcome.index.pekne_hviezdicky_preco') }}</li>
 </ul>
 
-<p><strong>{% trans %}welcome.index.aj_ty_hlasuj{% endtrans %}</strong><p>
+<p><strong>{{ trans('welcome.index.aj_ty_hlasuj') }}</strong><p>
 
 {% include 'AnketaBundle:Welcome:likebox.html.twig' %}
 

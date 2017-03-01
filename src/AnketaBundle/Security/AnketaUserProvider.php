@@ -46,11 +46,6 @@ class AnketaUserProvider implements UserProviderInterface
         $this->logger = $logger;
     }
 
-    public function getUserSources()
-    {
-        return $this->userSources;
-    }
-
     /**
      * Reload a user given an existing UserInterface instance.
      * (This happens on each request.)
@@ -75,8 +70,7 @@ class AnketaUserProvider implements UserProviderInterface
             throw new UsernameNotFoundException(sprintf("User %s not found in database! Cannot refresh.", $oldUser->getLogin()));
         }
 
-        $user->setOrgUnits($oldUser->getOrgUnits());
-        $this->loadUserInfo($user);
+        $this->loadUserInfo($user, array());
 
         return $user;
     }
@@ -121,7 +115,7 @@ class AnketaUserProvider implements UserProviderInterface
                     ->findOrCreateRole('ROLE_USER'));
         }
 
-        $this->loadUserInfo($user, true);
+        $this->loadUserInfo($user, array('displayName'));
 
         if ($user->getDisplayName() === null) {
             throw new UsernameNotFoundException(sprintf('User "%s" not found.', $user->getLogin()));
@@ -134,8 +128,11 @@ class AnketaUserProvider implements UserProviderInterface
      * Load user info and user's subjects in necessary.
      *
      * @param User $user
+     * @param $thingList List of things we want to load. One or more of
+     *                   'subjects', 'displayName', 'isStudentThisSeason',
+     *                   'isStudentAtAnyTime'.
      */
-    private function loadUserInfo(User $user, $loadDisplayName = false)
+    public function loadUserInfo(User $user, $thingList)
     {
         $activeSeason = $this->em->getRepository('AnketaBundle:Season')
                 ->getActiveSeason();
@@ -150,14 +147,15 @@ class AnketaUserProvider implements UserProviderInterface
             $this->em->persist($userSeason);
         }
 
+        if ($user->getDisplayName() === null) {
+            $thingList[] = 'displayName';
+        }
+
         // "$load[X][Y]" == "service X should load user attribute Y"
         $load = array();
 
-        if ($loadDisplayName || $user->getDisplayName() === null) {
-            $load[$this->userSources['displayName']]['displayName'] = true;
-        }
-        if (!$user->getOrgUnits()) {
-            $load[$this->userSources['orgUnits']]['orgUnits'] = true;
+        foreach ($thingList as $thing) {
+            $load[$this->userSources[$thing]][$thing] = true;
         }
 
         foreach ($load as $service => $attributes) {

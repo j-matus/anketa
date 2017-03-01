@@ -25,17 +25,18 @@ class DebugController extends Controller {
     public function aisAction() {
         $retriever = $this->get('anketa.ais_retriever');
         $semestre = $this->getRequest()->query->get('semestre');
-        $semestreArr = null;
-        if ($semestre != null) {
-            $semestreArr = array();
-            foreach (explode(';', $semestre) as $semester) {
-                $sem = explode(':', $semester, 2);
-                if (count($sem) == 2) {
-                    $semestreArr[] = $sem;
-                }
+        if ($semestre === null) {
+            throw new \Exception('Potrebujem v url napr. "?semestre=2047/2018:Z;2047/2048:L"');
+        }
+        $semestreArr = array();
+        foreach (explode(';', $semestre) as $semester) {
+            $sem = explode(':', $semester, 2);
+            if (count($sem) == 2) {
+                $semestreArr[] = $sem;
             }
         }
-        $predmety = $retriever->getPredmety($semestreArr);
+        $result = $retriever->getResult(null, $semestreArr);
+        $predmety = $result['subjects'];
         return $this->render('AnketaBundle:Debug:ais.html.twig',
                 array('predmety' => $predmety));
     }

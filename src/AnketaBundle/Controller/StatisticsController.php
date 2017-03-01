@@ -26,7 +26,7 @@ class StatisticsController extends Controller {
             $access = $this->get('anketa.access.statistics');
             $season = null;
             foreach ($seasonsFound as $candidateSeason) {
-                if ($access->canSeeResults($candidateSeason) || $candidateSeason->getResultsVisible()) {
+                if ($access->canSeeResults($candidateSeason) || $access->someoneCanSeeResults($candidateSeason)) {
                     $season = $candidateSeason;
                     break;
                 }
@@ -258,13 +258,11 @@ class StatisticsController extends Controller {
     }
 
     private function accessDeniedForSeason(Season $season) {
-        if ($season->getResultsVisible()) {
-            $templateParams = array();
-            $templateParams['activeMenuItems'] = array($season->getId());
-            $templateParams['season'] = $season;
-            return $this->render('AnketaBundle:Statistics:resultsRequireLogin.html.twig', $templateParams);
-        }
-        throw new AccessDeniedException();
+        $templateParams = array();
+        $templateParams['activeMenuItems'] = array($season->getId());
+        $templateParams['season'] = $season;
+        $templateParams['logged_in'] = ($this->get('anketa.access.statistics')->getUser() !== null);
+        return $this->render('AnketaBundle:Statistics:resultsDenied.html.twig', $templateParams);
     }
 
     public function listSubjectsAction($season_slug) {
@@ -357,7 +355,9 @@ class StatisticsController extends Controller {
         if (!$this->get('anketa.access.statistics')->canSeeResults($section->getSeason())) {
             return $this->accessDeniedForSeason($section->getSeason());
         }
-
+        
+        // Skontroluje, ci dana stranka predmetu/ucitela nema byt skryta, lebo ucitel nesuhlasi
+        // so zverejnenim svojich vysledkov, pripadne kvoli FaF obmedzeniu.
         if (($section->getSeason()->getFafRestricted() || $section->getTeacherOptedOut()) && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $em = $this->get('doctrine.orm.entity_manager');
             $access = $this->get('anketa.access.statistics');
@@ -366,9 +366,13 @@ class StatisticsController extends Controller {
             $subjects = $em->getRepository('AnketaBundle:Subject')->getSubjectsForTeacherWithAnyAnswers($teacher, $season);
             $good = false;
             if ($section->getSubject() !== null) {
+                
+                // Pozrieme, ci prihlaseny uzivatel neucil v tomto semestri tento predmet
                 foreach ($subjects as $subject) {
                     if ($section->getSubject() == $subject) $good = true;
                 }
+
+                // Ak ide priamo o stranku ucitela, bude ju vidiet iba on.
                 if ($section->getTeacher() !== null && $section->getTeacher() !== $teacher) {
                     $good = false;
                 }
@@ -381,6 +385,23 @@ class StatisticsController extends Controller {
                 return $this->render('AnketaBundle:Statistics:teacherOptedOut.html.twig', array(
                     'section' => $section,
                     'hide_if_all' => ($season->getSubjectHiding() == Season::HIDE_SUBJECT_IF_ALL)));
+            }
+        }
+        
+        // Ak si ucitel nepraje zverejnit svoje vysledky v ankete, neuvidi vysledky ostatnych ucitelov
+        // TODO: Dorobit to tak, aby rozumne bralo do uvahy SubjectHiding (nieco v style "ja neuvidim ekvivalent toho, co ini nevidia kvoli mne"
+        if ($this->getUser()->getHideAllResults() && $this->get('anketa.access.statistics')->isFacultyTeacherAtAnyTime() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $good = true;
+            if ($section->getTeacher() !== null) {
+                $em = $this->container->get('doctrine.orm.entity_manager');
+                $teacher = $this->getUser();
+
+                if ($section->getTeacher() !== $teacher) $good = false;
+            }
+            if (!$good) {
+                return $this->render('AnketaBundle:Statistics:teacherOptedOut.html.twig', array(
+                'section' => $section,
+                'isTeacher' => true));
             }
         }
 
@@ -571,6 +592,8 @@ class StatisticsController extends Controller {
         if ('POST' == $request->getMethod()) {
             $user = $this->get('anketa.access.statistics')->getUser();
             if (!$user) throw new AccessDeniedException();
+            $answer->setReviewed(false);
+            $em->flush();
             $note = $request->get('note', '');
 
             $emailTpl = array(

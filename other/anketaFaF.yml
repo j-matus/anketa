@@ -65,8 +65,8 @@ otazky:
 
     - text:   Napíšte váš názor na študijný program.
       text_en: Write your opinion on the study program.
-      popis:  Môžete sa vyjadriť napríklad ku skladbe predmetov, ku celkovej kvalite kľúčových učiteľov, ku prístupu garanta alebo tútora ku študentom a pod. Uveďte, prípadne, prečo by ste tento program odporúčali/neodporúčali záujemcom o štúdium.
-      popis_en: For example, you may evaluate overall composition of the courses, quality of the key teachers, etc. Why would you recommend / not recommend this study program to other students?
+      popis:  Môžete sa vyjadriť napríklad ku skladbe predmetov a pod. Uveďte, prípadne, prečo by ste tento program odporúčali/neodporúčali záujemcom o štúdium. K osobnostiam jednotlivých učiteľov sa vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom.
+      popis_en: For example, you may evaluate overall composition of the courses, etc. Why would you recommend / not recommend this study program to other students? If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
       kategoria:  studijnyprogram
       komentar:   Yes
       hviezdicky: No
@@ -266,8 +266,8 @@ otazky:
     - text:   Napíšte Váš názor na tento predmet. Zdôvodnite, prečo by ste ho odporúčali/neodporúčali.
       text_en: Write your opinion on this course. Please justify why you would or would not recommend the course to other students.
       popis: >
-        Popíšte, čo by ste navrhli zmeniť v organizácii a obsahu tohto predmetu. Ktorá časť výučby nebola dostatočne pokrytá vhodným študijným materiálom. Môžete uviesť, prečo by ste ho odporúčali/neodporúčali ďalším študentom.
-      popis_en: What would you change in the organisation and content of this course? Which parts of the course were not properly covered by study materials? Please justify why you do or do not recommend the course.
+        Popíšte, čo by ste navrhli zmeniť v organizácii a obsahu tohto predmetu. Ktorá časť výučby nebola dostatočne pokrytá vhodným študijným materiálom. Môžete uviesť, prečo by ste ho odporúčali/neodporúčali ďalším študentom. K osobnostiam jednotlivých učiteľov sa vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom.
+      popis_en: What would you change in the organisation and content of this course? Which parts of the course were not properly covered by study materials? Please justify why you do or do not recommend the course. If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
       kategoria:  predmety
       komentar:   Yes
       hviezdicky: No
@@ -329,8 +329,8 @@ otazky:
 
 
 # vseobecne otazky - fakulta
-    - text:   Váš celkový dojem z fakulty na základe doterajších skúseností.
-      text_en:  Your overall impression of the faculty based on your experience.
+    - text:   Váš celkový dojem z fakulty na základe doterajších skúseností. K osobnostiam jednotlivých učiteľov sa	vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom.
+      text_en:  Your overall impression of the faculty based on your experience. If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
       popis:  
       popis_en:
       kategoria:  fakulta

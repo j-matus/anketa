@@ -10,10 +10,14 @@ class AbstractVotingController extends Controller {
 
     public function preExecute() {
         $access = $this->get('anketa.access.hlasovanie');
-        if ($access->getUser() === null) throw new AccessDeniedException();
-        if ($access->getUserSeason() === null) throw new AccessDeniedException();
+        $user = $access->getUser();
+        $userSeason = $access->getUserSeason();
+        if ($user === null || $userSeason === null) throw new AccessDeniedException();
 
-        $this->loadUserInfo();
+        if (!$userSeason->getLoadedFromAis()) {
+            $userSeason->setLoadedFromAis(TRUE);
+            $this->get('anketa.user_provider')->loadUserInfo($user, array('isStudentThisSeason', 'subjects'));
+        }
 
         if ($access->userCanVote()) return;
 
@@ -31,55 +35,7 @@ class AbstractVotingController extends Controller {
             return $rv;
         }
 
-        if (!$access->userHasAllowedOrgUnit()) {
-            $user = $access->getUser();
-            $allowedOrgUnit = $this->container->getParameter('org_unit');
-            $params = array();
-            $params['org_unit'] = $allowedOrgUnit;
-            $otherInstances = $this->container->getParameter('other_instances');
-            $recommendedInstances = array();
-            foreach ($otherInstances as $key => $definition) {
-                if (in_array($key, $user->getOrgUnits())) {
-                    $recommendedInstances[] = $definition;
-                }
-            }
-            $params['recommended_instances'] = $recommendedInstances;
-            $rv = $this->render('AnketaBundle:Hlasovanie:orgunit.html.twig', $params);
-            $rv->setStatusCode(403);
-            return $rv;
-        }
-
         // Nemoze hlasovat z nejakeho ineho dovodu...
         throw new AccessDeniedException();
-    }
-
-    /**
-     * Load user info and subjects if necessary.
-     */
-    private function loadUserInfo()
-    {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $user = $this->get('security.context')->getToken()->getUser();
-        $activeSeason = $em->getRepository('AnketaBundle:Season')
-                ->getActiveSeason();
-        $userSeason = $em->getRepository('AnketaBundle:UserSeason')
-                ->findOneBy(array('user' => $user,
-                                  'season' => $activeSeason));
-        $userSources = $this->get('anketa.user_provider')->getUserSources();
-
-        // "$load[X][Y]" == "service X should load user attribute Y"
-        $load = array();
-
-        if (!$userSeason->getLoadedFromAis()) {
-            $load[$userSources['isStudent']]['isStudent'] = TRUE;
-            $load[$userSources['subjects']]['subjects'] = TRUE;
-            $userSeason->setLoadedFromAis(TRUE);
-        }
-
-        foreach ($load as $service => $attributes) {
-            $this->get($service)->load($userSeason, $attributes);
-        }
-
-        $em->flush();
     }
 }

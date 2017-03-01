@@ -74,7 +74,7 @@ teachingassociation:
       chcem_nahlasit: Chcem nahlásiť <strong>chýbajúceho učiteľa</strong>
       nadpis: Nahlásenie chýbajúceho učiteľa
       popis: Ak v zozname učiteľov a cvičiacich k tomuto predmetu niekto chýba, dajte nám prosím o tom vedieť vo formulári nižšie.
-      meno: Meno
+      meno: Meno (bez diakritiky)
       meno_placeholder: Začnite písať, meno sa doplní
       funkcia: Funkcia
       vyucujuci: Prednášajúci
@@ -146,14 +146,17 @@ statistics:
       {1} Bol skrytý 1 nevhodný komentár. Jeho obsah bude napriek tomu preskúmaný.|
       [2,4] Boli skryté %count% nevhodné komentáre. Ich obsah bude napriek tomu preskúmaný.|
       ]4,Inf] Bolo skrytých %count% nevhodných komentárov. Ich obsah bude napriek tomu preskúmaný.
-    komentare_po_prihlaseni: Komentáre si môžete pozrieť po <a href="%url%">prihlásení</a>.
+    komentare_po_prihlaseni: Neprihlásené osoby nemajú prístup ku komentárom. <a href="%url%">Prihlásiť</a>
+    komentare_nepristupne: Momentálne nemáte prístup ku komentárom.
   fafRestriction:
     teacher: Prístup ku výsledkom je obmedzený. Učitelia môžu vidieť iba výsledky <a href="%url%">svojich predmetov</a>.
     noteacher: Prístup ku výsledkom je obmedzený. Výsledky môžu vidieť iba učitelia, a to iba pre predmety, ktoré učia.
   teacherOptedOut:
-    me: Tento učiteľ nesúhlasí so zverejnením jeho výsledkov.
+    teacher: Tento učiteľ nesúhlasí so zverejnením jeho výsledkov.
     any: Učiteľ tohoto predmetu nesúhlasí so zverejnením jeho výsledkov.
     all: Učitelia tohoto predmetu nesúhlasia so zverejnením jeho výsledkov.
+    me: Neevidujeme váš súhlas so zverejnením výsledkov ankety, preto nemáte prístup k hodnoteniam jednotlivých učiteľov a ostatní používatelia nemajú prístup k vašim hodnoteniam. Ak sa jedná o chybu, môžete písomný súhlas kedykoľvek podpísať a odovzdať na dekanáte vašej fakulty.
+    invisible: Tieto hodnotenia vidíte iba vy, keďže neevidujeme váš súhlas so zverejnením výsledkov ankety. Ak sa jedná o chybu, môžete písomný súhlas kedykoľvek podpísať a odovzdať na dekanáte vašej fakulty.
   controller:
     vseobecne: Všeobecné otázky
     studijne_programy: Študijné programy
