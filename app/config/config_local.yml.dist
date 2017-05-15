@@ -36,7 +36,7 @@ parameters:
     # viditelny nazov fakulty (na rozdiel od org_unit) - je v nadpise apod
     skratka_fakulty:   FMFI
 
-    smernica_dekana:   "http://www.fmph.uniba.sk/index.php?id=2940"
+    smernica_dekana:   "https://zona.fmph.uniba.sk/fileadmin/fmfi/fakulta/legislativa/Zabezpecenie_anketa_FMFI_UK.pdf"
 
     google_analytics_tracking_code: ~
 

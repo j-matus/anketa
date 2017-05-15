@@ -48,24 +48,29 @@
     {% if skratka_fakulty == 'FMFI' %}
         <div class="faq-item">
             Vplyv ankety na chod fakulty je priamo úmerný účasti študentov.
-            Vedenie fakulty berie početné názory študentov vážne &mdash;
-            prečítajte si <a href="{{ asset('bundles/anketa/files/anketa-stanovisko-2010.pdf') }}">stanovisko vedenia
-            k výsledkom poslednej ankety</a>, ktoré bolo motivované vyše 40% účasťou študentov.
+            Po relatívne vysokej účasti počas predchádzajúcich ročníkov došlo
+            k viacerým zmenám (napr. zmeny učiteľov, upravenie obsahov predmetov
+            a pod.), pričom istý posun bolo možné sledovať aj priamo v anketovom
+            hodnotení počas nasledujúcich ročníkov. Niečo sa teda dosiahnuť určite
+            dá :)
         </div>
     {% else %}
         <div class="faq-item">
-            To, či sa vyplnením ankety niečo zmení, závisí v prvom rade od Vás - Vaša účasť na ankete je prvým, ale potrebným krokom.
-            Ako motivácia môže poslúžiť výsledok ankety na Fakulte matematiky, fyziky a informatiky, kde anketa prebehla minulý rok.
-            Po vyše 40% účasti študentov došlo k viacerým zmenám (napr. zmeny učiteľov, upravenie obsahov predmetov a pod.). Viac si môžte 
-            prečítať v <a href="{{ asset('bundles/anketa/files/anketa-stanovisko-2010.pdf') }}">stanovisku vedenia
-            k výsledkom ankety z FMFI</a>. Teda niečo sa dosiahnuť určite dá :)
+            To, či sa vyplnením ankety niečo zmení, závisí v prvom rade od Vás
+            &mdash; Vaša účasť na ankete je prvým, ale potrebným krokom. Ako
+            motivácia môže poslúžiť výsledok ankety na Fakulte matematiky,
+            fyziky a informatiky, kde anketa prebehla počas viac ako desiatich
+            predchádzajúcich semestrov. Po relatívne vysokej účasti v mnohých z
+            nich došlo k viacerým zmenám (napr. zmeny učiteľov, upravenie
+            obsahov predmetov a pod.). Niečo sa teda dosiahnuť určite dá :)
         </div>
     {% endif %}
 
     {% if skratka_fakulty == 'FMFI' %}
     <h2 class="faq">Dokedy môžem hlasovať?</h2>
         <div class="faq-item">
-            Anketa je otvorená na hlasovanie podla smernice dekana spravidla posledné dva týždne semestra a prvé dva týždne skúškového obdobia.
+            Anketa je otvorená na hlasovanie spravidla posledné dva týždne
+            semestra a počas celého skúškového obdobia.
         </div>
     {% else %}
         {# TODO zistit dokedy je otvorene hlasovanie! #}
@@ -99,12 +104,13 @@
                 členovia akademickej obce {{ skratka_fakulty }} UK (študenti aj
                 zamestnanci).
             </p>
+            {#
             {% if skratka_fakulty == 'FMFI' %}
                 <p>
                     Pozrite si <a href="/vysledky/2010-2011">výsledky ankety 2010/2011</a>.
                 </p>
             {% endif %}
-
+            #}
      </div>
     <h2 class="faq">Našiel som bug/napadlo mi vylepšenie. Čo mám robiť?
 </h2>
