@@ -75,21 +75,18 @@ class ImportUcitelPredmetCommand extends AbstractImportCommand {
                     VALUES (:code, :name, :slug)
                     ON DUPLICATE KEY UPDATE slug=slug");
 
-        $insertTeacherSubjectLecturer = $conn->prepare("
+        $insertTeacherSubject = $conn->prepare("
                     INSERT INTO TeachersSubjects (teacher_id, subject_id, season_id, lecturer, trainer)
-                    SELECT a.id, b.id, :season, 1, 0
+                    SELECT a.id, b.id, :season, :isLecturer, :isTrainer
                     FROM User a, Subject b
                     WHERE a.login = :login and b.slug = :slug
-                    ON DUPLICATE KEY UPDATE lecturer=1");
-
-        $insertTeacherSubjectTrainer = $conn->prepare("
-                    INSERT INTO TeachersSubjects (teacher_id, subject_id, season_id, lecturer, trainer)
-                    SELECT a.id, b.id, :season, 0, 1
-                    FROM User a, Subject b
-                    WHERE a.login = :login and b.slug = :slug
-                    ON DUPLICATE KEY UPDATE trainer=1");
+                    ON DUPLICATE KEY UPDATE lecturer=GREATEST(VALUES(lecturer), TeachersSubjects.lecturer),
+                        trainer=GREATEST(VALUES(trainer), TeachersSubjects.trainer)");
 
         $rows = 0;
+        $rowsSuccess = 0;
+        $rowsIncomplete = 0;
+        $rowsUnknown = 0;
         try {
             while (($row = $tableReader->readAssocRow()) !== false) {
                 $rows++;
@@ -107,7 +104,19 @@ class ImportUcitelPredmetCommand extends AbstractImportCommand {
                 $meno = $row['Meno'];
                 $login = $row['Login'];
 
-                if (strlen($aisNazov) == 0 || strlen($login) == 0 || strlen($plneMeno) == 0) {
+                if (strlen($aisNazov) == 0) {
+                    $output->writeln($aisDlhyKod . ': Chýba meno predmetu');
+                    $rowsIncomplete++;
+                    continue;
+                }
+                if (strlen($plneMeno) == 0) {
+                    $output->writeln($aisDlhyKod . ': Chýba meno vyučujúceho '.$meno .' '.$priezvisko);
+                    $rowsIncomplete++;
+                    continue;
+                }
+                if (strlen($login) == 0) {
+                    $output->writeln($aisDlhyKod . ': Chýba login vyučujúceho '.$plneMeno);
+                    $rowsIncomplete++;
                     continue;
                 }
 
@@ -123,13 +132,13 @@ class ImportUcitelPredmetCommand extends AbstractImportCommand {
                 $prednasajuci = 0;
                 $cviciaci = 0;
 
-                if ($hodnost == 'P') {
+                if ($hodnost == 'P' || $hodnost == 'H' || $hodnost == 'S') {
                     $prednasajuci = 1;
-                    $insertTeacherSubject = $insertTeacherSubjectLecturer;
-                } else if ($hodnost == 'C') {
+                } else if ($hodnost == 'C' || $hodnost == 'V') {
                     $cviciaci = 1;
-                    $insertTeacherSubject = $insertTeacherSubjectTrainer;
                 } else {
+                    $output->writeln($aisDlhyKod . ': neznamy typ vyučujúceho \'' . $hodnost . '\'');
+                    $rowsUnknown++;
                     continue;
                 }
 
@@ -151,7 +160,11 @@ class ImportUcitelPredmetCommand extends AbstractImportCommand {
                 $insertTeacherSubject->bindValue('slug', $slug);
                 $insertTeacherSubject->bindValue('login', $login);
                 $insertTeacherSubject->bindValue('season', $season->getId());
+                $insertTeacherSubject->bindValue('isLecturer', $prednasajuci);
+                $insertTeacherSubject->bindValue('isTrainer', $cviciaci);
                 $insertTeacherSubject->execute();
+
+                $rowsSuccess++;
             }
         } catch (Exception $e) {
             $conn->rollback();
@@ -160,6 +173,7 @@ class ImportUcitelPredmetCommand extends AbstractImportCommand {
 
         $conn->commit();
         $output->writeln("Processed ".$rows." rows from ".$input->getArgument('file'));
+        $output->writeln("Successful rows: ".$rowsSuccess.", incomplete rows: ".$rowsIncomplete.", unknown rows: ".$rowsUnknown);
         fclose($file);
     }
 
