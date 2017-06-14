@@ -62,8 +62,8 @@ def main():
                                 rokStudia=zapisny_list.rocnik,
                                 studijnyProgram=dict(skratka=studium.sp_skratka,
                                                      nazov=studium.sp_popis),
-                                expanded_from_vals=dict(skratka=predmet.skratka,
-                                                        nazov=predmet.nazov)
+                                expanded_from=dict(skratka=predmet.skratka,
+                                                   nazov=predmet.nazov)
                             ))
                     else:
                         subjects.append(dict(
@@ -74,7 +74,7 @@ def main():
                             rokStudia=zapisny_list.rocnik,
                             studijnyProgram=dict(skratka=studium.sp_skratka,
                                                  nazov=studium.sp_popis),
-                            expanded_from_vals=None
+                            expanded_from=None
                         ))
 
     client.logout()

@@ -51,7 +51,7 @@ class AISUserSource implements UserSourceInterface
 
     public function __construct(Connection $dbConn, EntityManager $em, AISRetriever $aisRetriever,
             SubjectIdentificationInterface $subjectIdentification, $allowedOrgUnit, $checkOrgUnit,
-            LoggerInterface $logger = null, $expand_subjects)
+            LoggerInterface $logger = null, $expand_subjects = null)
     {
         $this->dbConn = $dbConn;
         $this->em = $em;
@@ -105,7 +105,7 @@ class AISUserSource implements UserSourceInterface
 
         foreach ($aisPredmety as $aisPredmet) {
             $props = $this->subjectIdentification->identify($aisPredmet['skratka'], $aisPredmet['nazov']);
-            $expanded_from = $aisPredmet['expanded_from_vals'];
+            $expanded_from = $aisPredmet['expanded_from'];
 
             // Ignorujme duplicitne predmety
             if (in_array($props['slug'], $slugy)) {
