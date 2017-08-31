@@ -94,7 +94,7 @@ question:
   index:
     ak_neucil: Ak vás tento učiteľ neučil, môžete otázky preskočiť a zvoliť
     uloz_a_chod: Ulož a choď ďalej
-    preskocte_predmet: Ak tento predmet nepodlieha priamej vyučbe, ale splneniu určitých povinností (ako napr. diplomová práca, vedecká činnosť, samostatné štúdium odbornej literatúry a pod.), prípadne ste tento predmet v aktuálnom semestri neobsolvovali lebo Vám bol uznaný, hodnotenie predmetu prosím preskočte.
+    preskocte_predmet: Ak tento predmet nepodlieha priamej vyučbe, prípadne ste tento predmet v aktuálnom semestri neobsolvovali lebo Vám bol uznaný, alebo ste ho <em>absolvovali na inom pracovisku</em>, hodnotenie predmetu prosím <strong>preskočte</strong>.
     chyba_v_uciteloch: Je v zozname učiteľov k tomuto predmetu chyba?
     dajte_nam_vediet: Dajte nám vedieť a my to napravíme
     uloz: Ulož
