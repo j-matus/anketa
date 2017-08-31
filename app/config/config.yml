@@ -90,6 +90,7 @@ services:
             - %org_unit%
             - %check_voters_org_unit%
             - "@logger"
+            - %expand_subjects%
     anketa.ldap_retriever:
         class: AnketaBundle\Integration\LDAPRetriever
         arguments:

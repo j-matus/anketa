@@ -46,9 +46,12 @@ class AISUserSource implements UserSourceInterface
     /** @var string */
     private $allowedOrgUnit;
 
+    /** @var array */
+    private $expand_subjects;
+
     public function __construct(Connection $dbConn, EntityManager $em, AISRetriever $aisRetriever,
             SubjectIdentificationInterface $subjectIdentification, $allowedOrgUnit, $checkOrgUnit,
-            LoggerInterface $logger = null)
+            LoggerInterface $logger = null, $expand_subjects = null)
     {
         $this->dbConn = $dbConn;
         $this->em = $em;
@@ -56,6 +59,7 @@ class AISUserSource implements UserSourceInterface
         $this->logger = $logger;
         $this->subjectIdentification = $subjectIdentification;
         $this->allowedOrgUnit = ($checkOrgUnit ? $allowedOrgUnit : null);
+        $this->expand_subjects = $expand_subjects;
     }
 
     public function load(UserSeason $userSeason, array $want)
@@ -73,7 +77,7 @@ class AISUserSource implements UserSourceInterface
                 }
             }
 
-            $result = $this->aisRetriever->getResult($this->allowedOrgUnit, $semestre);
+            $result = $this->aisRetriever->getResult($this->allowedOrgUnit, $semestre, $this->expand_subjects);
 
             if ($result['is_student']) {
                 if (isset($want['subjects'])) {
@@ -101,6 +105,7 @@ class AISUserSource implements UserSourceInterface
 
         foreach ($aisPredmety as $aisPredmet) {
             $props = $this->subjectIdentification->identify($aisPredmet['skratka'], $aisPredmet['nazov']);
+            $expanded_from = $aisPredmet['expanded_from'];
 
             // Ignorujme duplicitne predmety
             if (in_array($props['slug'], $slugy)) {
@@ -156,6 +161,20 @@ class AISUserSource implements UserSourceInterface
                 throw new \Exception("Nepodarilo sa pridať väzbu študent-predmet do DB");
             }
             $stmt = null;
+
+            if ($expanded_from != null) {
+                $old_props = $this->subjectIdentification->identify($expanded_from['skratka'], $expanded_from['nazov']);
+                $stmt = $this->dbConn->prepare("INSERT INTO TeachersSubjects(teacher_id, subject_id, season_id, lecturer, trainer)
+                                                SELECT teacher_id, s2.id as subject_id, season_id, lecturer, trainer from TeachersSubjects as ts, Subject as s, Subject as s2
+                                                WHERE s.id = ts.subject_id and s.code=:old_code and s2.code=:new_code
+                                                ON DUPLICATE KEY UPDATE subject_id=s2.id");
+                $stmt->bindValue('old_code', $old_props['code']);
+                $stmt->bindValue('new_code', $props['code']);
+                if (!$stmt->execute()) {
+                    throw new \Exception("Nepodarilo sa získať učiteľa pôvodného AIS predmetu");
+                }
+                $stmt = null;
+            }
 
             $this->dbConn->commit();
         }
