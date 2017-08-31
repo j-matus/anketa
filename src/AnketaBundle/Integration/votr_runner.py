@@ -25,6 +25,7 @@ def main():
     # TODO: full_name = client.get_full_name()
     is_student = False
     subjects = []
+    ostatne_studia = []
 
     if client.get_som_student():
         studia = client.get_studia()
@@ -35,6 +36,14 @@ def main():
             # TODO: pouzivat zapisny_list.organizacna_jednotka,
             # ked bude v REST API
             if fakulta and studium.organizacna_jednotka != fakulta:
+                for zapisny_list in client.get_zapisne_listy(studium.studium_key):
+                    # Ak je to pre nas relevantne studium, vratime ho
+                    # Dolezite pri zistovani chybajucej org. jednotky v AISe
+                    if zapisny_list.akademicky_rok in relevantne_roky:
+                        toto_studium = {}
+                        toto_studium['skratka'] = studium.sp_skratka or "Neznamy program"
+                        toto_studium['oj'] = studium.organizacna_jednotka or "bez fakulty"
+                        ostatne_studia.append(toto_studium)
                 continue
 
             for zapisny_list in client.get_zapisne_listy(studium.studium_key):
@@ -83,6 +92,7 @@ def main():
     # result['full_name'] = full_name
     result['is_student'] = is_student
     result['subjects'] = subjects
+    result['ostatne_studia'] = ostatne_studia
 
     print(json.dumps(result))
 
