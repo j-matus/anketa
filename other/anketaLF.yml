@@ -204,8 +204,8 @@ otazky:
             hodnota:  0
       position:   6
 
-    - text:   Napíšte Váš názor na tento predmet. Zdôvodnite, prečo by ste ho odporúčali/neodporúčali.
-      text_en: Write your opinion on this course. Please justify why you would or would not recommend the course to other students.
+    - text:   Napíšte Váš názor na tento predmet.
+      text_en: Write your opinion on this course.
       popis: >
         Popíšte, čo by ste navrhli zmeniť v organizácii a obsahu tohto predmetu. Ktorá časť výučby nebola dostatočne pokrytá vhodným študijným materiálom. K osobnostiam jednotlivých učiteľov sa vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom.
       popis_en: What would you change in the organisation and content of this course? Which parts of the course were not properly covered by study materials? If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
