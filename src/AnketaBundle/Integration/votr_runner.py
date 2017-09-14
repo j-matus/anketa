@@ -17,7 +17,7 @@ def main():
     json_input = json.load(sys.stdin)
     fakulta = json_input['fakulta']
     semestre = json_input['semestre']
-    expand_subjects = json_input['expand_subjects']
+    expand_subjects = json_input['expand_subjects'] or {}
     relevantne_roky = [ak_rok for ak_rok, sem in semestre]
 
     client = create_client(json_input['server'], json_input['params'])
