@@ -1,5 +1,6 @@
 base:
   svt: Student Developer Team
+  nahlasit: Report a problem
 userbar:
   prihlaseny: Logged in
   odhlasit: logout
