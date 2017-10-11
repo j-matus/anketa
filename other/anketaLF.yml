@@ -179,8 +179,8 @@ otazky:
             hodnota: -2
       position:   5
 
-    - text:   Zhruba akú časť kontaktnej výučby (prednášky, cvičenia a pod.) ste absolvovali?
-      text_en: Approximately what proportion of the in-class teaching (lectures, tutorials, etc..) have you attended?
+    - text:  Zhruba akú časť prednášok ste absolvovali?
+      text_en: Approximately what proportion of lectures have you attended?
       popis:
       popis_en:
       kategoria:  predmety
@@ -269,8 +269,8 @@ otazky:
       hviezdicky: Yes
       position:   1
 
-    - text:   Činnosť Študentskej komory akademického senátu (ŠKAS).
-      text_en: Activities of the Student section of the Faculty Council (ŠKAS).
+    - text:   Činnosť Študentskej časti akademického senátu (ŠČAS).
+      text_en: Activities of the Student section of the Faculty Council (ŠČAS).
       popis:
       popis_en:
       kategoria:  fakulta
