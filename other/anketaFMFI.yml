@@ -157,6 +157,31 @@ otazky:
             hodnota: -2
       position:   4
 
+    - text:   Koľko hodín práce ste v priemere týždenne venovali tomuto predmetu?
+      text_en: How much time did you spend on this course every week on average?
+      popis:
+      popis_en:
+      kategoria:  predmety
+      komentar:   No
+      hviezdicky: No
+      moznosti:
+          - text: Hodinu a menej.
+            text_en: One hour or less.
+            hodnota: 1
+          - text: Dve hodiny.
+            text_en: Two hours.
+            hodnota: 2
+          - text: Štyri hodiny.
+            text_en: Four hours.
+            hodnota: 4
+          - text: Osem hodín.
+            text_en: Eight hours.
+            hodnota: 8
+          - text: Nežijem ničím iným.
+            text_en: I live for nothing else.
+            hodnota: 16
+      position:   5
+
     - text:   Boli jasne stanovené požiadavky a spôsob hodnotenia predmetu?
       text_en: Were the requirements and the evaluation criteria of the course clearly defined?
       popis:
@@ -177,7 +202,7 @@ otazky:
           - text: Určite nie.
             text_en: Definitely not.
             hodnota: -2
-      position:   5
+      position:   6
 
     - text:   Zhruba akú časť kontaktnej výučby (prednášky, cvičenia a pod.) ste absolvovali?
       text_en: Approximately what proportion of the in-class teaching (lectures, tutorials, etc..) have you attended?
@@ -202,32 +227,10 @@ otazky:
           - text:     Menej ako 10%.
             text_en:  Less than 10%.
             hodnota:  0
-      position:   6
-
-    - text:   Odporučili by ste tento predmet ostatným študentom?
-      text_en: Would you recommend this course to other students?
-      popis:
-      popis_en:
-      kategoria:  predmety
-      komentar:   No
-      hviezdicky: No
-      moznosti:
-          - text: Určite áno
-            text_en: Definitely yes.
-            hodnota: 2
-          - text: Skôr áno
-            text_en: Yes.
-            hodnota: 1
-          - text: Skôr nie
-            text_en: No.
-            hodnota: -1
-          - text: Určite nie
-            text_en: Definitely not.
-            hodnota: -2
       position:   7
 
-    - text:   Napíšte Váš názor na tento predmet. Zdôvodnite, prečo by ste ho odporúčali/neodporúčali.
-      text_en: Write your opinion on this course. Please justify why you would or would not recommend the course to other students.
+    - text:   Napíšte Váš názor na tento predmet. 
+      text_en: State your opinion on this course.
       popis: >
         Popíšte, čo by ste navrhli zmeniť v organizácii a obsahu tohto predmetu. Ktorá časť výučby nebola dostatočne pokrytá vhodným študijným materiálom. Môžete uviesť, prečo by ste ho odporúčali/neodporúčali ďalším študentom. K osobnostiam jednotlivých učiteľov sa vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom.
       popis_en: What would you change in the organisation and content of this course? Which parts of the course were not properly covered by study materials? Please justify why you do or do not recommend the course. If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
@@ -270,10 +273,8 @@ otazky:
 
     - text:   Napíšte Váš názor alebo pripomienky k učiteľovi a jeho pôsobeniu v tomto predmete.
       text_en: Write your comments about the teacher and his work regarding this course.
-      popis:  >
-        Zdôvodnite, prečo by ste ho odporúčali/neodporúčali.
-      popis_en: >
-        Please justify why you would or would not recommend this teacher.
+      popis:
+      popis_en:
       kategoria:  predmety_ucitel
       komentar:   Yes
       hviezdicky: No
@@ -282,8 +283,8 @@ otazky:
 
 
 # vseobecne otazky - fakulta
-    - text:   Váš celkový dojem z fakulty na základe doterajších skúseností. K osobnostiam jednotlivých učiteľov sa vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom
-      text_en:  Your overall impression of the faculty based on your experience. If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
+    - text:   Váš celkový dojem z fakulty. K osobnostiam jednotlivých učiteľov sa vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom
+      text_en:  Your overall impression of the faculty. If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
       popis:  
       popis_en:
       kategoria:  fakulta
@@ -300,8 +301,8 @@ otazky:
       hviezdicky: Yes
       position:   2
 
-    - text:   Váš celkový dojem z fakultnej knižnice.
-      text_en: Your overall impression of the faculty library.
+    - text:   Kvalita služieb študijného oddelenia.
+      text_en: Quality of the registrar's office services.
       popis:  
       popis_en:
       kategoria:  fakulta
@@ -309,14 +310,42 @@ otazky:
       hviezdicky: Yes
       position:   3
 
-    - text: Ako sa vám páči anketa v súčasnej podobe?
-      text_en: How do you like the student questionnaire in its current form?
-      popis:  Páči sa vám? Čo by ste navrhovali zmeniť?
-      popis_en: Do you like it? What would you suggest to change?
+    - text:   Váš dojem z fakultnej knižnice.
+      text_en: Your impression of the faculty library.
+      popis:  
+      popis_en:
       kategoria:  fakulta
       komentar:   Yes
       hviezdicky: Yes
       position:   4
+
+    - text: Úroveň stravovacích služieb.
+      text_en: Your impression of the food options.
+      popis:
+      popis_en:
+      kategoria: fakulta
+      komentar:  Yes
+      hviezdicky: Yes
+      position:   5
+
+    - text:    Vybavenie odborných a počítačových učební.
+      text_en: Quality of laboratories and computer rooms.
+      popis: 
+      popis_en:
+      kategoria: fakulta
+      komentar:  Yes
+      hviezdicky: Yes
+      position:   6
+      
+
+    - text: Ako sa vám páči anketa?
+      text_en: How do you like the student questionnaire?
+      popis:  Čo by ste navrhovali zmeniť?
+      popis_en: What would you suggest to change?
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: Yes
+      position:   7
 
     - text: Chcete sa ešte k niečomu vyjadriť?
       text_en: Do you have any additional comments?
@@ -325,5 +354,5 @@ otazky:
       kategoria:  fakulta
       komentar:   Yes
       hviezdicky: No
-      position:   5
+      position:   8
 ...
