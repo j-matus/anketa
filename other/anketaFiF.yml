@@ -323,8 +323,8 @@ otazky:
             text_en: I'm not using the service
       position:   4
 
-    - text:   Činnosť Študentskej časti Akademického senátu (ŠČ AS).
-      text_en: Activities of the Student section of the Faculty Council (ŠČ AS).
+    - text:   Činnosť Študentskej časti Akademického senátu FiF UK (ŠČ AS FiF UK).
+      text_en: Activities of the Student section of the Faculty Council (ŠČ AS FiF UK).
       popis:
       popis_en:
       kategoria:  fakulta
