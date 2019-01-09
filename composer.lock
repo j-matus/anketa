@@ -1376,10 +1376,10 @@
         },
         {
             "name": "svt/votr",
-            "version": "20180508-dev",
+            "version": "20190109-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fmfi-svt/votr/archive/d0bb7797428e5ab843be02b9c748f6d6d0a18625.zip",
+                "url": "https://github.com/fmfi-svt/votr/archive/512bc5e01afc62eda12907ec6379a4afb9cb8ab9.zip",
                 "reference": null,
                 "shasum": null
             },
