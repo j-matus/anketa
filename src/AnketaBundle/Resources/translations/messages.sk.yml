@@ -13,7 +13,7 @@ welcome:
   index:
     studentska_anketa: Študentská anketa
     vitaj: Vitajte v Študentskej ankete
-    zapoj_sa: Zapojte sa aj Vy a prezentujte svoj názor! <strong>Vzhľadom ku zmenám v systéme AIS2, hlasovanie v ankete momentálne žiaľ nefunguje. Na odstránení problémov pracujeme.</strong>
+    zapoj_sa: Zapojte sa aj Vy a prezentujte svoj názor!
     stanovisko: Prečítajte si <a href="%url%">stanovisko vedenia fakulty k výsledkom ankety %descr%</a>.
     hlasuj: Hlasuj!
     otvorene_do: Otvorené do
