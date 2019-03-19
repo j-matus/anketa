@@ -156,7 +156,7 @@ class StatisticsController extends Controller {
         );
 
         $url = (isset($_SERVER['HTTPS']) ? 'https' : 'http') .
-            '://chart.googleapis.com/chart?' . http_build_query($options);
+            '://image-charts.com/chart?' . http_build_query($options);
 
         return array('url' => $url, 'width' => $width, 'height' => $height);
     }
