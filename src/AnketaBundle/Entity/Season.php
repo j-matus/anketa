@@ -147,6 +147,14 @@ class Season {
     const HIDE_SUBJECT_IF_ANY = 1;
     const HIDE_SUBJECT_IF_ALL = 2;
 
+    /**
+     * If we want to ignore hideAllResults.
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var boolean $showAllResults
+     */
+    protected $showAllResults = false;
+
     public function __construct($description, $slug) {
         $this->setDescription($description);
         $this->setSlug($slug);
@@ -189,6 +197,14 @@ class Season {
 
     public function setActive($active) {
         $this->active = $active;
+    }
+
+    public function getShowAllResults() {
+        return $this->showAllResults;
+    }
+
+    public function setShowAllResults($showAllResults) {
+        $this->showAllResults = $showAllResults;
     }
 
     public function getVotingOpen() {
