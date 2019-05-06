@@ -150,7 +150,7 @@ class Season {
     /**
      * If we want to ignore hideAllResults.
      *
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=false, options={"default" : 0})
      * @var boolean $showAllResults
      */
     protected $showAllResults = false;
