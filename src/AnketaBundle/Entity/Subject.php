@@ -90,16 +90,18 @@ class Subject {
             $zvysok = $matches[1];
         }
         $matches = array();
-        $match = preg_match("@^[^-]*-([^-]*)-@", $zvysok, $matches);
+        $match = preg_match("@^[^-]+-([^-]*)-@", $zvysok, $matches);
         if ($match == 0) {
             $matches = array();
             if (preg_match("@-(Bc|Mgr)@", $zvysok, $matches) == 0) {
                 return self::NO_CATEGORY;
             }
             else {
+                if (strlen($matches[1]) < 2) return self::NO_CATEGORY; // FiF fix
                 return $matches[1];
             }
         } else {
+            if (strlen($matches[1]) < 2) return self::NO_CATEGORY; // FiF fix
             return $matches[1];
         }
     }
