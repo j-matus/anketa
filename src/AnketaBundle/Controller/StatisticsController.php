@@ -358,7 +358,7 @@ class StatisticsController extends Controller {
         
         // Skontroluje, ci dana stranka predmetu/ucitela nema byt skryta, lebo ucitel nesuhlasi
         // so zverejnenim svojich vysledkov, pripadne kvoli FaF obmedzeniu.
-        if (($section->getSeason()->getFafRestricted() || $section->getTeacherOptedOut()) && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (!$section->getSeason()->getShowAllResults() && ($section->getSeason()->getFafRestricted() || $section->getTeacherOptedOut()) && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $em = $this->get('doctrine.orm.entity_manager');
             $access = $this->get('anketa.access.statistics');
             $season = $section->getSeason();
@@ -390,7 +390,7 @@ class StatisticsController extends Controller {
         
         // Ak si ucitel nepraje zverejnit svoje vysledky v ankete, neuvidi vysledky ostatnych ucitelov
         // TODO: Dorobit to tak, aby rozumne bralo do uvahy SubjectHiding (nieco v style "ja neuvidim ekvivalent toho, co ini nevidia kvoli mne"
-        if ($this->getUser()->getHideAllResults() && $this->get('anketa.access.statistics')->isFacultyTeacherAtAnyTime() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if (!$section->getSeason()->getShowAllResults() && $this->getUser()->getHideAllResults() && $this->get('anketa.access.statistics')->isFacultyTeacherAtAnyTime() && !$this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $good = true;
             if ($section->getTeacher() !== null) {
                 $em = $this->container->get('doctrine.orm.entity_manager');
