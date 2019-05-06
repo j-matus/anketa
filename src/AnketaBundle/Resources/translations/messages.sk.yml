@@ -119,6 +119,7 @@ statistics:
     moje_komentare: Moje komentáre
     moje_reporty: Reporty
     stanovisko_vedenia: Stanovisko vedenia
+    statistiky: Štatistiky
   seasonReport:
     vysledky: Výsledky
     pocet_hlasujucich: V ankete <em>%season%</em> hlasovalo %voters% študentov z celkového počtu %total%.

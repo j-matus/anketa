@@ -1,0 +1,4 @@
+weekday,hour,counts
+{% for result in results %}
+{{ result['weekday'] }},{{ result['hour'] }},{{ result['counts'] }}
+{% endfor %}

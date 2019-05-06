@@ -126,6 +126,10 @@ class StatisticsAccess
         return $userSeason->getIsTeacher();
     }
 
+    public function isSuperAdmin() {
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
+    }
+
     /**
      * Returns whether the current user can or could have created comments,
      * and thus should see a "My comments" item in the menu.

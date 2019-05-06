@@ -450,6 +450,87 @@ class StatisticsController extends Controller {
         return $this->render('AnketaBundle:Statistics:seasonReport.html.twig', $templateParams);
     }
 
+    /*
+     * Provides analytics stats for user interaction with anketa
+     */
+    public function analyticsStatsAction($season_slug = null) {
+        $season = $this->getSeason($season_slug);
+        $templateParams = array();
+        $templateParams['season_slug'] = $season->getSlug();
+        $templateParams['activeMenuItems'] = array($season->getId());
+        return $this->render('AnketaBundle:Statistics:stats.html.twig', $templateParams);
+    }
+
+    /*
+     * Does a CSV export of startTimestamp dates aggregated on a given day
+     */
+    public function analyticsStatsStartedDailyAction($season_slug = null) {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $conn = $em->getConnection();
+        $season = $this->getSeason($season_slug);
+
+        $st = $conn->prepare("select date_format(UserSeason.startTimestamp, '%Y-%m-%d') as dates, count(*) as counts from UserSeason where UserSeason.startTimestamp is not NULL and UserSeason.season_id = :season_id group by date_format(dates, '%Y-%m-%d')");
+        $st->bindValue('season_id', $season->getId());
+        $st->execute();
+
+        $template_params = array();
+        $template_params['results'] = $st->fetchAll();
+        return $this->render('AnketaBundle:Statistics:started_daily.csv.twig', $template_params);
+    }
+
+    /*
+     * Does a CSV export of startTimestamp dates aggregated on a given day
+     */
+    public function analyticsStatsFinishedDailyAction($season_slug = null) {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $conn = $em->getConnection();
+        $season = $this->getSeason($season_slug);
+
+        $st = $conn->prepare("select date_format(UserSeason.finishTimestamp, '%Y-%m-%d') as dates, count(*) as counts from UserSeason where UserSeason.finishTimestamp is not NULL and UserSeason.season_id = :season_id group by date_format(dates, '%Y-%m-%d')");
+        $st->bindValue('season_id', $season->getId());
+        $st->execute();
+
+        $template_params = array();
+        $template_params['results'] = $st->fetchAll();
+        return $this->render('AnketaBundle:Statistics:started_daily.csv.twig', $template_params);
+    }
+
+    /*
+     * Does a CSV export of startTimestamp dates aggregated on a given weekday/hour
+     */
+    public function analyticsStatsStartedWeekdayHourAction($season_slug = null) {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $conn = $em->getConnection();
+        $season = $this->getSeason($season_slug);
+
+        $st = $conn->prepare("select HOUR(UserSeason.startTimestamp) as hour, DAYOFWEEK(UserSeason.startTimestamp) as weekday, count(*) as counts from UserSeason where UserSeason.startTimestamp is not NULL and UserSeason.season_id = :season_id group by weekday, hour");
+        $st->bindValue('season_id', $season->getId());
+        $st->execute();
+
+        $template_params = array();
+        $template_params['results'] = $st->fetchAll();
+        return $this->render('AnketaBundle:Statistics:started_weekdays_hours.csv.twig', $template_params);
+    }
+
+    /*
+     * Does a CSV export of startTimestamp dates aggregated on a given day
+     */
+    public function analyticsTimeTakenToFinishAction($season_slug = null) {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $conn = $em->getConnection();
+        $season = $this->getSeason($season_slug);
+
+        $st = $conn->prepare("select (UNIX_TIMESTAMP(finishTimestamp) - UNIX_TIMESTAMP(startTimestamp)) div 300 as dt, count(*) as counts from UserSeason where finishTimestamp is not null and startTimestamp is not null and season_id = :season_id group by dt");
+        $st->bindValue('season_id', $season->getId());
+        $st->execute();
+
+        $template_params = array();
+        $template_params['results'] = $st->fetchAll();
+        return $this->render('AnketaBundle:Statistics:time_taken_to_finish.csv.twig', $template_params);
+    }
+
+
+
     public function listGeneralAction($season_slug) {
         $em = $this->get('doctrine.orm.entity_manager');
         $season = $this->getSeason($season_slug);
