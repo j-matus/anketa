@@ -22,7 +22,8 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 class CommentReviewAdminController extends Controller {
 
     public function preExecute() {
-        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        $sec_ctx = $this->get('security.context');
+        if (!($sec_ctx->isGranted('ROLE_REVIEWER') || $sec_ctx->isGranted('ROLE_ADMIN'))) {
             throw new AccessDeniedException();
         }
     }
