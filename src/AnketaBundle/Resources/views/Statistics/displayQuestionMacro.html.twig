@@ -12,7 +12,30 @@
         {{ trans('statistics.displayQuestionMacro.nik_neodpovedal') }}
     {% else %}
         {% if data.chart is not null %}
-            <img src="{{ data.chart.url }}" width="{{ data.chart.width }}" height="{{ data.chart.height }}" alt="">
+            <script>
+                (() => {
+                    let chartElement = document.createElement('div');
+                    chartElement.style.width = '{{ data.chart.width }}px';
+                    chartElement.style.height = '{{ data.chart.height }}px';
+                    document.currentScript.parentNode.insertBefore(chartElement, document.currentScript.nextSibling);
+
+                    window.gcharts_ready.then(() => {
+                        let data = google.visualization.arrayToDataTable(JSON.parse('{{ data.chart.json | raw }}'));
+                        let chart = new google.visualization.BarChart(chartElement);
+                        let options = {
+                            legend: {position: "none"},
+                            chartArea: {
+                                left: 100,
+                                right: 10,
+                                bottom: 20,
+                                top: 20,
+                            },
+                            enableInteractivity: false,
+                        };
+                        chart.draw(data, options);
+                    });
+                })();
+            </script>
         {% endif %}
         {% if data.histogram is not empty %}
             <div class="stats-details">

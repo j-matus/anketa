@@ -131,34 +131,32 @@ class StatisticsController extends Controller {
             $palette = array();
         }
 
-        $titles = array_map(function ($data) { return $data['title']; }, $histogram);
+        /* when there are no votes we terminate early */
         $counts = array_map(function ($data) { return $data['cnt']; }, $histogram);
         if (array_sum($counts) == 0) {
             return null;
         }
 
-        // docs at http://code.google.com/apis/chart/image/docs/gallery/bar_charts.html
-        $options = array(
-            'cht' => 'bhs',   // bar chart, horizontal, stacked
-            'chbh' => 'a',   // bar width = automatic
-            'chds' => 'a',   // automatic data scaling
-            'chxt' => 'x,y',   // visible axes
-            // axis style: leave default color (676767) and font (11.5), align right (1) and
-            // show only axis line (l) and not line with tick marks (lt)
-            'chxs' => '1,676767,11.5,1,l',
-            // marker style: data values (N), black, sum of each bar (-1), font size 16,
-            // right-anchored placement with offset -3
-            'chm' => 'N,000000,-1,,16,,r:-3',
-            'chs' => $width . 'x' . $height,
-            'chco' => implode('|', $palette),
-            'chxl' => '1:|' . implode('|', array_reverse($titles)),
-            'chd' => 't:' . implode(',', $counts)
-        );
+        /*
+         * We need to create JSON like this:
+         * [
+         *   ['Name', 'Value', { role: 'style' } ],
+         *   ['title1', 1, 'color: #ff1e1e'],
+         *   ['title2', 5, 'color: #ff8f1e'],
+         *   ['title3', 10, 'color: #f5f51d'],
+         *   ['title4', 14, 'color: #b4ff1e'],
+         *   ['title5', 12, 'color: #1eff1e'],
+         * ]
+         */
+        $bars = array_map(function ($data) use (&$palette) {
+            /* we can shift the palette array because it should have the same length as histogram */
+            return array($data['title'], $data['cnt'], array_shift($palette));
+        }, $histogram);
 
-        $url = (isset($_SERVER['HTTPS']) ? 'https' : 'http') .
-            '://image-charts.com/chart?' . http_build_query($options);
+        /* we prepend the array with header row */
+        array_unshift($bars, array('Name', 'Value', array('role' => 'style')));
 
-        return array('url' => $url, 'width' => $width, 'height' => $height);
+        return array('json' => json_encode($bars), 'width' => $width, 'height' => $height);
     }
 
     /**
