@@ -22,7 +22,8 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*",
         "svt/votr": "@dev",
         "svt/rozvrhxml": "@dev",
-        "svt/cosign-bundle": "@dev"
+        "svt/cosign-bundle": "@dev",
+        "ext-json": "*"
     },
     "require-dev": {
         "svt/linters": "@dev"
