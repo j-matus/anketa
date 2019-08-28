@@ -159,8 +159,10 @@ otazky:
 
     - text:   Koľko hodín práce ste v priemere týždenne venovali tomuto predmetu?
       text_en: How much time did you spend on this course every week on average?
-      popis:
-      popis_en:
+      popis: >
+        Započítavajte čas strávený na prednáškach, cvičeniach, domácich úlohách a prípravu
+        na zápočty a skúšky.
+      popis_en: Include time spent on lectures, exercises, homeworks and the time spent while preparing to midterms and exams.
       kategoria:  predmety
       komentar:   No
       hviezdicky: No
