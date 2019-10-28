@@ -20,7 +20,14 @@
         {% endfor %}
         {% if access.statistics.canCreateResponses(section.season) %}
             <div>
-                <a href="{{ path('response_new', {'section_slug': section.slug}) }}">Nový komentár</a>
+                <form action="{{ path('response_new', {'section_slug': section.slug}) }}" method="GET">
+                    <button type="submit">Nový komentár</button>
+                </form>
+                <form action="{{ path('response_new', {'section_slug': section.slug}) }}" method="POST">
+                    <input type="hidden" name="association" value="">
+                    <input type="hidden" name="text" value="{{ trans('response.edit.dakovny_response') }}">
+                    <button type="submit">{{ trans('response.edit.odoslat_dakovny') }}</button>
+                </form>
             </div>
         {% endif %}
         </div>
