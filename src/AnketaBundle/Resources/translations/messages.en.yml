@@ -204,6 +204,8 @@ response:
     kto_moze_citat: Your response will be visible to all students and teachers.
     da_sa_upravovat: You will be able to edit your response after submit.
     odoslat: Submit
+    odoslat_dakovny: Thank for feedback
+    dakovny_response: Thank you for your feedback, your opinion is very important to us.
   list:
     moje_komentare: My responses
     tu_su_komentare: This page contains all your responses.
