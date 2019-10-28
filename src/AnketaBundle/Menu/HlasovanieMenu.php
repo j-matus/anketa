@@ -48,10 +48,6 @@ class HlasovanieMenu
             'general' => new MenuItem(
                 $trans->trans('hlasovanie.menu.vseobecne'),
                 $this->generateUrl('answer_general')
-            ),
-            'anonymizuj' => new MenuItem(
-                    $trans->trans('hlasovanie.menu.ukoncenie'),
-                    $this->generateUrl('anonymizuj')
             )
         );
 
@@ -151,7 +147,33 @@ class HlasovanieMenu
             }
         }
 
+        # remove menu items containing zero questions
+        $menu = $this->sanitizeMenu($menu);
+
+        # pridaj do menu link na ukoncenie hlasovania
+        $menu['anonymizuj'] = new MenuItem(
+            $trans->trans('hlasovanie.menu.ukoncenie'),
+            $this->generateUrl('anonymizuj')
+        );
+
         return $menu;
+    }
+
+    /**
+      * Traverse menu tree and remove subtrees with zero questions
+      */
+    private function sanitizeMenu($menu) {
+         foreach ($menu as $key => $value) {
+             $pb = $value->getProgressbar();
+             $newmenu = $this->sanitizeMenu($value->children);
+
+             if ($pb->getProgressTotal() == 0) {
+                 unset($menu[$key]);
+             } else {
+                 $menu[$key]->children = $newmenu;
+             }
+         }
+         return $menu;
     }
 
     public function render($activeItems = array()) {
