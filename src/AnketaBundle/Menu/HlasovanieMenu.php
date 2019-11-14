@@ -37,6 +37,10 @@ class HlasovanieMenu
         $season = $em->getRepository('AnketaBundle:Season')->getActiveSeason();
 
         $menu = array(
+            'general' => new MenuItem(
+                $trans->trans('hlasovanie.menu.vseobecne'),
+                $this->generateUrl('answer_general')
+            ),
             'subject' => new MenuItem(
                 $trans->trans('hlasovanie.menu.predmety'),
                 $this->generateUrl('answer_subject')
@@ -44,10 +48,6 @@ class HlasovanieMenu
             'study_program' => new MenuItem(
                 $trans->trans('hlasovanie.menu.studijne_programy'),
                 $this->generateUrl('answer_study_program')
-            ),
-            'general' => new MenuItem(
-                $trans->trans('hlasovanie.menu.vseobecne'),
-                $this->generateUrl('answer_general')
             )
         );
 
