@@ -285,76 +285,48 @@ otazky:
 
 
 # vseobecne otazky - fakulta
-    - text:   Váš celkový dojem z fakulty. K osobnostiam jednotlivých učiteľov sa vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom
-      text_en:  Your overall impression of the faculty. If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
+    - text:   Aký je Tvoj celkový dojem z  priestorov fakulty a ďalších súčastí univerzity, vybavenia prednáškových a počítačových miestností, voľnočasových priestorov pre študentov, atď.?
+      text_en:  What is your impression from the faculty and university premises, lecture rooms, computer labs, spaces available for students to relax, etc.?
       popis:  
       popis_en:
       kategoria:  fakulta
       komentar:   Yes
-      hviezdicky: Yes
+      hviezdicky: No
       position:   1
-
-    - text:   Činnosť Študentskej komory akademického senátu (ŠKAS).
-      text_en: Activities of the Student section of the Faculty Council (ŠKAS).
-      popis:
+      
+    - text:   Ako hodnotíš služby poskytované priamo fakultou (tútori študijných programov, fakultná knižnica, rozvrh, študijné oddelenie, referát doktorandského štúdia, atď.) a ďalšie služby dostupné na fakulte (úroveň stravovacích zariadení, atď.)?
+      text_en:  How do you rate services provided by the faculty (tutors of study programs, library, schedules, registrar's office for undergraduate or graduate students, etc.) and other services available at the faculty (food services, etc.)?
+      popis:  
       popis_en:
       kategoria:  fakulta
       komentar:   Yes
-      hviezdicky: Yes
+      hviezdicky: No
       position:   2
 
-    - text:   Kvalita služieb študijného oddelenia.
-      text_en: Quality of the registrar's office services.
-      popis:  
+    - text:   Ako hodnotíš činnosť Študentskej komory akademického senátu (ŠKAS)?
+      text_en: How do you rate the activities of the Student Chamber of the Academic Senate?
+      popis:
       popis_en:
       kategoria:  fakulta
       komentar:   Yes
       hviezdicky: Yes
       position:   3
 
-    - text:   Váš dojem z fakultnej knižnice.
-      text_en: Your impression of the faculty library.
-      popis:  
-      popis_en:
-      kategoria:  fakulta
-      komentar:   Yes
-      hviezdicky: Yes
-      position:   4
-
-    - text: Úroveň stravovacích služieb.
-      text_en: Your impression of the food options.
-      popis:
-      popis_en:
-      kategoria: fakulta
-      komentar:  Yes
-      hviezdicky: Yes
-      position:   5
-
-    - text:    Vybavenie odborných a počítačových učební.
-      text_en: Quality of laboratories and computer rooms.
-      popis: 
-      popis_en:
-      kategoria: fakulta
-      komentar:  Yes
-      hviezdicky: Yes
-      position:   6
-      
-
-    - text: Ako sa vám páči anketa?
-      text_en: How do you like the student questionnaire?
+    - text: Ako hodnotíš študentskú anketu?
+      text_en: How do you rate this student questionnaire?
       popis:  Čo by ste navrhovali zmeniť?
       popis_en: What would you suggest to change?
       kategoria:  fakulta
       komentar:   Yes
       hviezdicky: Yes
-      position:   7
+      position:   4
 
-    - text: Chcete sa ešte k niečomu vyjadriť?
-      text_en: Do you have any additional comments?
+    - text: Ak sa chceš vyjadriť k čomukoľvek ďalšiemu, napíš to sem.
+      text_en: If you have any further comments, please write them here.
       popis:  Privítame napr. návrhy na zmeny v skladbe ponúkaných študijných programov, názory na rozšírenie ponuky študijných programov o programy v cudzom jazyku, príp. akékoľvek ďalšie návrhy a pripomienky k činnosti fakulty.
       popis_en: 
       kategoria:  fakulta
       komentar:   Yes
       hviezdicky: No
-      position:   8
+      position:   5
 ...
