@@ -1,0 +1,189 @@
+---
+kategorie:
+# kategorie predmetov
+    - id:         predmety
+      popis:      Predmety
+      popis_en:   Courses
+      kategoria:  predmety
+
+    - id:         predmety_ucitel
+      popis:      Učitelia k predmetu
+      popis_en:   Course teachers
+      kategoria:  predmety_ucitel
+
+# kategorie studijnych programov
+    - id:         studijnyprogram
+      popis:      Studijny program
+      popis_en:   Study program
+      kategoria:  studijnyprogram
+
+# vseobecne kategorie
+    - id:         fakulta
+      popis:      Otázky ku fakulte
+      popis_en:   Questions about the faculty
+      kategoria:  vseobecne
+    - id:         ostatne
+      popis:      Ostatné
+      popis_en:   Other
+      kategoria:  vseobecne
+
+otazky:
+# otazky k Studijnemu programu nechcu na PriF, preto tu niesu. Ak by si
+# ich chcel pridat, pozri sa do anketaOthers.yml a skopci ich sem,
+# popripade uprav.
+
+# otazky ku predmetom
+    - text:   Celkové hodnotenie kvality predmetu.
+      text_en: Overall rating of the quality of the subject.
+      popis:  
+      popis_en:
+      kategoria:  predmety
+      komentar:   No
+      hviezdicky: Yes
+      position:   1
+      hlavne_hodnotenie_predmetu: Yes
+      
+    - text:   Napíšte Váš názor na tento predmet. Zdôvodnite, prečo by ste ho odporúčali/neodporúčali.
+      text_en: Write your opinion on this course. Please justify why you would or would not recommend the course to other students.
+      popis: >
+        Popíšte, čo by ste navrhli zmeniť v organizácii a obsahu tohto predmetu. Ktorá časť výučby nebola dostatočne pokrytá vhodným študijným materiálom. Môžete uviesť, prečo by ste ho odporúčali/neodporúčali ďalším študentom. K osobnostiam jednotlivých učiteľov sa vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom.
+      popis_en: What would you change in the organisation and content of this course? Which parts of the course were not properly covered by study materials? Please justify why you do or do not recommend the course. If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
+      kategoria:  predmety
+      komentar:   Yes
+      hviezdicky: No
+      position:   2
+
+# otazky ku kombinacii predmet-ucitel
+    - text:   Celkové hodnotenie vyučujúceho v tomto predmete.
+      text_en: Overall rating of the teacher's performance in this course.
+      popis:
+      popis_en:
+      kategoria:  predmety_ucitel
+      komentar:   No
+      hviezdicky: Yes
+      ucitel:     Yes
+      position:   1
+      hlavne_hodnotenie_ucitela: Yes
+      
+    - text:   Napíšte Váš názor alebo pripomienky k učiteľovi a jeho pôsobeniu v tomto predmete.
+      text_en: Write your comments about the teacher and his work regarding this course.
+      popis:  >
+        Zdôvodnite, prečo by ste ho odporúčali/neodporúčali.
+      popis_en: >
+        Please justify why you would or would not recommend this teacher.
+      kategoria:  predmety_ucitel
+      komentar:   Yes
+      hviezdicky: No
+      ucitel:     Yes
+      position:   2
+
+# vseobecne otazky - fakulta
+    - text:   Ak nechcete hlasovať v ankete, dajte nám vedieť prečo.
+      text_en: In case you don't want to participate in voting, let us know why.
+      popis:  
+      popis_en: 
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: No
+      position:   1
+
+    - text:   Váš celkový dojem z fakulty na základe doterajších skúseností. K osobnostiam jednotlivých učiteľov sa	vyjadrujte výhradne v otázkach venovaných konkrétnym učiteľom.
+      text_en:  Your overall impression of the faculty based on your experience. If you have comments regarding individual teachers, please use the space provided for that purpose in questions regarding those teachers.
+      popis:  
+      popis_en:
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: Yes
+      position:   2
+
+    - text:   Prístup študijných referentiek ku študentom.
+      text_en: Attitude of registrar's office staff towards students.
+      popis:
+      popis_en:
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: Yes
+      position:   3
+
+    - text:   Vybavenosť učební a celkové podmienky na výučbu.
+      text_en: Quality of teaching facilities and overall teaching conditions.
+      popis:
+      popis_en:
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: Yes
+      position:   4
+
+    - text:   Vybavenosť knižnice a prístup pracovníkov knižnice ku študentom.
+      text_en: Quality of the library and attitude of library staff towards students.
+      popis:
+      popis_en:
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: No
+      moznosti:
+          - text: Super
+            text_en: Perfect
+          - text: OK
+            text_en: OK
+          - text: Nič moc
+            text_en: Meh
+          - text: Aká knižnica?
+            text_en: What library?
+      position:   5
+
+    - text:   Činnosť Študentskej komory Akademického senátu (ŠKAS).
+      text_en: Activities of the Student section of the Faculty Council (ŠKAS).
+      popis:
+      popis_en:
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: No
+      moznosti:
+          - text: Super
+            text_en: Super
+          - text: OK
+            text_en: OK
+          - text: Nič moc
+            text_en: Meh
+          - text: Aká komora?
+            text_en: What council?
+      position:   6
+
+    - text:   Študentská anketa.
+      text_en:  Student questionnaire.
+      popis:  >
+        Môžete sa tiež vyjadriť k tomu, čo by mali zodpovední podľa vás urobiť s výsledkami ankety
+      popis_en: What should the responsible do with the results of this questionnaire?
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: Yes
+      position:   7
+
+    - text:   Čo by sme mali urobiť pre to, aby študenti venovali viac času prednáškam a tvorivým aktivitám na fakulte?
+      text_en: What should we do to ensure that the students devote more time to lectures and creative activities at the faculty?
+      popis:
+      popis_en:
+      kategoria:  fakulta
+      komentar:   Yes
+      hviezdicky: No
+      position:   8
+
+# vseobecne otazky - ostatne
+    - text:   Chcete sa ešte k niečomu vyjadriť?
+      text_en: Do you want to address anything else?
+      popis:  >
+        Privítame napr. návrhy na zmeny v skladbe ponúkaných študijných programov, názory na rozšírenie ponuky študijných programov o programy v cudzom jazyku, príp. akékoľvek ďalšie návrhy a pripomienky k činnosti fakulty.
+      popis_en: We welcome, for example, proposals for changes in the composition of the courses offered, comments on widening of choice of study programs by programs in foreign languages​​, or any other suggestions and comments on the activities at the faculty.
+      kategoria:  ostatne
+      moznosti:
+          - text: Áno.
+            text_en: Yes.
+            hodnota: 1
+          - text: Nie.
+            text_en: No.
+            hodnota: -1
+      komentar:   Yes
+      hviezdicky: No
+      position:   7
+...
