@@ -120,6 +120,7 @@ statistics:
     moje_reporty: Reporty
     stanovisko_vedenia: Stanovisko vedenia
     statistiky: Štatistiky
+    vsetky_komentare: Všetky komentáre
   seasonReport:
     vysledky: Výsledky
     pocet_hlasujucich: V ankete <em>%season%</em> hlasovalo %voters% študentov z celkového počtu %total%.
@@ -210,12 +211,13 @@ response:
     dakovny_response: Ďakujem za spätnú väzbu, Váš názor je pre mňa dôležitý.
   list:
     moje_komentare: Moje komentáre
-    komentare: Zoznam pridaných komentárov
+    komentare: Zoznam všetkých pridaných komentárov
     tu_su_komentare: Tu sa nachádza zoznam vašich komentárov.
     pridavanie_z_vysledkov: Komentáre môžete pridávať z jednotlivých stránok s výsledkami.
     upravit_komentar: Upraviť komentár
     zmazat_komentar: Zmazať komentár
     ziaden_komentar_pridany: Zatiaľ ste nepridali žiaden komentár.
+    ziaden_komentar_pridany_global: Zatiaľ nebol pridaný žiaden komentár.
   controller:
     neznama_odpoved: Neznáma odpoveď: %id%
     komentar_bol_ulozeny: Váš komentár bol uložený.

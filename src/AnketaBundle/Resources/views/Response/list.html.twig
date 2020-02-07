@@ -36,7 +36,11 @@
             {% endif %}
         </div>
     {% else %}
-        <p>{{ trans('response.list.ziaden_komentar_pridany') }}</p>
+        {% if user %}
+            <p>{{ trans('response.list.ziaden_komentar_pridany') }}</p>
+        {% else %}
+            <p>{{ trans('response.list.ziaden_komentar_pridany_global') }}</p>
+        {% endif %}
     {% endfor %}
     </div>
 {% endblock %}

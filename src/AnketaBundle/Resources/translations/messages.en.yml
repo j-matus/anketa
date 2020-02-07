@@ -120,6 +120,7 @@ statistics:
     moje_reporty: Reports
     stanovisko_vedenia: Official statement
     statistiky: Statistics
+    vsetky_komentare: All comments
   seasonReport:
     vysledky: Results for
     pocet_hlasujucich: %voters% out of %total% students participated in the Student Questionnaire <em>%season%</em>.
@@ -213,6 +214,7 @@ response:
     upravit_komentar: Edit response
     zmazat_komentar: Delete response
     ziaden_komentar_pridany: You did not add any response so far.
+    ziaden_komentar_pridany_global: No response so far.
     komentare: List of all responses
   controller:
     neznama_odpoved: Unknown reponse: %id%
