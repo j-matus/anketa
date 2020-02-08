@@ -112,6 +112,12 @@ class StatisticsMenu
                     }
                 }
 
+                // Add "All Comments" under this season
+                $seasonItem->children['all_responses'] = new MenuItem(
+                    $trans->trans('statistics.menu.vsetky_komentare'),
+                    $this->generateUrl('responses_list',
+                        array('season_slug' => $season->getSlug())));
+
                 // Add "My subjects" under this season.
                 if ($access->hasOwnSubjects($season)) {
                     $seasonItem->children['my_subjects'] = new MenuItem(
