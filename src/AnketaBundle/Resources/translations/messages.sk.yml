@@ -207,8 +207,8 @@ response:
     kto_moze_citat: Odoslaný komentár si môžu prečítať všetci študenti a učitelia.
     da_sa_upravovat: Text komentáru budete môcť dodatočne upravovať.
     odoslat: Odoslať
-    odoslat_dakovny: Vytvoriť ďakovný komentár
-    dakovny_response: Ďakujem za spätnú väzbu, Váš názor je pre mňa dôležitý.
+    odoslat_dakovny: Automatická odpoveď
+    dakovny_response: Ďakujem za spätnú väzbu.
   list:
     moje_komentare: Moje komentáre
     komentare: Zoznam všetkých pridaných komentárov
